@@ -4,7 +4,7 @@ module.exports = ($, usehtml) ->
   dist = 'build/'
   distApp = dist + 'app/'
   distAST = distApp + 'assets/'
-  source = 'src/client/' # for abs path construction
+  source = 'src/' # for abs path construction
 
   markupEngine = if usehtml then 'html' else 'jade'
   markupExt = '.' + markupEngine

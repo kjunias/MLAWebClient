@@ -11,7 +11,6 @@ runSequence = require 'run-sequence'
 gulpsync    = require('gulp-sync')(gulp)
 $           = require('gulp-load-plugins')()
 config      = require('./gulp.config')($, usehtml)
-server      = require './src/server/server'
 
 # production mode
 isProduction = false
@@ -83,9 +82,9 @@ gulp.task 'webserver', () ->
   gulp.src config.webserver.webroot
     .pipe $.webserver config.webserver
 
-gulp.task 'myserv', () ->
-  log 'Starting express server...'
-  server.startServer config.server.port
+# gulp.task 'myserv', () ->
+#   log 'Starting express server...'
+#   server.startServer config.server.port
 
 ###
 # WATCH
