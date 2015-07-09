@@ -1,5 +1,5 @@
 {
-  "directory": "./build/vendor",
+  "directory": "./_build/vendor",
   "registry": "http://bower.herokuapp.com",
   "strict-ssl": false
 }

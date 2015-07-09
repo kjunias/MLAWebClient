@@ -70,7 +70,7 @@ gulp.task 'markup', ['index', 'views']
 
 gulp.task 'views', () -> buildMarkup(config.html.views, config.distApp)
   
-gulp.task 'index', ['templatecache'], () -> buildMarkup(config.html.index, 'build', false, true)
+gulp.task 'index', ['templatecache'], () -> buildMarkup(config.html.index, '_build/', false, true)
 
 gulp.task 'templatecache', () -> buildMarkup(config.html.templates, config.distApp + 'js', true)
 
@@ -188,6 +188,7 @@ gulp.task 'serve-build', (cb) ->
 
 # run tasks without watch
 gulp.task 'compile',[
+          'bower',
           'bootstrap',
           'styles',
           'scripts',

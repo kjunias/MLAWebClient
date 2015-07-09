@@ -1,7 +1,7 @@
 module.exports = ($, usehtml) ->
 
   # distribution folder
-  dist = 'build/'
+  dist = '_build/'
   distApp = dist + 'app/'
   distAST = distApp + 'assets/'
   source = 'src/' # for abs path construction
@@ -10,7 +10,7 @@ module.exports = ($, usehtml) ->
   markupExt = '.' + markupEngine
 
   # main source folders
-  srcAST  = source + 'assets/'
+  srcAST  = 'assets/'
   srcIMG  = srcAST + 'img/'
   srcLNG  = srcAST + 'langs/'
   srcLESS = source + 'less/'
@@ -67,7 +67,7 @@ module.exports = ($, usehtml) ->
         module: 'naut'
     ,
     webserver:
-      webroot:          'build',
+      webroot:          dist,
       host:             'localhost',
       port:             '3000',
       livereload:       true,
