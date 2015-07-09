@@ -1,0 +1,31 @@
+// START Sidebar
+.sidebar-wrapper
+  .sidebar(ui-sidebar="")
+    .sidebar-nav
+        ul.nav
+          // Iterates over all sidebar items
+          li.nav-heading
+            span.text-muted(translate='sidebar.heading.HEADER') Main Navigation
+          li(ng-class="{active:$state.includes('app')}")
+            a(href='', title='Layouts', ripple='')
+              em.sidebar-item-icon.icon-layout
+              em.sidebar-item-caret.fa.pull-right.fa-angle-right
+              span Layouts
+            ul.nav.sidebar-subnav
+              li.sidebar-subnav-header
+                a
+                  em.sidebar-item-icon.fa.fa-angle-right
+                  | Layouts
+              li(ui-sref-active="active")
+                a(ui-sref='app.dashboard', title='Default', ripple='')
+                  em.sidebar-item-icon
+                  span Default
+              li(ui-sref-active="active")
+                a(ui-sref='app-dock.dashboard', title='Docked', ripple='')
+                  em.sidebar-item-icon
+                  span Docked
+              li(ui-sref-active="active")
+                a(ui-sref='app-fh.columns', title='Full Height', ripple='')
+                  em.sidebar-item-icon
+                  span Full Height
+// END Sidebar
