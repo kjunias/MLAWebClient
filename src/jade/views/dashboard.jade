@@ -1,4 +1,6 @@
 .app-view-header
-  | 
+  | Dashboard
+  small(ng-bind="app.date.toLocaleString()")
+
 .container-fluid(ng-controller="DashboardController as dashboard")
   .text-center

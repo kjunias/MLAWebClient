@@ -35,8 +35,12 @@
         // Global settings
         $rootScope.app = {
           name:          'MemoryLeaks',
-          description:   'MemoryLeaks WebClient',
+          description:   'MemoryLeaks WebClients',
+          date:          new Date(),
+          dateStr:       new Date().toLocaleString(),
           year:          new Date().getFullYear(),
+          month:         new Date().getMonth(),
+          day:          new Date().getDate(),
           views: {
             animation: 'ng-fadeInLeft2'
           },
@@ -74,6 +78,7 @@
         $rootScope.$watch('app.layout', function () {
           $localStorage.settings = $rootScope.app;
         }, true);
+        $rootScope.app.date = new Date();
       }
 
       function availableThemes() {
