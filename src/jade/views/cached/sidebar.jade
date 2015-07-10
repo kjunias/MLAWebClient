@@ -15,7 +15,7 @@
             a(href='', title='Layouts', ripple='')
               em.sidebar-item-icon.icon-globe
               em.sidebar-item-caret.fa.pull-right.fa-angle-right
-              span Reporters
+              span(translate='common.REPORTERS') Reporters
             ul.nav.sidebar-subnav
               li.sidebar-subnav-header
                 a
@@ -33,4 +33,9 @@
                 a(ui-sref='app.dashboard', title='Default', ripple='')
                   em.sidebar-item-icon
                   span 192.168.38.1
+          li(ui-sref-active="active")
+            a(ui-sref='app.dashboard', title='Units', ripple='')
+              em.sidebar-item-icon.icon-box
+              span(translate='common.UNITS') Units
+
 // END Sidebar
