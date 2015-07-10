@@ -78,13 +78,9 @@ gulp.task 'templatecache', () -> buildMarkup(config.html.templates, config.distA
 # SERVER
 ###
 gulp.task 'webserver', () ->
-  log 'Starting web server.. '
+  log 'Starting web server ... '
   gulp.src config.webserver.webroot
     .pipe $.webserver config.webserver
-
-# gulp.task 'myserv', () ->
-#   log 'Starting express server...'
-#   server.startServer config.server.port
 
 ###
 # WATCH
@@ -95,13 +91,15 @@ gulp.task 'watch', () ->
 
   $.livereload.listen()
 
-  gulp.watch([config.less.watch, config.less.styles], ['styles'])
-  gulp.watch(config.bootstrap, ['bootstrap'])
-  gulp.watch(config.html.all, ['markup'])
-  gulp.watch(config.js, ['scripts'])
-  gulp.watch(config.html.templates, ['templatecache'])
+  gulp.watch [config.less.watch, config.less.styles], ['styles']
+  gulp.watch config.bootstrap, ['bootstrap']
+  gulp.watch config.html.all, ['markup']
+  gulp.watch config.js, ['scripts']
+  gulp.watch config.html.templates, ['templatecache']
+  gulp.watch config.assets, ['assets']
+  gulp.watch config.build, ['default']
 
-  gulp.watch([].concat(config.less.watch, config.html.views, config.html.templates, config.js))
+  gulp.watch([].concat(config.less.watch, config.html.views, config.html.templates, config.js, config.assets, config.build))
     .on 'change', (event) ->
       setTimeout () ->
         $.livereload.changed event.path

@@ -50,6 +50,8 @@ module.exports = ($, usehtml) ->
 
     bootstrap: [srcLESS + 'bootstrap/bootstrap.less'],
     js: [srcJS + 'app.module.js', srcJS + 'modules/**/*.js', srcJS + 'custom/**/*.js'],
+    assets: [srcAST + '**/*'],
+    build: ['gulp*'],
     distJSPaths: ['app/js/app.js'],
 
     ###
