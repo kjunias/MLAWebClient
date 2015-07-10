@@ -1,67 +1,112 @@
 form(action="")
-  p.help-block Type and hit enter to search
-  input.form-control.input-huge(type="text", placeholder="I'm looking for...", ng-model="searchTerm")
+  p.help-block Type to search
+  input.form-control.input-huge(type="text", placeholder="Search here ...", ng-model="searchTerm")
   button(type="submit").hidden Search
 .row
   .col-md-4.col-sm-6.pv
-    h4.text-bold.pv-lg People (4)
+    h4.text-bold.pv-lg Reporters (4)
     br
     ul.list-unstyled
-      // START User
+      
       li.media
         .media-left.media-middle
-          // Contact avatar
           .point-pin
             a(href="")
-              img.media-object.img-circle.thumb40(src='app/assets/img/user/05.jpg', alt="Image")
+              img.media-object.img-circle.thumb40(src='app/assets/img/server/01.png', alt="Image")
             .point.point-success.point-lg
-        // Contact info
         .media-body
           .media-heading
-            a.text-md(href="") Marc Fuller
-      // END User
-      // START User
+            a.text-md(href="") 192.168.4.1
+      
       li: hr
       li.media
         .media-left.media-middle
-          // Contact avatar
           .point-pin
             a(href="")
-              img.media-object.img-circle.thumb40(src='app/assets/img/user/06.jpg', alt="Image")
+              img.media-object.img-circle.thumb40(src='app/assets/img/server/06.png', alt="Image")
             .point.point-success.point-lg
-        // Contact info
         .media-body
           .media-heading
-            a.text-md(href="") Wade Wade
-      // END User
-      // START User
+            a.text-md(href="") 192.168.8.1
+      
       li: hr
       li.media
         .media-left.media-middle
-          // Contact avatar
           .point-pin
             a(href="")
-              img.media-object.img-circle.thumb40(src='app/assets/img/user/07.jpg', alt="Image")
+              img.media-object.img-circle.thumb40(src='app/assets/img/server/03.png', alt="Image")
             .point.point-danger.point-lg
-        // Contact info
         .media-body
           .media-heading
-            a.text-md(href="") Alan Boyd
-      // END User
-      // START User
+            a.text-md(href="") 192.168.12.1
+      
       li: hr
       li.media
         .media-left.media-middle
-          // Contact avatar
           .point-pin
             a(href="")
-              img.media-object.img-circle.thumb40(src='app/assets/img/user/01.jpg', alt="Image")
+              img.media-object.img-circle.thumb40(src='app/assets/img/server/02.png', alt="Image")
             .point.point-danger.point-lg
-        // Contact info
         .media-body
           .media-heading
-            a.text-md(href="") Ryan Carr
-      // END User
+            a.text-md(href="") 192.168.38.1
+
+
+  .col-md-4.col-sm-6.pv
+    h4.text-bold.pv-lg Units (5)
+    br
+    ul.list-unstyled
+      li.media
+        .media-left.media-middle
+          .thumb40.bg-success.circle.text-center.text-bold C7
+        .media-body
+          .media-heading.clearfix
+            a.pull-left.text-md(ui-sref="app.dashboard", layer-morph-close="") 192.168.4.101
+            small.text-muted.pull-right.mt 3 matches
+      li: hr
+      li.media
+        .media-left.media-middle
+          .thumb40.bg-danger.circle.text-center.text-bold 3000
+        .media-body
+          .media-heading.clearfix
+            a.pull-left.text-md(ui-sref="app.extras.projects", layer-morph-close="") 192.168.12.104
+            small.text-muted.pull-right.mt 2 matches      li: hr
+      li.media
+        .media-left.media-middle
+          .thumb40.bg-warning.circle.text-center.text-bold 4400
+        .media-body
+          .media-heading.clearfix
+            a.pull-left.text-md(ui-sref="app.extras.projects", layer-morph-close="") 192.168.12.104
+            small.text-muted.pull-right.mt 2 matches
+      li: hr
+      li.media
+        .media-left.media-middle
+            a(href="")
+              img.media-object.img-circle.thumb40(src='app/assets/img/unit/01.png', alt="Image")
+        .media-body
+          .media-heading.clearfix
+            a.pull-left.text-md(ui-sref="app.extras.profile", layer-morph-close="") 192.168.8.102
+            small.text-muted.pull-right.mt 3 matches
+      li: hr
+      li.media
+        .media-left.media-middle
+            a(href="")
+              img.media-object.img-circle.thumb40(src='app/assets/img/unit/02.png', alt="Image")
+        .media-body
+          .media-heading.clearfix
+            a.pull-left.text-md(ui-sref="app.extras.profile", layer-morph-close="") 192.168.8.102
+            small.text-muted.pull-right.mt 3 matches
+      li: hr
+      li.media
+        .media-left.media-middle
+            a(href="")
+              img.media-object.img-circle.thumb40(src='app/assets/img/unit/4400.png', alt="Image")
+        .media-body
+          .media-heading.clearfix
+            a.pull-left.text-md(ui-sref="app.extras.profile", layer-morph-close="") 192.168.8.102
+            small.text-muted.pull-right.mt 3 matches
+
+
   .col-md-4.col-sm-6.pv
     h4.text-bold.pv-lg Pages (3)
     br
@@ -76,17 +121,16 @@ form(action="")
       li: hr
       li.media
         .media-left.media-middle
-          .thumb40.bg-purple.circle.text-center.text-bold P
+          .thumb40.bg-purple.circle.text-center.text-bold R
         .media-body
           .media-heading.clearfix
-            a.pull-left.text-md(ui-sref="app.extras.profile", layer-morph-close="") Profile
+            a.pull-left.text-md(ui-sref="app.extras.profile", layer-morph-close="") Reporters
             small.text-muted.pull-right.mt 3 matches
       li: hr
       li.media
         .media-left.media-middle
-          .thumb40.bg-danger.circle.text-center.text-bold P
+          .thumb40.bg-danger.circle.text-center.text-bold U
         .media-body
           .media-heading.clearfix
-            a.pull-left.text-md(ui-sref="app.extras.projects", layer-morph-close="") Projects
+            a.pull-left.text-md(ui-sref="app.extras.projects", layer-morph-close="") Units
             small.text-muted.pull-right.mt 2 match(es)
-
