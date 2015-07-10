@@ -11,6 +11,12 @@
               .label.pull-right.label-success 4
               em.sidebar-item-icon.icon-pie-graph
               span(translate='sidebar.nav.DASHBOARD') Dashboard
+
+          li(ui-sref-active="active")
+            a(ui-sref='app.dashboard', title='Units', ripple='')
+              em.sidebar-item-icon.icon-server
+              span(translate='common.SERVER') Server
+
           li(ng-class="{active:$state.includes('app')}")
             a(href='', title='Layouts', ripple='')
               em.sidebar-item-icon.icon-globe
@@ -37,5 +43,15 @@
             a(ui-sref='app.dashboard', title='Units', ripple='')
               em.sidebar-item-icon.icon-box
               span(translate='common.UNITS') Units
+          li(ui-sref-active="active")
+            a(ui-sref='app.dashboard', title='Units', ripple='')
+              em.sidebar-item-icon.icon-disc
+              span(translate='common.LOADS') LOADS
 
+          li
+            hr
+          li(ui-sref-active="active")
+            a(ui-sref='app.dashboard', title='Units', ripple='')
+              em.sidebar-item-icon.fa.fa-calendar
+              span(translate='sidebar.nav.app.CALENDAR') Calendar
 // END Sidebar

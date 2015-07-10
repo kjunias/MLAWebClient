@@ -1,8 +1,10 @@
 {
   "common": {
     "DASHBOARD": "Dashboard",
+    "SERVER": "Server",
     "REPORTERS": "Reporters",
-    "UNITS": "Units"
+    "UNITS": "Units",
+    "LOADS": "Loads"
   },
   "topbar": {
     "search": {
