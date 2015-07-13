@@ -1,8 +1,8 @@
 {
-  "name": "Naut",
+  "name": "MemoryLeaks",
   "version": "1.0.0",
-  "description": "Bootstrap Admin Theme + AngularJS",
-  "author": "@geedmo",
+  "description": "MemoryLeaks WebClient",
+  "author": "kjunias",
   "dependencies": {},
   "devDependencies": {
     "del": "^1.1.1",

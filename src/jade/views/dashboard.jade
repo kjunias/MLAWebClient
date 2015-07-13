@@ -4,3 +4,133 @@
 
 .container-fluid(ng-controller="DashboardController as dashboard")
   .text-center
+  // START dashboard content
+  .col-lg-9.fw-boxed
+ 
+    // START Tabbed panel
+    .panel.panel-default(ng-init="hpanel = [true, false, false, false]")
+      .row
+        .col-md-4
+          .row.row-flush.text-center.text-muted.m0
+            .col-xs-3.col-md-6.bb.br.pv-xxl.clickable(ripple="", ng-click="hpanel = [true, false, false, false]", ng-class="{'bg-info': hpanel[0]}")
+              em.icon-server.fa-2x.mv
+              p SERVER 
+            .col-xs-3.col-md-6.bb.br.pv-xxl.clickable(ripple="", ng-click="hpanel = [false, true, false, false]", ng-class="{'bg-purple': hpanel[1]}")
+              em.icon-globe.fa-2x.mv
+              p REPORTERS
+            .col-xs-3.col-md-6.bb-lg.br.pv-xxl.clickable(ripple="", ng-click="hpanel = [false, false, true, false]", ng-class="{'bg-pink': hpanel[2]}")
+              em.icon-box.fa-2x.mv
+              p UNITS
+            .col-xs-3.col-md-6.bb-lg.br.pv-xxl.clickable(ripple="", ng-click="hpanel = [false, false, false, true]", ng-class="{'bg-amber': hpanel[3]}")
+              em.icon-disc.fa-2x.mv
+              p LOADS
+
+        .col-md-8(ng-if="hpanel[0]")
+          .row.row-table
+            .col-sm-8.col-xs-12
+              .p
+                h4 Server Metrics (last hour)
+                sparkline.mb(options="dashboard.sparkOptionsLine", values="dashboard.sparkValuesLine")
+                small Server processed requests per second.
+            .col-sm-4.col-xs-12.pv
+              .p.text-center
+                .mb-sm Memory
+                sparkline.mb(options="dashboard.sparkOptions", values="dashboard.sparkValues1")
+                .mv-sm CPU
+                sparkline.mb(options="dashboard.sparkOptions", values="dashboard.sparkValues2")
+                .mv-sm Network
+                sparkline.mb(options="dashboard.sparkOptions", values="dashboard.sparkValues3")
+        .col-md-8(ng-if="hpanel[1]")
+          .row.row-table
+            .col-sm-6.col-xs-12
+              .p
+                .row.row-flush.text-center
+                  .col-xs-6
+                    p.mt-lg Databases
+                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent1')
+                      span {{dashboard.piePercent1}}
+                  .col-xs-6
+                    p.mt-lg Memory
+                    .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent2')
+                      span {{dashboard.piePercent2}}
+            .col-sm-6.col-xs-12
+              .p
+                | Last Hour 
+                progressbar.progress-xs(value='35', type='warning')
+                | Last Day
+                progressbar.progress-xs(value='10', type='info')
+                | Last Week
+                progressbar.progress-xs.m0(value='35', type='danger')
+        .col-md-8(ng-if="hpanel[2]", ng-init="dashboard.loadProgressValues()")
+          .row.row-table
+            .col-sm-8.col-xs-12
+              .p
+                h3 Tasks done 60%
+                progressbar.progress-xs(value='dashboard.progressVal[0]', type='info')
+                em Sed ut semper leo. Nulla sit amet risus sem, sit amet molestie felis. 
+            .col-sm-4.col-xs-12.pv
+              .p
+                | Pending 
+                progressbar.active.progress-xs(value="dashboard.progressVal[1]", type='purple')
+                | In progress
+                progressbar.active.progress-xs(value="dashboard.progressVal[2]", type='primary')
+                | This month
+                progressbar.active.progress-xs.m0(value="dashboard.progressVal[3]", type='warning')
+        .col-md-8(ng-if="hpanel[3]")
+          .p.pv-xxl
+            .row.row-table.text-center
+              .col-sm-4.col-xs-12
+                p.text-muted TOTAL
+                h1.text-lg.m0.mb-lg 11
+                p.text-muted.m0 LATEST
+                p.m0 2.0.32.588
+              .col-sm-4.col-xs-12
+                p.text-muted ACTIVE
+                h1.text-lg.m0.mb-lg 8
+                p.text-muted.m0 SINCE
+                p.m0 10/7/2015 16:50:07
+              .col-sm-4.col-xs-12
+                p.text-muted ALERTS
+                h1.text-lg.m0.mb-lg 14
+                p.text-muted.m0 LAST ALERT
+                p.m0 10 minutes ago
+    // END Tabbed panel
+
+    // START Panel
+    .panel.panel-default
+      .panel-heading
+        .panel-title 
+          em.icon-signal.fa-lg.text-muted.pull-right
+          | Analytics
+      .panel-body
+        .row
+          .col-md-9
+            p.text-center: em Top leakin units for the last 20 mintes 
+            flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{splines: dashboard.areaSplineSeries}")
+          .col-md-3
+            table.table.table-hover.mb-lg
+              thead
+                tr
+                  th Unit
+                  th.text-right Show
+              tbody
+                tr
+                  td 192.168.4.101
+                  td.text-right
+                    label.switch.m0(ng-class="'switch-' + app.theme.name")
+                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[0]")
+                      span
+                tr
+                  td 192.168.4.102
+                  td.text-right
+                    label.switch.m0(ng-class="'switch-' + app.theme.name")
+                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[1]")
+                      span
+                tr
+                  td 192.168.4.103
+                  td.text-right
+                    label.switch.m0(ng-class="'switch-' + app.theme.name")
+                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[2]")
+                      span
+            p: em Top Leaking units live. 
+ 

@@ -78,7 +78,7 @@ gulp.task 'templatecache', () -> buildMarkup(config.html.templates, config.distA
 # SERVER
 ###
 gulp.task 'webserver', () ->
-  log 'Starting web server.. '
+  log "Starting web server on port #{config.webserver.port}..."
   gulp.src config.webserver.webroot
     .pipe $.webserver config.webserver
 
