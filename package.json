@@ -1,7 +1,7 @@
 {
   "name": "MemoryLeaks",
-  "version": "1.0.0",
-  "description": "MemoryLeaks WebClient",
+  "version": "0.0.1",
+  "description": "MemoryLeaks Analyzer Web Client",
   "author": "kjunias",
   "dependencies": {},
   "devDependencies": {

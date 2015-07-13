@@ -1,10 +1,10 @@
 {
-  "name": "Naut",
-  "version": "1.0.0",
+  "name": "MemoryLeaks",
+  "version": "0.0.1",
   "authors": [
-    "@geedmo"
+    "kjunias"
   ],
-  "description": "Bootstrap admin theme + AngularJS",
+  "description": "MemoryLeaks Analyzer Web Client",
   "keywords": [
     "bootstrap",
     "angular",
