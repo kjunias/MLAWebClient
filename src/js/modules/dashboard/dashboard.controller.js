@@ -69,9 +69,16 @@
 
       getLeaksData();
 
+      $rootScope.$on('reporter.selected', onReporterSelect)
+
+      function onReporterSelect(event, data) {
+        getLeaksData();
+      }
+
       function getLeaksData() {
-        $http.get('http://localhost:5555/reporters/8/unitsdata?from=2015-07-09T00:00:00.000Z&to=2015-07-09T23:59:59.000Z')
+        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=2015-07-09T00:00:00.000Z&to=2015-07-09T23:59:59.000Z')
           .success(function (res) {
+            console.log("=====>gotData", res);
             vm.splineData = generateLeaksSeries(res);
           })
           .error(function (err) {

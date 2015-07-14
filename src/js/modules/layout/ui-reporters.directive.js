@@ -22,7 +22,6 @@
       function link(scope, element, attributs, ctrl) {
         scope.$watch('reporters', function (value) {
           element.find('a').on('click', function (event) {
-            console.log("====> click!!!");
             var ele = angular.element(this),
                 par = ele.parent()[0];
 

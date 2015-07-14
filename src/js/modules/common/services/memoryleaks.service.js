@@ -17,7 +17,6 @@
       init();
 
       function init() {
-        console.log("=====> Init memLeaksService");
         getReporters();
       }
 
@@ -25,12 +24,12 @@
         $http.get('http://localhost:5555/reporters')
           .success(function (res) {
             $rootScope.reporters = res;
+            $rootScope.currentReporter = $rootScope.reporters[4];
           })
           .error(function (err) {
             console.log(err);
           });
       }
-
       return memLeaksService;
     }
 

@@ -18,8 +18,9 @@
 
       $scope.reporterClick= reporterClick;
 
-      function reporterClick(element) {
-        console.log("===>Reporter clicked in ctrl", element);
+      function reporterClick(reporter) {
+        $rootScope.currentReporter = reporter;
+        $rootScope.$emit('reporter.selected', $rootScope.currentReporter);
       }
     }
 }) ();
