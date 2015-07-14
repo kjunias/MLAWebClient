@@ -14,7 +14,11 @@
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
-      
+      $rootScope.currentPeriod = {
+        from : new Date('2015-07-09T00:00:00.000Z'),
+        to: new Date('2015-07-09T23:59:59.000Z')
+      }
+
       // Some numbers for demo
       vm.loadProgressValues = function() {
         vm.progressVal = [0,0,0,0];
@@ -76,7 +80,8 @@
       }
 
       function getLeaksData() {
-        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=2015-07-09T00:00:00.000Z&to=2015-07-09T23:59:59.000Z')
+        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+          + '&to=' + $rootScope.currentPeriod.to.toISOString())
           .success(function (res) {
             console.log("=====>gotData", res);
             vm.splineData = generateLeaksSeries(res);
