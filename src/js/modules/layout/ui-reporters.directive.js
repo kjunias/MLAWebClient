@@ -38,6 +38,8 @@
               ele.parent().toggleClass('active');
               event.preventDefault();
             }
+
+            ele.parent().addClass('active');
           });
 
           // on mobiles, sidebar starts off-screen
