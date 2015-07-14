@@ -105,19 +105,22 @@
       .panel-body
         .row
           .col-md-9
-            .row.row-table.text-center(ng-controller='DatepickerDemoController')
+            .row.row-table.text-center(ng-controller='DatepickerController')
               .col-sm-6
                 p.input-group.pull-right
                   span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='open($event)')
                       em.fa.fa-calendar
-                  input.form-control(type='text', value='Test', datepicker-popup='{{format}}', ng-model='currentPeriod.fromStr', is-open='opened', min-date='minDate', max-date="'2015-06-22'", datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+                  input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.fromStr', is-open='opened', min-date='minDate', max-date="'2015-06-22'", 
+                                      datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
               .col-sm-6
                 p.input-group.pull-right
                   span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='open($event)')
                       em.fa.fa-calendar
-                  input.form-control(type='text', value='Test', datepicker-popup='{{format}}', ng-model='currentPeriod.toStr', is-open='opened', min-date='minDate', max-date="'2015-06-22'", datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+                  input.form-control(type='text', value='Test', datepicker-popup='{{format}}', ng-model='currentPeriod.toStr', is-open='opened', min-date='minDate', max-date="'2015-06-22'", 
+                                      datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+                  
             flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
           .col-md-3
             table.table.table-hover.mb-lg

@@ -8,13 +8,15 @@
 
     angular
         .module('naut')
-        .controller('DatepickerDemoController', DatepickerDemoController);
-    /* @ngInject */
-    function DatepickerDemoController($scope) {
+        .controller('DatepickerController', DatepickerController);
+    
+    DatepickerController.$inject = ['$rootScope', '$scope'];
+    function DatepickerController($rootScope, $scope) {
 
       $scope.today = function() {
         $scope.dt = new Date();
       };
+
       $scope.today();
 
       $scope.clear = function () {
@@ -46,7 +48,5 @@
       $scope.initDate = new Date('2016-15-20');
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[0];
-
     }
-    DatepickerDemoController.$inject = ['$scope'];
 })();
