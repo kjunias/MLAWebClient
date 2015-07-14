@@ -2,7 +2,7 @@
   | Dashboard
   small(ng-bind="app.date.toLocaleString()")
 
-.container-fluid(ng-controller="DashboardController as dashboard")
+.row(ng-controller="DashboardController as dashboard")
   .text-center
   // START dashboard content
   .col-lg-9.fw-boxed
@@ -100,12 +100,18 @@
     .panel.panel-default
       .panel-heading
         .panel-title 
-          em.icon-signal.fa-lg.text-muted.pull-right
+          em.icon-bar-graph-2.fa-lg.text-muted.pull-right
           | Memory Usage Data
       .panel-body
         .row
           .col-md-9
-            p.text-center: em Current day 
+            .row.row-table.text-center
+              .col-sm-3
+                em.fa.fa-calendar.fa-lg.pull-right
+              .col-sm-6
+                p.text-center: em {{currentPeriod.from.toUTCString()}}  -  {{currentPeriod.to.toUTCString()}}
+              .col-sm-3
+                em.fa.fa-calendar.fa-lg.pull-left
             flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
           .col-md-3
             table.table.table-hover.mb-lg
