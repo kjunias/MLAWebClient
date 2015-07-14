@@ -86,6 +86,9 @@
           });
       }
 
+
+      vm.areaSplineSeries = [];
+
       function generateLeaksSeries(rawData) {
         var leaksSeries = []
         var i = 0;
@@ -93,8 +96,11 @@
           leaksSeries[i] = {
             'label': rawData[unit].IPV4,
             'color': getRandomColor(),
+            'index':i,
             'data': []
           };
+
+          vm.areaSplineSeries[i] = true;
 
           var unitData = rawData[unit].data
           for (var d in unitData) {
@@ -138,9 +144,6 @@
         // vm.splineData = getSplineData();
         vm.splineData = getLeaksData();
       });
-
-      vm.areaSplineSeries = [true, true, true];
-
 
       // Small line chart
       // ----------------------------------- 

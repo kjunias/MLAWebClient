@@ -114,23 +114,12 @@
                   th Unit
                   th.text-right Show
               tbody
-                tr
-                  td 192.168.4.101
+                tr(ng-repeat="serie in dashboard.splineData")
+                  td {{serie.label}}
                   td.text-right
                     label.switch.m0(ng-class="'switch-' + app.theme.name")
-                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[0]")
+                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[serie.index]")
                       span
-                tr
-                  td 192.168.4.102
-                  td.text-right
-                    label.switch.m0(ng-class="'switch-' + app.theme.name")
-                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[1]")
-                      span
-                tr
-                  td 192.168.4.103
-                  td.text-right
-                    label.switch.m0(ng-class="'switch-' + app.theme.name")
-                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[2]")
-                      span
+
             p: em Top Leaking units live. 
  

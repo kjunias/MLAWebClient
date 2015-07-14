@@ -24,7 +24,7 @@
         $http.get('http://localhost:5555/reporters')
           .success(function (res) {
             $rootScope.reporters = res;
-            $rootScope.currentReporter = $rootScope.reporters[4];
+            $rootScope.currentReporter = $rootScope.reporters[7];
           })
           .error(function (err) {
             console.log(err);
