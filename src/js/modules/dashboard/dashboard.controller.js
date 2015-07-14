@@ -59,7 +59,11 @@
             show: false
         },
         xaxis:{
-          label: 'Testing'
+          mode: 'time',
+          axisLabel: 'Testing'
+        },
+        yaxis:{
+          axisLabel: 'Testing'
         }
       });
 
@@ -68,8 +72,6 @@
       function getLeaksData() {
         $http.get('http://localhost:5555/reporters/8/unitsdata?from=2015-07-09T00:00:00.000Z&to=2015-07-09T23:59:59.000Z')
           .success(function (res) {
-            // generateLeaksSeries(res);
-            // vm.splineData = getSplineData();
             vm.splineData = generateLeaksSeries(res);
           })
           .error(function (err) {
