@@ -1,18 +1,18 @@
 // START Sidebar
-.sidebar-wrapper
+.sidebar-wrapper(ui-if="reportersLoaded")
   .sidebar(ui-sidebar="")
     .sidebar-nav
         ul.nav
           // Iterates over all sidebar items
           li.nav-heading
             span.text-muted(translate='sidebar.heading.HEADER') Main Navigation
-          li(ui-sref-active="active")
+          li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Dashboard', ripple='')
               .label.pull-right.label-success 4
               em.sidebar-item-icon.icon-pie-graph
               span(translate='sidebar.nav.DASHBOARD') Dashboard
 
-          li(ui-sref-active="active")
+          li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Units', ripple='')
               em.sidebar-item-icon.icon-server
               span(translate='common.SERVER') Server
@@ -27,19 +27,12 @@
                 a
                   em.sidebar-item-icon.fa.fa-angle-right
                   | Reporters
-              li(ui-sref-active="active")
-                a(ui-sref='app.dashboard', title='Default', ripple='')
+              li(ng-repeat="reporter in reporters", ui-sref-active="", ui-reporters="")
+                a(ui-sref='app.dashboard', title='{{reporter._source.idReporters}}', id='{{reporter._source.idReporters}}', ripple='', ng-click="reporterClick()")
                   em.sidebar-item-icon
-                  span 192.168.4.1
-              li(ui-sref-active="active")
-                a(ui-sref='app.dashboard', title='Default', ripple='')
-                  em.sidebar-item-icon
-                  span 192.168.8.1
-              li(ui-sref-active="active")
-                a(ui-sref='app.dashboard', title='Default', ripple='')
-                  em.sidebar-item-icon
-                  span 192.168.38.1
-          li(ui-sref-active="active")
+                  span {{reporter._source.idReporters}}: {{reporter._source.strFrom}}
+
+          li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Units', ripple='')
               em.sidebar-item-icon.icon-box
               span(translate='common.UNITS') Units
@@ -50,7 +43,7 @@
 
           li
             hr
-          li(ui-sref-active="active")
+          li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Units', ripple='')
               em.sidebar-item-icon.fa.fa-calendar
               span(translate='sidebar.nav.app.CALENDAR') Calendar

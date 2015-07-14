@@ -80,11 +80,9 @@
       }
 
       function generateLeaksSeries(rawData) {
-        console.log("====> rawData:", rawData);
         var leaksSeries = []
         var i = 0;
         for (var unit in rawData) {
-          console.log("====>:", unit);
           leaksSeries[i] = {
             'label': rawData[unit].IPV4,
             'color': getRandomColor(),
@@ -99,13 +97,11 @@
           i++;
         }
 
-        console.log("====> seriesData:", leaksSeries);
         return leaksSeries;
       }
 
       function getRandomColor () {
-        var color = '#'+Math.floor(Math.random()*16777215).toString(16); 
-        console.log("color: ", color);
+        var color = '#'+Math.floor(Math.random()*16777215).toString(16);
         return color;
       }
 
