@@ -107,11 +107,11 @@
           .col-md-9
             .row.row-table.text-center
               .col-sm-3
-                em.fa.fa-calendar.fa-lg.pull-right
+                em.fa.fa-calendar.fa-lg.pull-right.btn(ng-click="")
               .col-sm-6
                 p.text-center: em {{currentPeriod.from.toUTCString()}}  -  {{currentPeriod.to.toUTCString()}}
               .col-sm-3
-                em.fa.fa-calendar.fa-lg.pull-left
+                em.fa.fa-calendar.fa-lg.pull-left.btn(ng-click="")
             flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
           .col-md-3
             table.table.table-hover.mb-lg
