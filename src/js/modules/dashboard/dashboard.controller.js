@@ -9,8 +9,8 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', 'colors', 'flotOptions', '$timeout'];
-    function DashboardController($rootScope, $scope, colors, flotOptions, $timeout) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout'];
+    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
@@ -51,35 +51,78 @@
       vm.splineChartOpts = angular.extend({}, flotOptions['default'], {
         series: {
           lines: {
-            show: false
-          },
-          splines: {
             show: true,
-            tension: 0.4,
-            lineWidth: 2,
-            fill: 0.5
-          },
+            lineWidth: 2
+          }
         },
-        yaxis: {max: 50}
+        legend: {
+            show: false
+        },
+        xaxis:{
+          label: 'Testing'
+        }
       });
-      vm.splineData = getSplineData();
+
+      getLeaksData();
+
+      function getLeaksData() {
+        $http.get('http://localhost:5555/reporters/8/unitsdata?from=2015-07-09T00:00:00.000Z&to=2015-07-09T23:59:59.000Z')
+          .success(function (res) {
+            // generateLeaksSeries(res);
+            // vm.splineData = getSplineData();
+            vm.splineData = generateLeaksSeries(res);
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+      function generateLeaksSeries(rawData) {
+        console.log("====> rawData:", rawData);
+        var leaksSeries = []
+        var i = 0;
+        for (var unit in rawData) {
+          console.log("====>:", unit);
+          leaksSeries[i] = {
+            'label': rawData[unit].IPV4,
+            'color': getRandomColor(),
+            'data': []
+          };
+
+          var unitData = rawData[unit].data
+          for (var d in unitData) {
+            leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), unitData[d].dcmMemInUse])
+          }
+
+          i++;
+        }
+
+        console.log("====> seriesData:", leaksSeries);
+        return leaksSeries;
+      }
+
+      function getRandomColor () {
+        var color = '#'+Math.floor(Math.random()*16777215).toString(16); 
+        console.log("color: ", color);
+        return color;
+      }
 
       function getSplineData() {
         return [{
-          'label': 'Campaing1',
-          'color': colors.byName($rootScope.app.theme.name),
+          'label': '192.168.4.101',
+          'color': getRandomColor(),
           'data': [
             ['1', 28],['2', 30],['3', 32],['4', 33],['5', 33],['6', 32],['7', 31],['8', 30],['9', 29],['10', 28],['11', 28],['12', 29],['13', 30],['14', 29],['15', 28]
           ]
         }, {
-          'label': 'Campaing2',
-          'color': colors.byName($rootScope.app.theme.name),
+          'label': '192.168.4.102',
+          'color': getRandomColor(),
           'data': [
             ['1', 12],['2', 14],['3', 20],['4', 16],['5', 18],['6', 14],['7', 19],['8', 24],['9', 18],['10', 14],['11', 16],['12', 15],['13', 14],['14', 16],['15', 18]
           ]
         }, {
-          'label': 'Campaing3',
-          'color': colors.byName($rootScope.app.theme.name),
+          'label': '192.168.4.103',
+          'color': getRandomColor(),
           'data': [
             ['1', 6],['2', 8],['3', 7],['4', 6],['5', 7],['6', 10],['7', 9],['8', 8],['9', 10],['10', 9],['11', 6],['12', 8],['13', 9],['14', 10],['15', 10]
           ]
@@ -87,15 +130,15 @@
       }
 
       $scope.$watch('app.theme.name', function(val) {
-        vm.splineData = getSplineData();
+        // vm.splineData = getSplineData();
+        vm.splineData = getLeaksData();
       });
 
-      vm.areaSplineSeries = [false, true, true];
+      vm.areaSplineSeries = [true, true, true];
 
 
       // Small line chart
       // ----------------------------------- 
-
       vm.smallChartOpts = angular.extend({}, flotOptions['default'], {
         points: {
           show: true,
@@ -110,10 +153,10 @@
           }
         },
         grid: {
-            show: false
+            show: true
         },
         legend: {
-            show: false
+            show: true
         },
         xaxis: {
             tickDecimals: 0

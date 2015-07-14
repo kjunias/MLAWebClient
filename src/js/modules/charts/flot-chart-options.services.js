@@ -81,7 +81,7 @@
           },
           points: {
             show: true,
-            radius: 4
+            radius: 2
           }
         }
       });

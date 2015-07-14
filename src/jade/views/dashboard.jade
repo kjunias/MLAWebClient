@@ -101,12 +101,12 @@
       .panel-heading
         .panel-title 
           em.icon-signal.fa-lg.text-muted.pull-right
-          | Analytics
+          | Memory Usage Data
       .panel-body
         .row
           .col-md-9
-            p.text-center: em Top leakin units for the last 20 mintes 
-            flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{splines: dashboard.areaSplineSeries}")
+            p.text-center: em Current hour 
+            flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
           .col-md-3
             table.table.table-hover.mb-lg
               thead
