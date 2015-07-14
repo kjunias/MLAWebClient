@@ -19,6 +19,9 @@
         to: new Date('2015-07-09T23:59:59.000Z')
       }
 
+      $scope.currentPeriod.fromStr = $scope.currentPeriod.from.toISOString();
+      $scope.currentPeriod.toStr = $scope.currentPeriod.to.toISOString();
+
       // Some numbers for demo
       vm.loadProgressValues = function() {
         vm.progressVal = [0,0,0,0];
