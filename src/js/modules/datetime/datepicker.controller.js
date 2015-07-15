@@ -24,9 +24,9 @@
         $scope.dt = null;
       };
 
-      // Disable weekend selection
+      // Disable future days selection
       $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+        return (date > ($scope.today() || new Date()));
       };
 
       $scope.toggleMin = function() {
@@ -48,6 +48,15 @@
         $scope.openedTo = !$scope.openedTo;
       };
 
+      $scope.datePickerOnNewDate = function(date) {
+        console.log("====> New date!!", date);
+      };
+
+      $scope.datePickerOnDateChange = function() {
+        $rootScope.currentPeriod.from.setHours(0,0,0);
+        $rootScope.currentPeriod.to.setHours(23,59,59);
+      };
+
       $scope.dateOptions = {
         formatYear: 'yy',
         startingDay: 1
@@ -56,6 +65,5 @@
       $scope.initDate = $scope.today();
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[0];
-
     }
 })();

@@ -15,12 +15,14 @@
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
       $rootScope.currentPeriod = {
-        from : new Date('2015-07-09T00:00:00.000Z'),
-        to: new Date('2015-07-09T23:59:59.000Z')
+        from : new Date(),
+        to: new Date()
       }
 
-      $scope.currentPeriod.fromStr = $scope.currentPeriod.from.toISOString();
-      $scope.currentPeriod.toStr = $scope.currentPeriod.to.toISOString();
+      $rootScope.currentPeriod.from.setHours(0,0,0);
+      $rootScope.currentPeriod.to.setHours(23,59,59);
+
+      console.log("===> initial $rootScope.currentPeriod:", $rootScope.currentPeriod);
 
       // Some numbers for demo
       vm.loadProgressValues = function() {
