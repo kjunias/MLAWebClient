@@ -39,7 +39,11 @@
               }
             }
 
-            $rootScope.currentReporter = $rootScope.reporters.active[0];
+            if ($rootScope.reporters.active.length > 0 ) {
+              $rootScope.currentReporter = $rootScope.reporters.active[0];
+              $rootScope.$emit('reporter.selected', $rootScope.currentReporter);
+            }
+
           })
           .error(function (err) {
             console.log(err);

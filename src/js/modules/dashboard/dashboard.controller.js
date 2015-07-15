@@ -26,10 +26,8 @@
                                       '192.168.4.128':'192.168.28.1',
                                       '192.168.4.96':'192.168.25.1',
                                     };
-      $rootScope.currentPeriod.from.setHours(0,0,0);
-      // $rootScope.currentPeriod.to.setHours(23,59,59);
-
-      console.log("===> initial $rootScope.currentPeriod:", $rootScope.currentPeriod);
+      $rootScope.currentPeriod.from.setHours(0,0,0);      
+      $rootScope.$on('reporter.selected', onReporterSelect);
 
       // Some numbers for demo
       vm.loadProgressValues = function() {
@@ -87,28 +85,26 @@
 
       getLeaksData();
 
-      $rootScope.$on('reporter.selected', onReporterSelect);
-
       function onReporterSelect(event, data) {
         getLeaksData();
       }
 
       vm.refreshChart = function (event) {
-        console.log("=====>refreshChart");
         getLeaksData();
       }
 
       function getLeaksData() {
-        // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
-        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
-          + '&to=' + $rootScope.currentPeriod.to.toISOString())
-          .success(function (res) {
-            console.log("=====>gotData", res);
-            vm.splineData = generateLeaksSeries(res);
-          })
-          .error(function (err) {
-            console.log(err);
-          });
+        if (typeof $rootScope.currentReporter != 'undefined') {
+          // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+            + '&to=' + $rootScope.currentPeriod.to.toISOString())
+            .success(function (res) {
+              vm.splineData = generateLeaksSeries(res);
+            })
+            .error(function (err) {
+              console.log(err);
+            });
+        }
       }
 
 
@@ -167,7 +163,7 @@
 
       $scope.$watch('app.theme.name', function(val) {
         // vm.splineData = getSplineData();
-        vm.splineData = getLeaksData();
+        // vm.splineData = getLeaksData();
       });
 
       // Small line chart

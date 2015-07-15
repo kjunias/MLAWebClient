@@ -27,7 +27,6 @@
       };
       
       function linkFunction(scope, element, attributes) {
-        console.log("===> chart directive, element, attributes: ", element, attributes);
         var height, plot, plotArea, width;
         var heightDefault = 400;
 
