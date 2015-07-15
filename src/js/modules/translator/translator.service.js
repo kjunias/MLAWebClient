@@ -21,9 +21,7 @@
         // list of available languages
         available: {
           'en':    'English',
-          'es':    'Español',
-          'pt':    'Português',
-          'zh-cn': '中国简体',
+          'fr':    'Français',
         },
         selected: 'English'
       };

@@ -31,7 +31,7 @@
               .p
                 h4 Server Metrics (last hour)
                 sparkline.mb(options="dashboard.sparkOptionsLine", values="dashboard.sparkValuesLine")
-                small Server processed requests per second.
+                small.text-center Requests per second
             .col-sm-4.col-xs-12.pv
               .p.text-center
                 .mb-sm Memory
@@ -46,21 +46,21 @@
               .p
                 .row.row-flush.text-center
                   .col-xs-6
-                    p.mt-lg Databases
+                    p.mt-lg Memory
                      .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent1')
                       span {{dashboard.piePercent1}}
                   .col-xs-6
-                    p.mt-lg Memory
+                    p.mt-lg CPU
                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent2')
                       span {{dashboard.piePercent2}}
             .col-sm-6.col-xs-12
               .p
-                | Last Hour 
+                | ES 
                 progressbar.progress-xs(value='35', type='warning')
-                | Last Day
+                | MemSurvey
                 progressbar.progress-xs(value='10', type='info')
-                | Last Week
-                progressbar.progress-xs.m0(value='35', type='danger')
+                | Other
+                progressbar.progress-xs.m0(value='35', type='gray')
         .col-md-8(ng-if="hpanel[2]", ng-init="dashboard.loadProgressValues()")
           .row.row-table
             .col-sm-8.col-xs-12
@@ -70,11 +70,11 @@
                 em Testing testing. 
             .col-sm-4.col-xs-12.pv
               .p
-                | Pending 
+                | 3000 Series
                 progressbar.active.progress-xs(value="dashboard.progressVal[1]", type='purple')
-                | In progress
+                | 4000 Series
                 progressbar.active.progress-xs(value="dashboard.progressVal[2]", type='primary')
-                | This month
+                | C Series
                 progressbar.active.progress-xs.m0(value="dashboard.progressVal[3]", type='warning')
         .col-md-8(ng-if="hpanel[3]")
           .p.pv-xxl
@@ -139,6 +139,5 @@
                     label.switch.m0(ng-class="'switch-' + app.theme.name")
                       input(type='checkbox', ng-model="dashboard.areaSplineSeries[serie.index]")
                       span
-
-            p: em Top Leaking units live. 
+ 
  

@@ -46,8 +46,8 @@
               duration: 700,
               enabled: true
           },
-          barColor: colors.byName('info'),
-          // trackColor: colors.byName('inverse'),
+          barColor: colors.byName('warning'),
+          trackColor: colors.byName('info'),
           scaleColor: false,
           lineWidth: 10,
           lineCap: 'circle'
@@ -90,7 +90,7 @@
       }
 
       function getLeaksData() {
-        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+        $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
           + '&to=' + $rootScope.currentPeriod.to.toISOString())
           .success(function (res) {
             console.log("=====>gotData", res);
