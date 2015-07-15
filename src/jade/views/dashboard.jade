@@ -134,8 +134,8 @@
                   th.text-right Show
               tbody
                 tr(ng-repeat="serie in dashboard.splineData")
-                  td(style="color:{{serie.color}}") {{serie.label}}
-                  td.text-right
+                  td.legend-td(style="color:{{serie.color}}") {{serie.label}}
+                  td.legend-td.text-right
                     label.switch.m0(ng-class="'switch-' + app.theme.name")
                       input(type='checkbox', ng-model="dashboard.areaSplineSeries[serie.index]")
                       span
