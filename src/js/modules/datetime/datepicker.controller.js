@@ -48,13 +48,10 @@
         $scope.openedTo = !$scope.openedTo;
       };
 
-      $scope.datePickerOnNewDate = function(date) {
-        console.log("====> New date!!", date);
-      };
-
       $scope.datePickerOnDateChange = function() {
         $rootScope.currentPeriod.from.setHours(0,0,0);
         $rootScope.currentPeriod.to.setHours(23,59,59);
+        console.log("====> New date!!", $rootScope.currentPeriod);
       };
 
       $scope.dateOptions = {

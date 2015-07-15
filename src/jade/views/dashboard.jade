@@ -106,20 +106,24 @@
         .row
           .col-md-10
             .row.row-table.text-center(ng-controller='PeriodDatepickerController')
-              .col-md-6
+              .col-md-5
                 p.input-group
                   span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='toggleFrom($event)')
                       em.fa.fa-calendar
                   input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.from', is-open='openedFrom', min-date='minDate', max-date="today()", 
                                       datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="datePickerOnDateChange()", close-text='Close')
-              .col-md-6
+              .col-md-5
                 p.input-group
                   input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.to', is-open='openedTo', min-date='minDate', max-date="today()", 
                                       datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="datePickerOnDateChange()", close-text='Close')
                   span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='toggleTo($event)')
                       em.fa.fa-calendar
+              .col-md-2.pull-right.chart-refresh-btn
+                span.input-group-btn
+                    button.btn.btn-default(type='button', ng-click='dashboard.refreshChart($event)')
+                      em.fa.fa-refresh
 
             flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
           .col-md-2

@@ -84,6 +84,11 @@
         getLeaksData();
       }
 
+      vm.refreshChart = function (event) {
+        console.log("=====>refreshChart");
+        getLeaksData();
+      }
+
       function getLeaksData() {
         $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
           + '&to=' + $rootScope.currentPeriod.to.toISOString())
