@@ -69,10 +69,11 @@
         },
         xaxis:{
           mode: 'time',
-          axisLabel: 'Testing'
+          timezone: "browser",
+          axisLabel: 'Time'
         },
         yaxis:{
-          axisLabel: 'Testing'
+          axisLabel: 'Mememory Usage (%)'
         }
       });
 
