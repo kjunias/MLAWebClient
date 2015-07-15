@@ -90,7 +90,8 @@
       }
 
       function getLeaksData() {
-        $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+        // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
           + '&to=' + $rootScope.currentPeriod.to.toISOString())
           .success(function (res) {
             console.log("=====>gotData", res);
@@ -119,7 +120,7 @@
 
           var unitData = rawData[unit].data
           for (var d in unitData) {
-            leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), unitData[d].dcmMemInUse])
+            leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))])
           }
 
           i++;
