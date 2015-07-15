@@ -13,6 +13,10 @@
     MemoryleaksService.$inject = ['$rootScope', '$http'];
     function MemoryleaksService($rootScope, $http) {
       var memLeaksService = this;
+      $rootScope.reporters = {
+        active: [],
+        inactive: []
+      };
 
       init();
 
@@ -24,8 +28,18 @@
         // $http.get('http://192.168.38.1:5555/reporters')
         $http.get('http://localhost:5555/reporters')
           .success(function (res) {
-            $rootScope.reporters = res;
-            $rootScope.currentReporter = $rootScope.reporters[7];
+            for (var i in res) {
+              var aWeekAgo = new Date();
+              aWeekAgo.setDate(aWeekAgo.getDate() - 7);
+              var rep = res[i];
+              if (new Date(rep._source.lastValidDate) < aWeekAgo) {
+                $rootScope.reporters.inactive.push(rep);
+              } else {
+                $rootScope.reporters.active.push(rep);
+              }
+            }
+
+            $rootScope.currentReporter = $rootScope.reporters.active[0];
           })
           .error(function (err) {
             console.log(err);

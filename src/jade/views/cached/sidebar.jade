@@ -27,10 +27,10 @@
                 a
                   em.sidebar-item-icon.fa.fa-angle-right
                   | Reporters
-              li(ng-repeat="reporter in reporters", ui-sref-active="", ui-reporters="")
+              li(ng-repeat="reporter in reporters.active", ui-sref-active="", ui-reporters="")
                 a(ui-sref='app.dashboard', title='{{reporter._source.idReporters}}', id='{{reporter._source.idReporters}}', ripple='', ng-click="reporterClick(reporter)")
                   em.sidebar-item-icon
-                  span {{reporter._source.idReporters}}: {{reporter._source.strFrom}}
+                  span {{reporter._source.idReporters}}: {{reportersMappings[reporter._source.strFrom] || reporter._source.strFrom}}
 
           li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Units', ripple='')

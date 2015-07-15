@@ -14,13 +14,20 @@
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
+
       $rootScope.currentPeriod = {
         from : new Date(),
         to: new Date()
       }
 
+      $rootScope.reportersMappings = {'192.168.4.108':'192.168.8.1',
+                                      '192.168.4.127':'192.168.27.1',
+                                      '192.168.4.112':'192.168.12.1',
+                                      '192.168.4.128':'192.168.28.1',
+                                      '192.168.4.96':'192.168.25.1',
+                                    };
       $rootScope.currentPeriod.from.setHours(0,0,0);
-      $rootScope.currentPeriod.to.setHours(23,59,59);
+      // $rootScope.currentPeriod.to.setHours(23,59,59);
 
       console.log("===> initial $rootScope.currentPeriod:", $rootScope.currentPeriod);
 
@@ -64,6 +71,7 @@
             lineWidth: 2
           }
         },
+        height: 420,
         legend: {
             show: false
         },
@@ -79,7 +87,7 @@
 
       getLeaksData();
 
-      $rootScope.$on('reporter.selected', onReporterSelect)
+      $rootScope.$on('reporter.selected', onReporterSelect);
 
       function onReporterSelect(event, data) {
         getLeaksData();
