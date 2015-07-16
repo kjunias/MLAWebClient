@@ -85,6 +85,12 @@
         },
         yaxis:{
           axisLabel: 'Mememory Usage (%)'
+        },
+        zoom: {
+          interactive: true
+        },
+        pan: {
+          interactive: true
         }
       });
 
@@ -101,8 +107,7 @@
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
           $rootScope.chartLoading = true;
-          // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
-          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
+          $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
             + '&to=' + $rootScope.currentPeriod.to.toISOString())
             .success(function (res) {
               vm.splineData = generateLeaksSeries(res, true);
