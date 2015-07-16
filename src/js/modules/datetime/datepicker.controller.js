@@ -34,7 +34,7 @@
       };
 
       $scope.toggleMin = function() {
-        $scope.minDate = new Date('2015-06-01T00:00:00.000Z');
+        $scope.minDate = new Date('2015-01-01T00:00:00.000Z'); // TODO: configure or remove this 
       };
       $scope.toggleMin();
 
@@ -55,7 +55,6 @@
       $scope.datePickerOnDateChange = function() {
         $rootScope.currentPeriod.from.setHours(0,0,0);
         $rootScope.currentPeriod.to.setHours(23,59,59);
-        console.log("====> New date!!", $rootScope.currentPeriod);
       };
 
       $scope.dateOptions = {

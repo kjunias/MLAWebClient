@@ -102,30 +102,53 @@
 
       vm.refreshChart = function (event) {
         getLeaksData();
+        updateLeaksData();
+      }
+
+      function updateLeaksData() {
+        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+          params: {
+            from: $rootScope.currentPeriod.from.toISOString(),
+            to: $rootScope.currentPeriod.to.toISOString()
+          }
+        })
+        .success(function (res) {
+          console.log("===> Updated leaks data: ", res);
+        })
+        .error(function (err) {
+          console.log(err);
+        })
+        .finally(function () {
+          // $rootScope.chartLoading = false;
+        });
       }
 
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
           $rootScope.chartLoading = true;
-          // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
-          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
-            + '&to=' + $rootScope.currentPeriod.to.toISOString())
-            .success(function (res) {
-              vm.splineData = generateLeaksSeries(res, true);
-            })
-            .error(function (err) {
-              console.log(err);
-            })
-            .finally(function () {
-              $rootScope.chartLoading = false;
-            });
+          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+            params: {
+              from: $rootScope.currentPeriod.from.toISOString(),
+              to: $rootScope.currentPeriod.to.toISOString()
+            }
+          })
+          .success(function (res) {
+            vm.splineData = generateLeaksSeries(res, true);
+            console.log("===> Got leaks data: ", res);
+          })
+          .error(function (err) {
+            console.log(err);
+          })
+          .finally(function () {
+            $rootScope.chartLoading = false;
+          });
         }
       }
 
 
       vm.showSeriesLegend = [];
 
-      function generateLeaksSeries(rawData, drawall) {
+      function generateLeaksSeries(rawData, allSeries) {
         $rootScope.leaksSeries = []
         var i = 0;
         for (var unit in rawData) {
@@ -160,7 +183,6 @@
             vm.showSeriesLegend.push(unitSeries.show);
           }
         }
-
         return drawableSeries;
       }
 
@@ -169,7 +191,6 @@
       }
 
       $scope.toggleLegend = function (series) {
-        console.log("====> legen clicked", series);
         vm.showSeriesLegend[series.index] = series.show;
         redraw();
       }
