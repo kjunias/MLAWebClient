@@ -14,7 +14,7 @@
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
-
+      $rootScope.chartLoading = false;
       $rootScope.currentPeriod = {
         from : new Date(),
         to: new Date()
@@ -95,6 +95,7 @@
 
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
+          $rootScope.chartLoading = true;
           // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
           $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
             + '&to=' + $rootScope.currentPeriod.to.toISOString())
@@ -103,6 +104,9 @@
             })
             .error(function (err) {
               console.log(err);
+            })
+            .finally(function () {
+              $rootScope.chartLoading = false;
             });
         }
       }
@@ -138,33 +142,6 @@
         var color = '#'+Math.floor(Math.random()*16777215).toString(16);
         return color;
       }
-
-      function getSplineData() {
-        return [{
-          'label': '192.168.4.101',
-          'color': getRandomColor(),
-          'data': [
-            ['1', 28],['2', 30],['3', 32],['4', 33],['5', 33],['6', 32],['7', 31],['8', 30],['9', 29],['10', 28],['11', 28],['12', 29],['13', 30],['14', 29],['15', 28]
-          ]
-        }, {
-          'label': '192.168.4.102',
-          'color': getRandomColor(),
-          'data': [
-            ['1', 12],['2', 14],['3', 20],['4', 16],['5', 18],['6', 14],['7', 19],['8', 24],['9', 18],['10', 14],['11', 16],['12', 15],['13', 14],['14', 16],['15', 18]
-          ]
-        }, {
-          'label': '192.168.4.103',
-          'color': getRandomColor(),
-          'data': [
-            ['1', 6],['2', 8],['3', 7],['4', 6],['5', 7],['6', 10],['7', 9],['8', 8],['9', 10],['10', 9],['11', 6],['12', 8],['13', 9],['14', 10],['15', 10]
-          ]
-        }];
-      }
-
-      $scope.$watch('app.theme.name', function(val) {
-        // vm.splineData = getSplineData();
-        // vm.splineData = getLeaksData();
-      });
 
       // Small line chart
       // ----------------------------------- 

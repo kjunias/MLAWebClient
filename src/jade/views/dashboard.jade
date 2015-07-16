@@ -125,7 +125,9 @@
                     button.btn.btn-default(type='button', ng-click='dashboard.refreshChart($event)')
                       em.fa.fa-refresh
 
-            flot(options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
+            .text-center(ng-show="chartLoading")
+              img(src="app/assets/img/utils/loading-spinner.gif")
+            flot(ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
           .col-md-2
             table.table.table-hover.mb-lg
               thead
