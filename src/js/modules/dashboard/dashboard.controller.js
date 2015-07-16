@@ -18,7 +18,12 @@
       $rootScope.currentPeriod = {
         from : new Date(),
         to: new Date()
-      }
+      };
+
+      $rootScope.leaksSeries = {
+        visibleUnits: [],
+        hiddenUnits: []
+      };
 
       $rootScope.reportersMappings = {'192.168.4.108':'192.168.8.1',
                                       '192.168.4.127':'192.168.27.1',
@@ -26,7 +31,7 @@
                                       '192.168.4.128':'192.168.28.1',
                                       '192.168.4.96':'192.168.25.1',
                                     };
-      $rootScope.currentPeriod.from.setHours(0,0,0);      
+      $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1);      
       $rootScope.$on('reporter.selected', onReporterSelect);
 
       // Some numbers for demo
@@ -100,7 +105,7 @@
           $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata?from=' + $rootScope.currentPeriod.from.toISOString()
             + '&to=' + $rootScope.currentPeriod.to.toISOString())
             .success(function (res) {
-              vm.splineData = generateLeaksSeries(res);
+              vm.splineData = generateLeaksSeries(res, true);
             })
             .error(function (err) {
               console.log(err);
@@ -114,28 +119,30 @@
 
       vm.areaSplineSeries = [];
 
-      function generateLeaksSeries(rawData) {
-        var leaksSeries = []
+      function generateLeaksSeries(rawData, drawall) {
+        $rootScope.leaksSeries = []
         var i = 0;
         for (var unit in rawData) {
-          leaksSeries[i] = {
+          $rootScope.leaksSeries[i] = {
             'label': rawData[unit].IPV4,
+            'id': rawData[unit].idUnits,
             'color': getRandomColor(),
             'index':i,
+            'show': true,
             'data': []
           };
 
-          vm.areaSplineSeries[i] = true;
+          vm.areaSplineSeries[i] = $rootScope.leaksSeries[i].show;
 
           var unitData = rawData[unit].data
           for (var d in unitData) {
-            leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))])
+            $rootScope.leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))])
           }
 
           i++;
         }
 
-        return leaksSeries;
+        return $rootScope.leaksSeries;
       }
 
       function getRandomColor () {
@@ -175,6 +182,7 @@
           ['1', 8],['2', 10],['3', 12],['4', 13],['5', 13],['6', 12],['7', 11],['8', 10],['9', 9],['10', 8],['11', 8],['12', 9],['13', 10],['14', 9],['15', 8]
         ]
       }];
+
       vm.smallChartData2 = [{
         'label': '',
         'color': colors.byName('warning'),
