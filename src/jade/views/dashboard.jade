@@ -127,7 +127,7 @@
 
             .text-center(ng-show="chartLoading")
               img(src="app/assets/img/utils/loading-spinner.gif")
-            flot(ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.areaSplineSeries}")
+            flot(ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.showSeriesLegend}")
           .col-md-2
             table.table.table-hover.mb-lg
               thead
@@ -135,11 +135,11 @@
                   th Unit
                   th.text-right Show
               tbody
-                tr(ng-repeat="serie in dashboard.splineData")
+                tr(ng-repeat="serie in leaksSeries")
                   td.legend-td(style="color:{{serie.color}}") {{serie.label}}
                   td.legend-td.text-right
                     label.switch.m0(ng-class="'switch-' + app.theme.name")
-                      input(type='checkbox', ng-model="dashboard.areaSplineSeries[serie.index]")
+                      input(type='checkbox', ng-model="serie.show", ng-click="toggleLegend(serie)")
                       span
  
  

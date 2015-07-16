@@ -19,7 +19,7 @@
         scope: {
           dataset: '=?',
           options: '=',
-          series: '=',
+          series: '=?bind',
           callback: '=',
           src: '='
         },

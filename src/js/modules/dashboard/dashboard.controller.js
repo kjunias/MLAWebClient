@@ -117,7 +117,7 @@
       }
 
 
-      vm.areaSplineSeries = [];
+      vm.showSeriesLegend = [];
 
       function generateLeaksSeries(rawData, drawall) {
         $rootScope.leaksSeries = []
@@ -132,17 +132,40 @@
             'data': []
           };
 
-          vm.areaSplineSeries[i] = $rootScope.leaksSeries[i].show;
+          vm.showSeriesLegend[i] = $rootScope.leaksSeries[i].show;
 
           var unitData = rawData[unit].data
           for (var d in unitData) {
             $rootScope.leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))])
           }
-
           i++;
         }
 
-        return $rootScope.leaksSeries;
+        return getDrawableData();
+      }
+
+      function getDrawableData () {
+        var drawableSeries = [];
+        vm.showSeriesLegend = []
+        for (var unit in $rootScope.leaksSeries) {
+          var unitSeries = $rootScope.leaksSeries[unit]
+          if(unitSeries.show) {
+            drawableSeries.push(unitSeries);
+            vm.showSeriesLegend.push(unitSeries.show);
+          }
+        }
+
+        return drawableSeries;
+      }
+
+      function redraw () {
+        vm.splineData = getDrawableData ();
+      }
+
+      $scope.toggleLegend = function (series) {
+        console.log("====> legen clicked", series);
+        vm.showSeriesLegend[series.index] = series.show;
+        redraw();
       }
 
       function getRandomColor () {
