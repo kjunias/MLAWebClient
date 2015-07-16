@@ -18,6 +18,7 @@
       $scope.today = function() {
         $scope.dt = new Date();
       };
+
       $scope.today();
 
       $scope.clear = function () {
@@ -26,7 +27,10 @@
 
       // Disable future days selection
       $scope.disabled = function(date, mode) {
-        return (date > ($scope.today() || new Date()));
+        $scope.today();
+        var today = $scope.dt;
+        today.setHours(23,59,59);
+        return (date > (today));
       };
 
       $scope.toggleMin = function() {
