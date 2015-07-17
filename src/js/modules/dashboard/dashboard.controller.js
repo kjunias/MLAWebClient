@@ -103,6 +103,7 @@
       }
 
       function updateLeaksData() {
+        erase();
         $rootScope.chartLoading = true;
         var unitsToUpdate = [];
         for (var unit in $rootScope.leaksSeries) {
@@ -214,6 +215,10 @@
           }
         }
         return drawableSeries;
+      }
+
+      function erase() {
+        vm.splineData = [];
       }
 
       function redraw() {
