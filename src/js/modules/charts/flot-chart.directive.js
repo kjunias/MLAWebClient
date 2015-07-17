@@ -10,8 +10,8 @@
         .module('naut')
         .directive('flot', flot);
     
-    flot.$inject = ['$http', '$timeout'] ;
-    function flot($http, $timeout) {
+    flot.$inject = ['$rootScope', '$http', '$timeout'] ;
+    function flot($rootScope, $http, $timeout) {
       
       return {
         restrict: 'EA',
@@ -64,6 +64,7 @@
             return plot;
           }
         }
+
         scope.$watchCollection('dataset', onDatasetChanged, true);
 
         function onSerieToggled (series) {

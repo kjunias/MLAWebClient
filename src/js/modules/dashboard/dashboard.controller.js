@@ -20,16 +20,14 @@
         to: new Date()
       };
 
-      $rootScope.leaksSeries = {
-        visibleUnits: [],
-        hiddenUnits: []
-      };
+      $rootScope.leaksSeries = [];
+      vm.showSeriesLegend = [];
 
       $rootScope.reportersMappings = {'192.168.4.108':'192.168.8.1',
                                       '192.168.4.127':'192.168.27.1',
                                       '192.168.4.112':'192.168.12.1',
                                       '192.168.4.128':'192.168.28.1',
-                                      '192.168.4.96':'192.168.25.1',
+                                      '192.168.4.96':'192.168.25.1'
                                     };
       $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1);      
       $rootScope.$on('reporter.selected', onReporterSelect);
@@ -101,27 +99,59 @@
       }
 
       vm.refreshChart = function (event) {
-        getLeaksData();
         updateLeaksData();
       }
 
       function updateLeaksData() {
+        $rootScope.chartLoading = true;
+        var unitsToUpdate = [];
+        for (var unit in $rootScope.leaksSeries) {
+          if ($rootScope.leaksSeries[unit].show) {
+            unitsToUpdate.push($rootScope.leaksSeries[unit].idUnits);
+          }
+        }
+
         $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
-            to: $rootScope.currentPeriod.to.toISOString()
+            to: $rootScope.currentPeriod.to.toISOString(),
+            units: unitsToUpdate
           }
         })
         .success(function (res) {
-          console.log("===> Updated leaks data: ", res);
+          updateLeaksSeries(res);
         })
         .error(function (err) {
           console.log(err);
         })
         .finally(function () {
-          // $rootScope.chartLoading = false;
+          $rootScope.chartLoading = false;
         });
       }
+
+
+      function updateLeaksSeries(rawData) {
+        for (var i in rawData) {
+          for (var j in $rootScope.leaksSeries) {
+            if (rawData[i].idUnits === $rootScope.leaksSeries[j].idUnits) {
+              var unitData = rawData[i].data
+              for (var d in unitData) {
+                var x = new Date(unitData[d].date).getTime();
+                var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
+
+                for (var k in $rootScope.leaksSeries[j].data) {
+                  var xl = $rootScope.leaksSeries[j].data[k][0]; 
+                  if (x !== xl && x < xl) {
+                    $rootScope.leaksSeries[j].data.splice(k, 0, [x, y]);
+                  }
+                }
+              }
+            }
+          }
+        }
+        redraw();
+      }
+
 
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
@@ -133,8 +163,8 @@
             }
           })
           .success(function (res) {
-            vm.splineData = generateLeaksSeries(res, true);
-            console.log("===> Got leaks data: ", res);
+            generateLeaksSeries(res);
+            redraw();
           })
           .error(function (err) {
             console.log(err);
@@ -146,15 +176,13 @@
       }
 
 
-      vm.showSeriesLegend = [];
-
-      function generateLeaksSeries(rawData, allSeries) {
+      function generateLeaksSeries(rawData) {
         $rootScope.leaksSeries = []
         var i = 0;
         for (var unit in rawData) {
           $rootScope.leaksSeries[i] = {
             'label': rawData[unit].IPV4,
-            'id': rawData[unit].idUnits,
+            'idUnits': rawData[unit].idUnits,
             'color': getRandomColor(),
             'index':i,
             'show': true,
@@ -165,12 +193,13 @@
 
           var unitData = rawData[unit].data
           for (var d in unitData) {
-            $rootScope.leaksSeries[i].data.push([new Date(unitData[d].date).getTime(), ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))])
+            var x = new Date(unitData[d].date).getTime();
+            var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
+            $rootScope.leaksSeries[i].data.push([x, y]);
           }
+
           i++;
         }
-
-        return getDrawableData();
       }
 
       function getDrawableData () {
@@ -178,16 +207,17 @@
         vm.showSeriesLegend = []
         for (var unit in $rootScope.leaksSeries) {
           var unitSeries = $rootScope.leaksSeries[unit]
+          vm.showSeriesLegend.push(false);
           if(unitSeries.show) {
             drawableSeries.push(unitSeries);
-            vm.showSeriesLegend.push(unitSeries.show);
+            vm.showSeriesLegend[unit] = unitSeries.show;
           }
         }
         return drawableSeries;
       }
 
-      function redraw () {
-        vm.splineData = getDrawableData ();
+      function redraw() {
+        vm.splineData = getDrawableData();
       }
 
       $scope.toggleLegend = function (series) {
