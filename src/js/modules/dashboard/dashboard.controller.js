@@ -115,7 +115,6 @@
         }
 
         $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
-        // $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
@@ -167,6 +166,7 @@
           .success(function (res) {
             generateLeaksSeries(res);
             redraw();
+            $rootScope.showAll = true;
           })
           .error(function (err) {
             console.log(err);
@@ -226,30 +226,34 @@
         vm.splineData = getDrawableData();
       }
 
-      $scope.toggleLegend = function (series) {
-        vm.showSeriesLegend[series.index] = series.show;
-        $rootScope.showAll = !$rootScope.showAll;
-        $rootScope.singleSeriesToggled = true;
-        
+      $scope.toggleLegend = function (series) {        
         var allFalse = true;
-        var allTrue = true;
+        var allTrue = true;        
 
-        for (var i in vm.showSeriesLegend) {
-          allFalse = allTrue = vm.showSeriesLegend[i].show;
-          if (vm.showSeriesLegend[i].show) {
-            allFalse = false;
+        vm.showSeriesLegend[series.index] = series.show;
+        $rootScope.singleSeriesToggled = true;
+
+        if (series.show) {
+          allFalse = false;
+
+          for (var j in vm.showSeriesLegend) {
+            if (!vm.showSeriesLegend[j].show) {
+              allTrue = false;
+              break;
+            }
           }
-          if (!vm.showSeriesLegend[i].show) {
-            allTrue = false;
-          }
-          if(!allTrue && !allFalse) {
-            $rootScope.showAll = false
-            break;
+
+        } else {
+          allTrue = false;
+
+          for (var i in vm.showSeriesLegend) {
+            if (vm.showSeriesLegend[i].show) {
+              allFalse = false;
+
+              break;
+            }
           }
         }
-
-        console.log("1===> allFalse, allTrue: ", allFalse, allTrue);
-
         redraw();
       }
 
@@ -261,7 +265,6 @@
       }
 
       function toggleAllLegend (currentValue, previousValue) {
-        console.log("1===> singleSeriesToggled: ", $rootScope.singleSeriesToggled);
         if (!$rootScope.singleSeriesToggled) {
           erase();
           for (var i in vm.showSeriesLegend) {
