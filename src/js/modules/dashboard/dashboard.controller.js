@@ -15,12 +15,14 @@
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
       $rootScope.chartLoading = false;
+      $rootScope.singleSeriesToggled = false;
       $rootScope.currentPeriod = {
         from : new Date(),
         to: new Date()
       };
 
       $rootScope.leaksSeries = [];
+      $rootScope.showAll = true;
       vm.showSeriesLegend = [];
 
       $rootScope.reportersMappings = {'192.168.4.108':'192.168.8.1',
@@ -112,7 +114,8 @@
           }
         }
 
-        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        // $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
@@ -227,7 +230,47 @@
 
       $scope.toggleLegend = function (series) {
         vm.showSeriesLegend[series.index] = series.show;
+        $rootScope.showAll = !$rootScope.showAll;
+        $rootScope.singleSeriesToggled = true;
+        
+        var allFalse = true;
+        var allTrue = true;
+
+        for (var i in vm.showSeriesLegend) {
+          allFalse = allTrue = vm.showSeriesLegend[i].show;
+          if (vm.showSeriesLegend[i].show) {
+            allFalse = false;
+          }
+          if (!vm.showSeriesLegend[i].show) {
+            allTrue = false;
+          }
+          if(!allTrue && !allFalse) {
+            $rootScope.showAll = false
+            break;
+          }
+        }
+
+        console.log("1===> allFalse, allTrue: ", allFalse, allTrue);
+
         redraw();
+      }
+
+      $scope.$watch('showAll', toggleAllEvent, true);
+
+      function toggleAllEvent(currentValue, previousValue) {
+        $rootScope.singleSeriesToggled = false;
+        toggleAllLegend(currentValue, previousValue);
+      }
+
+      function toggleAllLegend (currentValue, previousValue) {
+        console.log("1===> singleSeriesToggled: ", $rootScope.singleSeriesToggled);
+        if (!$rootScope.singleSeriesToggled) {
+          erase();
+          for (var i in vm.showSeriesLegend) {
+            $rootScope.leaksSeries[i].show = vm.showSeriesLegend[i] = currentValue;
+          }
+          redraw();
+        }
       }
 
       function getRandomColor () {

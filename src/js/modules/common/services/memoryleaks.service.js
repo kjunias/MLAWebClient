@@ -25,8 +25,8 @@
       }
 
       function getReporters() {
-        // $http.get('http://192.168.38.1:5555/reporters')
-        $http.get('http://localhost:5555/reporters')
+        $http.get('http://192.168.38.1:5555/reporters')
+        // $http.get('http://localhost:5555/reporters')
           .success(function (res) {
             for (var i in res) {
               var aWeekAgo = new Date();
