@@ -14,7 +14,7 @@
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
-      $rootScope.chartLoading = false;
+      $rootScope.chartLoading = true;
       $rootScope.singleSeriesToggled = false;
       $rootScope.currentPeriod = {
         from : new Date(),
@@ -135,24 +135,22 @@
 
 
       function updateLeaksSeries(rawData) {
+        $rootScope.chartLoading = true;
         for (var i in rawData) {
           for (var j in $rootScope.leaksSeries) {
             if (rawData[i].idUnits === $rootScope.leaksSeries[j].idUnits) {
-              var unitData = rawData[i].data
+              $rootScope.leaksSeries[j].data = [];
+              var unitData = rawData[i].data;
               for (var d in unitData) {
                 var x = new Date(unitData[d].date).getTime();
-                var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
-
-                for (var k in $rootScope.leaksSeries[j].data) {
-                  var xl = $rootScope.leaksSeries[j].data[k][0]; 
-                  if (x !== xl && x < xl) {
-                    $rootScope.leaksSeries[j].data.splice(k, 0, [x, y]);
-                  }
-                }
+                var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00));
+                $rootScope.leaksSeries[j].data.push([x, y]);
               }
             }
           }
         }
+
+        $rootScope.chartLoading = false;
         redraw();
       }
 
@@ -160,7 +158,7 @@
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
           $rootScope.chartLoading = true;
-          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
             params: {
               from: $rootScope.currentPeriod.from.toISOString(),
               to: $rootScope.currentPeriod.to.toISOString()
