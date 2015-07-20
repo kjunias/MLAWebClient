@@ -27,6 +27,7 @@
         getSerials();
         getLoads();
         getUnitsIPv4s();
+        getConfigs();
       }
 
       function getReporters() {
@@ -112,7 +113,19 @@
         // $http.get('http://192.168.40.38:5555/unitsipv4s')
           .success(function (res) {
             $rootScope.unitsIPv4s = res;
-            console.log("unitsIPv4s: ", $rootScope.unitsIPv4s);
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+      function getConfigs() {
+        // $http.get('http://192.168.38.1:5555/configs')
+        $http.get('http://localhost:5555/configs')
+        // $http.get('http://192.168.40.38:5555/configs')
+          .success(function (res) {
+            $rootScope.configs = res;
+            console.log("configs: ", $rootScope.configs);
           })
           .error(function (err) {
             console.log(err);
