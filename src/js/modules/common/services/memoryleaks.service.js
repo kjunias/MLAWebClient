@@ -23,6 +23,7 @@
       function init() {
         getReporters();
         getUnits();
+        getModels();
       }
 
       function getReporters() {
@@ -58,7 +59,19 @@
         // $http.get('http://192.168.40.38:5555/units')
           .success(function (res) {
             $rootScope.units = res;
-            console.log("units:", $rootScope.units);
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+      function getModels() {
+        // $http.get('http://192.168.38.1:5555/models')
+        $http.get('http://localhost:5555/models')
+        // $http.get('http://192.168.40.38:5555/models')
+          .success(function (res) {
+            $rootScope.models = res;
+            console.log("models:", $rootScope.models);
           })
           .error(function (err) {
             console.log(err);
