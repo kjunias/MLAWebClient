@@ -24,6 +24,7 @@
         getReporters();
         getUnits();
         getModels();
+        getSerials();
       }
 
       function getReporters() {
@@ -71,13 +72,24 @@
         // $http.get('http://192.168.40.38:5555/models')
           .success(function (res) {
             $rootScope.models = res;
-            console.log("models:", $rootScope.models);
           })
           .error(function (err) {
             console.log(err);
           });
       }
 
+      function getSerials() {
+        // $http.get('http://192.168.38.1:5555/serials')
+        $http.get('http://localhost:5555/serials')
+        // $http.get('http://192.168.40.38:5555/serials')
+          .success(function (res) {
+            $rootScope.serials = res;
+            console.log("serials: ", $rootScope.serials);
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
 
       return memLeaksService;
     }
