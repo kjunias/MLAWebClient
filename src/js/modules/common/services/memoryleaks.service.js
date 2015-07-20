@@ -22,6 +22,7 @@
 
       function init() {
         getReporters();
+        getUnits();
       }
 
       function getReporters() {
@@ -50,6 +51,21 @@
             console.log(err);
           });
       }
+
+      function getUnits() {
+        // $http.get('http://192.168.38.1:5555/units')
+        $http.get('http://localhost:5555/units')
+        // $http.get('http://192.168.40.38:5555/units')
+          .success(function (res) {
+            $rootScope.units = res;
+            console.log("units:", $rootScope.units);
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+
       return memLeaksService;
     }
 

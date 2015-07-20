@@ -125,13 +125,13 @@
         var unitsToUpdate = [];
         for (var unit in $rootScope.leaksSeries) {
           if ($rootScope.leaksSeries[unit].show) {
-            unitsToUpdate.push($rootScope.leaksSeries[unit].idUnits);
+            unitsToUpdate.push(encodeURI($rootScope.leaksSeries[unit].idUnits));
           }
         }
 
         // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
         // $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
-        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        $http.get('http://localhost:5555/reporters/'+ encodeURI($rootScope.currentReporter._source.idReporters) +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
