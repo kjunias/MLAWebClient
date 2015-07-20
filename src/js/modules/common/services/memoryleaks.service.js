@@ -21,18 +21,18 @@
       init();
 
       function init() {
-        getReporters();
-        getUnits();
-        getModels();
-        getSerials();
-        getLoads();
-        getUnitsIPv4s();
-        getConfigs();
+        getUnits()
+        .then(getModels())
+        .then(getSerials())
+        .then(getLoads())
+        .then(getUnitsIPv4s())
+        .then(getConfigs())
+        .then(getReporters());
       }
 
       function getReporters() {
         // $http.get('http://192.168.38.1:5555/reporters')
-        $http.get('http://localhost:5555/reporters')
+        return $http.get('http://localhost:5555/reporters')
         // $http.get('http://192.168.40.38:5555/reporters')
           .success(function (res) {
             for (var i in res) {
@@ -59,7 +59,7 @@
 
       function getUnits() {
         // $http.get('http://192.168.38.1:5555/units')
-        $http.get('http://localhost:5555/units')
+        return $http.get('http://localhost:5555/units')
         // $http.get('http://192.168.40.38:5555/units')
           .success(function (res) {
             $rootScope.units = res;
@@ -71,7 +71,7 @@
 
       function getModels() {
         // $http.get('http://192.168.38.1:5555/models')
-        $http.get('http://localhost:5555/models')
+        return $http.get('http://localhost:5555/models')
         // $http.get('http://192.168.40.38:5555/models')
           .success(function (res) {
             $rootScope.models = res;
@@ -83,7 +83,7 @@
 
       function getSerials() {
         // $http.get('http://192.168.38.1:5555/serials')
-        $http.get('http://localhost:5555/serials')
+        return $http.get('http://localhost:5555/serials')
         // $http.get('http://192.168.40.38:5555/serials')
           .success(function (res) {
             $rootScope.serials = res;
@@ -96,7 +96,7 @@
 
       function getLoads() {
         // $http.get('http://192.168.38.1:5555/loads')
-        $http.get('http://localhost:5555/loads')
+        return $http.get('http://localhost:5555/loads')
         // $http.get('http://192.168.40.38:5555/loads')
           .success(function (res) {
             $rootScope.loads = res;
@@ -109,7 +109,7 @@
 
       function getUnitsIPv4s() {
         // $http.get('http://192.168.38.1:5555/unitsipv4s')
-        $http.get('http://localhost:5555/unitsipv4s')
+        return $http.get('http://localhost:5555/unitsipv4s')
         // $http.get('http://192.168.40.38:5555/unitsipv4s')
           .success(function (res) {
             $rootScope.unitsIPv4s = res;
@@ -121,7 +121,7 @@
 
       function getConfigs() {
         // $http.get('http://192.168.38.1:5555/configs')
-        $http.get('http://localhost:5555/configs')
+        return $http.get('http://localhost:5555/configs')
         // $http.get('http://192.168.40.38:5555/configs')
           .success(function (res) {
             $rootScope.configs = res;
