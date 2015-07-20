@@ -25,6 +25,7 @@
         getUnits();
         getModels();
         getSerials();
+        getLoads();
       }
 
       function getReporters() {
@@ -84,7 +85,20 @@
         // $http.get('http://192.168.40.38:5555/serials')
           .success(function (res) {
             $rootScope.serials = res;
-            console.log("serials: ", $rootScope.serials);
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+
+      function getLoads() {
+        // $http.get('http://192.168.38.1:5555/loads')
+        $http.get('http://localhost:5555/loads')
+        // $http.get('http://192.168.40.38:5555/loads')
+          .success(function (res) {
+            $rootScope.loads = res;
+            console.log("loads: ", $rootScope.loads);
           })
           .error(function (err) {
             console.log(err);
