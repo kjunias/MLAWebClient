@@ -27,7 +27,7 @@
         },
         tooltip: true,
         tooltipOpts: {
-          content: '%x : %y'
+          content: '%x : %y; <br> %s, z: %z'
         },
         xaxis: {
           tickColor: '#f1f2f3',
@@ -81,7 +81,7 @@
           },
           points: {
             show: true,
-            radius: 2
+            radius: 1
           }
         }
       });

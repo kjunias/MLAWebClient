@@ -86,6 +86,10 @@
         yaxis:{
           axisLabel: 'Mememory Usage (%)'
         },
+        tooltipOpts: {
+          onHover: hoverPoint
+        },
+
         zoom: {
           interactive: true
         },
@@ -93,6 +97,17 @@
           interactive: true
         }
       });
+
+      function hoverPoint (flotItem, $tooltipEl) {
+        console.log("=========> hover!!!!", flotItem);
+        var str = 'Time: ' + new Date(flotItem.datapoint[0]).toLocaleString() + '<br>' +
+              'Mem(%): ' + flotItem.datapoint[1].toFixed(3) + '<br>' +
+              'IPv4: ' + flotItem.series.label + '<br>' +
+              'Load: ' + flotItem.series.label + '<br>';
+
+        $tooltipEl.text('');
+        $tooltipEl.append(str);
+      }
 
       getLeaksData();
 
@@ -115,8 +130,8 @@
         }
 
         // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
-        $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
-        // $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        // $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
@@ -160,8 +175,8 @@
         if (typeof $rootScope.currentReporter != 'undefined') {
           $rootScope.chartLoading = true;
           // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
-          $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
-          // $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          // $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
             params: {
               from: $rootScope.currentPeriod.from.toISOString(),
               to: $rootScope.currentPeriod.to.toISOString()
@@ -201,7 +216,7 @@
           for (var d in unitData) {
             var x = new Date(unitData[d].date).getTime();
             var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
-            $rootScope.leaksSeries[i].data.push([x, y]);
+            $rootScope.leaksSeries[i].data.push([x, y, 'Testing testing']);
           }
 
           i++;
