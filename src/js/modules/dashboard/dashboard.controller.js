@@ -114,7 +114,9 @@
           }
         }
 
-        $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
+        // $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
@@ -157,7 +159,9 @@
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
           $rootScope.chartLoading = true;
-          $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          // $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
             params: {
               from: $rootScope.currentPeriod.from.toISOString(),
               to: $rootScope.currentPeriod.to.toISOString()
