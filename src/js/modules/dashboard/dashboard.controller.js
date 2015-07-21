@@ -82,15 +82,20 @@
         xaxis:{
           mode: 'time',
           timezone: "browser",
-          axisLabel: 'Time'
+          axisLabel: 'Time',
+          // zoomRange: [0.1, 10]
         },
         yaxis:{
-          axisLabel: 'Mememory Usage (%)'
+          axisLabel: 'Mememory Usage (%)',
+          // zoomRange: [0.1, 10]
         },
         tooltipOpts: {
           onHover: hoverPoint
         },
-
+        selection: {
+          mode: 'xy',
+          color: 'blue'
+        },
         zoom: {
           interactive: true
         },
