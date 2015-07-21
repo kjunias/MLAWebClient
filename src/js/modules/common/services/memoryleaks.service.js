@@ -10,8 +10,8 @@
         .module('naut')
         .service('memoryleaks', MemoryleaksService);
 
-    MemoryleaksService.$inject = ['$rootScope', '$http'];
-    function MemoryleaksService($rootScope, $http) {
+    MemoryleaksService.$inject = ['$rootScope', '$http', 'BACKEND'];
+    function MemoryleaksService($rootScope, $http,  BACKEND) {
       var memLeaksService = this;
       $rootScope.reporters = {
         active: [],
@@ -31,9 +31,7 @@
       }
 
       function getReporters() {
-        // $http.get('http://192.168.38.1:5555/reporters')
-        return $http.get('http://localhost:5555/reporters')
-        // $http.get('http://192.168.40.38:5555/reporters')
+        return $http.get( BACKEND.baseURL + '/reporters')
           .success(function (res) {
             for (var i in res) {
               var aWeekAgo = new Date();
@@ -58,9 +56,7 @@
       }
 
       function getUnits() {
-        // $http.get('http://192.168.38.1:5555/units')
-        return $http.get('http://localhost:5555/units')
-        // $http.get('http://192.168.40.38:5555/units')
+        return $http.get( BACKEND.baseURL + '/units')
           .success(function (res) {
             $rootScope.units = formatData('idUnits', res);
           })
@@ -69,9 +65,7 @@
           });
       }
       function getModels() {
-        // $http.get('http://192.168.38.1:5555/models')
-        return $http.get('http://localhost:5555/models')
-        // $http.get('http://192.168.40.38:5555/models')
+        return $http.get( BACKEND.baseURL + '/models')
           .success(function (res) {
             $rootScope.models = formatData('idModel', res);
           })
@@ -81,9 +75,7 @@
       }
 
       function getSerials() {
-        // $http.get('http://192.168.38.1:5555/serials')
-        return $http.get('http://localhost:5555/serials')
-        // $http.get('http://192.168.40.38:5555/serials')
+        return $http.get( BACKEND.baseURL + '/serials')
           .success(function (res) {
             $rootScope.serials = formatData('idSerial', res);
           })
@@ -94,9 +86,7 @@
 
 
       function getLoads() {
-        // $http.get('http://192.168.38.1:5555/loads')
-        return $http.get('http://localhost:5555/loads')
-        // $http.get('http://192.168.40.38:5555/loads')
+        return $http.get( BACKEND.baseURL + '/loads')
           .success(function (res) {
             $rootScope.loads = formatData('idLoadVersion', res);
           })
@@ -107,9 +97,7 @@
 
 
       function getUnitsIPv4s() {
-        // $http.get('http://192.168.38.1:5555/unitsipv4s')
-        return $http.get('http://localhost:5555/unitsipv4s')
-        // $http.get('http://192.168.40.38:5555/unitsipv4s')
+        return $http.get( BACKEND.baseURL + '/unitsipv4s')
           .success(function (res) {
             $rootScope.unitsIPv4s = formatData('idIPv4', res);
           })
@@ -119,9 +107,7 @@
       }
 
       function getConfigs() {
-        // $http.get('http://192.168.38.1:5555/configs')
-        return $http.get('http://localhost:5555/configs')
-        // $http.get('http://192.168.40.38:5555/configs')
+        return $http.get( BACKEND.baseURL + '/configs')
           .success(function (res) {
             $rootScope.configs = formatData('idCurrentConfiguration', res);
           })

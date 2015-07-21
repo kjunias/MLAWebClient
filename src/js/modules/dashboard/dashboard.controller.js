@@ -9,8 +9,8 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout'];
-    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'BACKEND'];
+    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout, BACKEND) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
@@ -135,9 +135,7 @@
           }
         }
 
-        // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
-        // $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata/update', {
-        $http.get('http://localhost:5555/reporters/'+ encodeURI($rootScope.currentReporter._source.idReporters) +'/unitsdata/update', {
+        $http.get( BACKEND.baseURL + '/reporters/'+ encodeURI($rootScope.currentReporter._source.idReporters) +'/unitsdata/update', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
@@ -180,9 +178,7 @@
       function getLeaksData() {
         if (typeof $rootScope.currentReporter != 'undefined') {
           $rootScope.chartLoading = true;
-          // $http.get('http://192.168.38.1:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
-          // $http.get('http://192.168.40.38:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
-          $http.get('http://localhost:5555/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
+          $http.get( BACKEND.baseURL + '/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
             params: {
               from: $rootScope.currentPeriod.from.toISOString(),
               to: $rootScope.currentPeriod.to.toISOString()
