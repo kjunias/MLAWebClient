@@ -120,6 +120,11 @@
                   span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='toggleTo($event)')
                       em.fa.fa-calendar
+
+              .col-md-2
+                p.input-group
+                  input.form-control(type='number', ng-model="currentPeriod.resolution", min='100', max='10000', step='100', tooltip='Resolution')
+
               .col-md-2.pull-right.chart-refresh-btn
                 span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='dashboard.refreshChart($event)')

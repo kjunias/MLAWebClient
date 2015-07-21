@@ -18,7 +18,8 @@
       $rootScope.singleSeriesToggled = false;
       $rootScope.currentPeriod = {
         from : new Date(),
-        to: new Date()
+        to: new Date(),
+        resolution: 500
       };
 
       $rootScope.leaksSeries = [];
@@ -122,6 +123,7 @@
       }
 
       vm.refreshChart = function (event) {
+        console.log("===> resolution: ", $rootScope.currentPeriod.resolution);
         updateLeaksData();
       }
 
@@ -139,7 +141,8 @@
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
-            units: unitsToUpdate
+            units: unitsToUpdate,
+            resolution: $rootScope.currentPeriod.resolution
           }
         })
         .success(function (res) {
@@ -181,7 +184,8 @@
           $http.get( BACKEND.baseURL + '/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
             params: {
               from: $rootScope.currentPeriod.from.toISOString(),
-              to: $rootScope.currentPeriod.to.toISOString()
+              to: $rootScope.currentPeriod.to.toISOString(),
+              resolution: $rootScope.currentPeriod.resolution
             }
           })
           .success(function (res) {
@@ -278,6 +282,8 @@
       }
 
       $scope.$watch('showAll', toggleAllEvent, true);
+
+      $scope.$watch('resolution', function() { console.log("===> resolution: ", $rootScope.currentPeriod.resolution);}, true);
 
       function toggleAllEvent(currentValue, previousValue) {
         $rootScope.singleSeriesToggled = false;
