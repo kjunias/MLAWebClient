@@ -164,7 +164,7 @@
               for (var d in unitData) {
                 var x = new Date(unitData[d].date).getTime();
                 var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00));
-                $rootScope.leaksSeries[j].data.push([x, y]);
+                $rootScope.leaksSeries[j].data.push([x, y, unitData[d].idCurrentConfiguration]);
               }
             }
           }
