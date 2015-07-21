@@ -63,7 +63,6 @@
         // $http.get('http://192.168.40.38:5555/units')
           .success(function (res) {
             $rootScope.units = formatData('idUnits', res);
-            console.log("==>: ", $rootScope.serials);
           })
           .error(function (err) {
             console.log(err);

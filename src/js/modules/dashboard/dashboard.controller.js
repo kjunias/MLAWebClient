@@ -99,11 +99,17 @@
       });
 
       function hoverPoint (flotItem, $tooltipEl) {
-        // console.log("=========> hover!!!!", flotItem);
+        var idCurrentConfiguration = flotItem.series.data[flotItem.dataIndex][2];
+        var config = $rootScope.configs[idCurrentConfiguration];
+        var ipv4 = $rootScope.unitsIPv4s[config.idIPv4].IPv4;
+        var loadVersion = $rootScope.loads[config.idLoadVersion].loadVersion;
+        var serialNo = $rootScope.serials[config.idSerial].serialNo;
+
         var str = 'Time: ' + new Date(flotItem.datapoint[0]).toLocaleString() + '<br>' +
               'Mem(%): ' + flotItem.datapoint[1].toFixed(3) + '<br>' +
-              'IPv4: ' + flotItem.series.label + '<br>' +
-              'Load: ' + flotItem.series.label + '<br>';
+              'IPv4: ' + ipv4 + '<br>' +
+              'Serial: ' + serialNo + '<br>' +
+              'Load: ' + loadVersion + '<br>';
 
         $tooltipEl.text('');
         $tooltipEl.append(str);
@@ -215,7 +221,7 @@
           for (var d in unitData) {
             var x = new Date(unitData[d].date).getTime();
             var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
-            $rootScope.leaksSeries[i].data.push([x, y, 'Testing testing']);
+            $rootScope.leaksSeries[i].data.push([x, y, unitData[d].idCurrentConfiguration]);
           }
 
           i++;
