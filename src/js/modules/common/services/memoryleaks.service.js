@@ -62,19 +62,19 @@
         return $http.get('http://localhost:5555/units')
         // $http.get('http://192.168.40.38:5555/units')
           .success(function (res) {
-            $rootScope.units = res;
+            $rootScope.units = formatData('idUnits', res);
+            console.log("==>: ", $rootScope.serials);
           })
           .error(function (err) {
             console.log(err);
           });
       }
-
       function getModels() {
         // $http.get('http://192.168.38.1:5555/models')
         return $http.get('http://localhost:5555/models')
         // $http.get('http://192.168.40.38:5555/models')
           .success(function (res) {
-            $rootScope.models = res;
+            $rootScope.models = formatData('idModel', res);
           })
           .error(function (err) {
             console.log(err);
@@ -86,7 +86,7 @@
         return $http.get('http://localhost:5555/serials')
         // $http.get('http://192.168.40.38:5555/serials')
           .success(function (res) {
-            $rootScope.serials = res;
+            $rootScope.serials = formatData('idSerial', res);
           })
           .error(function (err) {
             console.log(err);
@@ -99,7 +99,7 @@
         return $http.get('http://localhost:5555/loads')
         // $http.get('http://192.168.40.38:5555/loads')
           .success(function (res) {
-            $rootScope.loads = res;
+            $rootScope.loads = formatData('idLoadVersion', res);
           })
           .error(function (err) {
             console.log(err);
@@ -112,7 +112,7 @@
         return $http.get('http://localhost:5555/unitsipv4s')
         // $http.get('http://192.168.40.38:5555/unitsipv4s')
           .success(function (res) {
-            $rootScope.unitsIPv4s = res;
+            $rootScope.unitsIPv4s = formatData('idIPv4', res);
           })
           .error(function (err) {
             console.log(err);
@@ -124,12 +124,20 @@
         return $http.get('http://localhost:5555/configs')
         // $http.get('http://192.168.40.38:5555/configs')
           .success(function (res) {
-            $rootScope.configs = res;
-            console.log("configs: ", $rootScope.configs);
+            $rootScope.configs = formatData('idCurrentConfiguration', res);
           })
           .error(function (err) {
             console.log(err);
           });
+      }
+
+      function formatData(idField, rawData) {
+        var dataObj = {};
+        for (var i in rawData) {
+          dataObj[rawData[i]._source[idField]] = rawData[i]._source;
+        }
+
+        return dataObj;
       }
 
       return memLeaksService;

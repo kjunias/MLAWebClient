@@ -136,7 +136,8 @@
                   th.text-right Show
               tbody
                 tr(ng-repeat="serie in leaksSeries")
-                  td.legend-td(style="color:{{serie.color}}") {{serie.label}}
+                  td.legend-td.align-top(style="color:{{serie.color}}") {{serie.label}}
+                    small.text-left.align-top {{units[serie.idUnits]["MACAddress"]}}
                   td.legend-td.text-right
                     label.switch.m0(ng-class="'switch-' + app.theme.name")
                       input(type='checkbox', ng-model="serie.show", ng-click="toggleLegend(serie)")

@@ -99,7 +99,7 @@
       });
 
       function hoverPoint (flotItem, $tooltipEl) {
-        console.log("=========> hover!!!!", flotItem);
+        // console.log("=========> hover!!!!", flotItem);
         var str = 'Time: ' + new Date(flotItem.datapoint[0]).toLocaleString() + '<br>' +
               'Mem(%): ' + flotItem.datapoint[1].toFixed(3) + '<br>' +
               'IPv4: ' + flotItem.series.label + '<br>' +
@@ -125,7 +125,7 @@
         var unitsToUpdate = [];
         for (var unit in $rootScope.leaksSeries) {
           if ($rootScope.leaksSeries[unit].show) {
-            unitsToUpdate.push(encodeURI($rootScope.leaksSeries[unit].idUnits));
+            unitsToUpdate.push($rootScope.leaksSeries[unit].idUnits);
           }
         }
 
@@ -195,7 +195,6 @@
           });
         }
       }
-
 
       function generateLeaksSeries(rawData) {
         $rootScope.leaksSeries = []
