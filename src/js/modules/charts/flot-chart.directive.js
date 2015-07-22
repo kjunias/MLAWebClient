@@ -21,8 +21,7 @@
           options: '=',
           series: '=?bind',
           plotselected: '=',
-          callback: '=',
-          src: '='
+          callback: '='
         },
         link: linkFunction
       };
@@ -30,6 +29,10 @@
       function linkFunction(scope, element, attributes) {
         var height, plot, plotArea, width;
         var heightDefault = 400;
+
+        scope.isZoomed = false;
+        scope.zoomRanges = [];
+        scope.initialRanges = {};
 
         plot = null;
 
@@ -58,12 +61,27 @@
           if (plot) {
             plot.setData(dataset);
             plot.setupGrid();
-            return plot.draw();
+            plot.draw();
           } else {
             plot = init();
             onSerieToggled(scope.series);
-            return plot;
+            plot;
           }
+
+          scope.initialRanges = {
+            xaxis: {
+              from: plot.getAxes().xaxis.min,
+              to: plot.getAxes().xaxis.max
+            },
+            yaxis: {
+              from: plot.getAxes().yaxis.min,
+              to: plot.getAxes().yaxis.max
+            }
+          };
+
+          // scope.zoomRanges[0] = scope.initialRanges;
+
+          // console.log('01 ====> unZoom: ', scope.initialRanges);
         }
 
         scope.$watchCollection('dataset', onDatasetChanged, true);
@@ -87,38 +105,18 @@
           }
         }
         scope.$watch('series', onSerieToggled, true);
-        
-        function onSrcChanged(src) {
 
-          if( src ) {
+        element.bind('plotselected', function( event, ranges) {
+          zoom(event, ranges);
 
-            $http.get(src)
-              .success(function (data) {
+          scope.isZoomed = true;
+          scope.zoomRanges.push(ranges);
 
-                $timeout(function(){
-                  scope.dataset = data;
-                });
+          console.log('1 ====> zoom: ', scope.isZoomed, scope.zoomRanges);
 
-            }).error(function(){
-              $.error('Flot chart: Bad request.');
-            });
-            
-          }
-        }
-        scope.$watch('src', onSrcChanged);
+        });
 
-        element.bind('plotselected', function (evt, ranges) {
-          console.log('===> plot selection: ', plot, ranges);
-          // clamp the zooming to prevent eternal zoom
-
-          if (ranges.xaxis.to - ranges.xaxis.from < 0.00001) {
-            ranges.xaxis.to = ranges.xaxis.from + 0.00001;
-          }
-
-          if (ranges.yaxis.to - ranges.yaxis.from < 0.00001) {
-            ranges.yaxis.to = ranges.yaxis.from + 0.00001;
-          }
-
+        function zoom(evt, ranges) {
           $.each(plot.getXAxes(), function(_, axis) {
             var opts = axis.options;
             opts.min = ranges.xaxis.from;
@@ -134,10 +132,27 @@
           plot.setupGrid();
           plot.draw();
           plot.clearSelection();
+        }
 
-        })
+        element.on('dblclick', unZoom);
+
+        function unZoom (eventData, handler) {
+          if (scope.isZoomed && scope.zoomRanges.length === 0) {
+            console.log('2 ====> unZoom: ', scope.isZoomed, scope.zoomRanges);
+            zoom(eventData, scope.initialRanges);
+            scope.isZoomed = false;
+            return;
+          }
+
+          if (!scope.isZoomed) {
+            return;
+          }
+
+          var ranges = scope.zoomRanges.pop();
+            
+          zoom(eventData, ranges);
+        }
       }
-
     }
 
 })();
