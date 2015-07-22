@@ -36,10 +36,12 @@
         $timeout(runSL);
       
         function initSparkLine($element) {
-
           options.type = options.type || 'bar'; // default chart is bar
           options.disableHiddenCheck = true;
+          drawSparkline($element, values);
+        }
 
+        function drawSparkline ($element, values) {
           $element.sparkline(values, options);
 
           if(options.resize) {
@@ -48,6 +50,12 @@
             });
           }
         }
+
+        $scope.$watch('values', function () {
+          values = $scope.values;
+          drawSparkline($element, values);
+        }, true);
+
       }
     }
 

@@ -362,11 +362,11 @@
         chartRangeMin: 0
       };
 
-      vm.sparkValuesLine = [1,3,4,7,5,9,4,4,7,5,9,6,4];
+      vm.sparkValuesLine = [];
       vm.sparkOptionsLine = {
         chartRangeMin: 0,
         type:               'line',
-        height:             '80',
+        height:             '80px',
         width:              '100%',
         lineWidth:          '2',
         lineColor:          colors.byName('purple'),
@@ -376,8 +376,27 @@
         fillColor:          '',
         highlightLineColor: '#fff',
         spotRadius:         '3',
-        resize:             'true'
+        resize:             'true',
+        tooltipFormat: '<span style="color: {{color}}; width: 30px; height: 22px;">&#9679;</span> {{prefix}}{{y}}{{suffix}}</span>'
       };
+
+      function updateSparkValuesLine() {
+        var random = Math.floor((Math.random() * 10) + 1);
+
+        if (vm.sparkValuesLine.length >= 20) {
+          vm.sparkValuesLine.shift();
+        }
+
+        vm.sparkValuesLine.push(random);
+        
+      }
+
+      setInterval( function () {
+        $scope.$apply(function () {
+            updateSparkValuesLine();
+        });
+      }
+      , 3000);
 
     }
 })();
