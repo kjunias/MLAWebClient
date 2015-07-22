@@ -61,6 +61,7 @@
           trackColor: colors.byName('info'),
           scaleColor: false,
           lineWidth: 10,
+          size: 65,
           lineCap: 'circle'
       };
 
