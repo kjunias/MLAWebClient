@@ -288,8 +288,6 @@
 
       $scope.$watch('showAll', toggleAllEvent, true);
 
-      $scope.$watch('resolution', function() { console.log("===> resolution: ", $rootScope.currentPeriod.resolution);}, true);
-
       function toggleAllEvent(currentValue, previousValue) {
         $rootScope.singleSeriesToggled = false;
         toggleAllLegend(currentValue, previousValue);

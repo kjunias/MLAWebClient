@@ -132,7 +132,7 @@
 
             .text-center(ng-show="chartLoading")
               img(src="app/assets/img/utils/loading-spinner.gif")
-            flot(ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.showSeriesLegend}")
+            flot(id="flotchart", ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.showSeriesLegend}")
           .col-md-2
             table.table.table-hover.mb-lg
               thead
