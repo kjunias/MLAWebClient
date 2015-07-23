@@ -457,8 +457,6 @@
         var queryTimeDiff = ($rootScope.dbStatus.currentQueryStats.query_total - $rootScope.dbStatus.lastQueryStats.query_total)/1000;
         var rate = queryCountDiff/queryTimeDiff;
         
-        console.log('=====>time & count & rate: ', queryCountDiff, queryTimeDiff, rate);   
-        
         if (vm.sparkSearchVals.length >= 20) {
           vm.sparkSearchVals.shift();
         }
@@ -471,8 +469,6 @@
         var indexCountDiff = $rootScope.dbStatus.currentQueryStats.index_time - $rootScope.dbStatus.lastQueryStats.index_time;
         var indexTimeDiff = ($rootScope.dbStatus.currentQueryStats.index_total - $rootScope.dbStatus.lastQueryStats.index_total)/1000;
         var rate = indexCountDiff/indexTimeDiff;
-        
-        console.log('=====>time & count & rate: ', indexCountDiff, indexTimeDiff, rate);   
         
         if (vm.sparkIndexVals.length >= 20) {
           vm.sparkIndexVals.shift();
