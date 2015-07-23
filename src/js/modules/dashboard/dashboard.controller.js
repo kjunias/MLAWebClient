@@ -80,15 +80,12 @@
 
       vm.getDatabasetatus = function () {
         memoryleaks.getDatabaseStatus().then(function(resp) {
-          console.log('=====> getDatabaseStatus: ', $rootScope.dbStatus);
+          // console.log('=====> getDatabaseStatus: ', $rootScope.dbStatus);
           var str = $rootScope.dbStatus._all.total.store.size.toUpperCase(); 
           var position = str.length - 2;
           
           vm.dbSize = [str.slice(0, position), ' ', str.slice(position)].join('');
           vm.dbDocCount = numeral($rootScope.dbStatus._all.total.docs.count).format('0.0 a').toUpperCase();
-
-          console.log('=====> vm.dbDocCountRaw: ', $rootScope.dbStatus._all.total.docs.count);
-          console.log('=====> vm.dbDocCount: ', vm.dbDocCount);
         });
       };
 
