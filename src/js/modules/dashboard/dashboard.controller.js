@@ -14,7 +14,7 @@
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
-      var SERVER_UPDATE_INTERVAL = 10000;
+      var SERVER_UPDATE_INTERVAL = 5000;
 
       $rootScope.chartLoading = true;
       $rootScope.singleSeriesToggled = false;
@@ -86,6 +86,14 @@
           
           vm.dbSize = [str.slice(0, position), ' ', str.slice(position)].join('');
           vm.dbDocCount = numeral($rootScope.dbStatus._all.total.docs.count).format('0.0 a').toUpperCase();
+
+          console.log('=====>search: ', $rootScope.dbStatus._all.total.search);      
+          console.log('=====>indexing: ', $rootScope.dbStatus._all.total.indexing);      
+          console.log('=====>query/sec: ', $rootScope.dbStatus._all.total.search.query_total/($rootScope.dbStatus._all.total.search.query_time_in_millis/1000));      
+          console.log('=====>index/sec: ', $rootScope.dbStatus._all.total.indexing.index_total/($rootScope.dbStatus._all.total.indexing.index_time_in_millis/1000));
+
+          updateSparkSearchkValues();
+          updateSparkIndexValues();
         });
       };
 
@@ -407,8 +415,10 @@
         chartRangeMin: 0
       };
 
-      vm.sparkValuesLine = [];
-      vm.sparkOptionsLine = {
+      vm.sparkSearchVals = [];
+      vm.sparkIndexVals = [];
+
+      vm.sparkOpts = {
         chartRangeMin: 0,
         type:               'line',
         height:             '80px',
@@ -425,23 +435,51 @@
         tooltipFormat: '<span style="color: {{color}}; width: 30px; height: 22px;">&#9679;</span> {{prefix}}{{y}}{{suffix}}</span>'
       };
 
-      function updateSparkValuesLine() {
-        var random = Math.floor((Math.random() * 10) + 1);
+      vm.sparkSearchOpts = {
+        chartRangeMin: 0,
+        type:               'line',
+        height:             '80px',
+        width:              '100%',
+        lineWidth:          '2',
+        lineColor:          colors.byName('info'),
+        spotColor:          '#888',
+        minSpotColor:       colors.byName('info'),
+        maxSpotColor:       colors.byName('info'),
+        fillColor:          '',
+        highlightLineColor: 'green',
+        spotRadius:         '3',
+        resize:             'true',
+        tooltipFormat: '<span style="color: {{color}}; width: 30px; height: 22px;">&#9679;</span> {{prefix}}{{y}}{{suffix}}</span>'
+      };
 
-        if (vm.sparkValuesLine.length >= 20) {
-          vm.sparkValuesLine.shift();
+      function updateSparkSearchkValues() {
+        var queryCountDiff = $rootScope.dbStatus.currentQueryStats.query_time - $rootScope.dbStatus.lastQueryStats.query_time;
+        var queryTimeDiff = ($rootScope.dbStatus.currentQueryStats.query_total - $rootScope.dbStatus.lastQueryStats.query_total)/1000;
+        var rate = queryCountDiff/queryTimeDiff;
+        
+        console.log('=====>time & count & rate: ', queryCountDiff, queryTimeDiff, rate);   
+        
+        if (vm.sparkSearchVals.length >= 20) {
+          vm.sparkSearchVals.shift();
         }
 
-        vm.sparkValuesLine.push(random);
+        vm.sparkSearchVals.push(rate || 0);
         
       }
 
-      setInterval( function () {
-        $scope.$apply(function () {
-            updateSparkValuesLine();
-        });
+      function updateSparkIndexValues() {
+        var indexCountDiff = $rootScope.dbStatus.currentQueryStats.index_time - $rootScope.dbStatus.lastQueryStats.index_time;
+        var indexTimeDiff = ($rootScope.dbStatus.currentQueryStats.index_total - $rootScope.dbStatus.lastQueryStats.index_total)/1000;
+        var rate = indexCountDiff/indexTimeDiff;
+        
+        console.log('=====>time & count & rate: ', indexCountDiff, indexTimeDiff, rate);   
+        
+        if (vm.sparkIndexVals.length >= 20) {
+          vm.sparkIndexVals.shift();
+        }
+
+        vm.sparkIndexVals.push(rate || 0);
       }
-      , 3000);
 
     }
 })();

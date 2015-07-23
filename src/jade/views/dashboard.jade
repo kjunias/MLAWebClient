@@ -52,19 +52,11 @@
                       h4.text-md.m0.mb-lg.text-nowrap {{dashboard.dbDocCount}}
                       p.mt-lg.m0 12 TYPES
           .row.row-table
-            .col-sm-8.col-xs-12
-          //-     .p
-          //-       h4 Server Metrics (last hour)
-          //-       sparkline.mb(options="dashboard.sparkOptionsLine", values="dashboard.sparkValuesLine")
-          //-       small.text-center Requests per second
-            //- .col-sm-4.col-xs-12.pv
-            //-   .p.text-center
-            //-     .mb-sm Memory
-            //-     sparkline.mb(options="dashboard.sparkOptions", values="dashboard.sparkValues1")
-            //-     .mv-sm CPU
-            //-     sparkline.mb(options="dashboard.sparkOptions", values="dashboard.sparkValues2")
-            //-     .mv-sm Network
-            //-     sparkline.mb(options="dashboard.sparkOptions", values="dashboard.sparkValues3")
+            .col-sm-6.col-xs-12
+              sparkline.mb(options="dashboard.sparkSearchOpts", values="dashboard.sparkSearchVals")
+            .col-sm-6.col-xs-12
+              sparkline.mb(options="dashboard.sparkOpts", values="dashboard.sparkIndexVals")
+
 
         .col-md-8(ng-if="hpanel[1]")
           .row.row-table

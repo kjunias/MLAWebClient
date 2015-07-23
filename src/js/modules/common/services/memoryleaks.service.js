@@ -18,11 +18,20 @@
         inactive: []
       };
 
-      $rootScope.dbStatus = {};
+      $rootScope.dbStatus = {
+        currentQueryStats: {
+          init: true,
+          query_total: 0,
+          query_time: 0,
+          index_total: 0,
+          index_time: 0
+        }
+      };
 
       init();
 
       function init() {
+        $rootScope.dbStatus.lastQueryStats = $rootScope.dbStatus.currentQueryStats;
         getUnits()
         .then(getModels())
         .then(getSerials())
@@ -130,7 +139,18 @@
       function getDatabaseStatus() {
         return $http.get( BACKEND.baseURL + '/db/stats')
           .success(function (res) {
+            var lastQueryStats = $rootScope.dbStatus.currentQueryStats;
             $rootScope.dbStatus = res;
+            var currentQueryStats = {
+              query_total: $rootScope.dbStatus._all.total.search.query_total,
+              query_time: $rootScope.dbStatus._all.total.search.query_time_in_millis,
+              index_total: $rootScope.dbStatus._all.total.search.query_time_in_millis,
+              index_time: $rootScope.dbStatus._all.total.search.query_time_in_millis
+            };
+
+            $rootScope.dbStatus.lastQueryStats = lastQueryStats;
+            $rootScope.dbStatus.currentQueryStats = currentQueryStats;
+
           })
           .error(function (err) {
             console.log(err);
