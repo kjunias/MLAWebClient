@@ -25,7 +25,7 @@
           abstract: true,
           templateUrl: Route.base('app.html'),
           resolve: {
-            _assets: Route.require('icons', 'screenfull', 'sparklines', 'slimscroll', 'toaster', 'animate')
+            _assets: Route.require('icons', 'screenfull', 'sparklines', 'slimscroll', 'toaster', 'animate', 'numeral')
           }
         })
         .state('app.dashboard', {

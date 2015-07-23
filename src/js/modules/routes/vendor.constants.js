@@ -38,7 +38,8 @@
               'blueimp-gallery':    ['vendor/blueimp-gallery/js/jquery.blueimp-gallery.min.js',
                                      'vendor/blueimp-gallery/css/blueimp-gallery.min.css'],
               'filestyle':          ['vendor/bootstrap-filestyle/src/bootstrap-filestyle.js'],
-              'nestable':           ['vendor/nestable/jquery.nestable.js']
+              'nestable':           ['vendor/nestable/jquery.nestable.js'],
+              'numeral':            ['vendor/numeral/numeral.js']
             },
             // Angular modules scripts (name is module name to be injected)
             modules: [

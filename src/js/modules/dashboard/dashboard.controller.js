@@ -9,11 +9,13 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'BACKEND'];
-    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout, serverStatus, BACKEND) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
+    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
+      var SERVER_UPDATE_INTERVAL = 10000;
+
       $rootScope.chartLoading = true;
       $rootScope.singleSeriesToggled = false;
       $rootScope.currentPeriod = {
@@ -50,7 +52,7 @@
       // Pie Charts
       // ----------------------------------- 
 
-      vm.cpuPieValue = vm.memPieValue = vm.storagePieValue = 0;
+      vm.cpuPieValue = vm.memPieValue = vm.storagePieValue = vm.dbSize = vm.dbDocCount = 0;
       vm.pieOptions = {
           animate:{
               duration: 700,
@@ -68,10 +70,25 @@
         serverStatus.getServerStatus().then(function(resp) {
           vm.cpuPieValue = Math.round($rootScope.serverStatus.cpu.usage * 100);
           vm.memPieValue = Math.round(100 - $rootScope.serverStatus.mem.memFreePerc * 100);
-          vm.memValue = bytesToSize($rootScope.serverStatus.mem.memTotal - $rootScope.serverStatus.mem.memFree, 1);
+          vm.memValue = numeral($rootScope.serverStatus.mem.memTotal - $rootScope.serverStatus.mem.memFree).format('0 b').toUpperCase();
 
           vm.diskPieValue = Math.round(100 - $rootScope.serverStatus.disk.freeSpace/$rootScope.serverStatus.disk.totalSpace * 100);
-          vm.diskValue = bytesToSize($rootScope.serverStatus.disk.totalSpace - $rootScope.serverStatus.disk.freeSpace);
+          vm.diskValue = numeral($rootScope.serverStatus.disk.totalSpace - $rootScope.serverStatus.disk.freeSpace).format('0 b').toUpperCase();
+
+        });
+      };
+
+      vm.getDatabasetatus = function () {
+        memoryleaks.getDatabaseStatus().then(function(resp) {
+          console.log('=====> getDatabaseStatus: ', $rootScope.dbStatus);
+          var str = $rootScope.dbStatus._all.total.store.size.toUpperCase(); 
+          var position = str.length - 2;
+          
+          vm.dbSize = [str.slice(0, position), ' ', str.slice(position)].join('');
+          vm.dbDocCount = numeral($rootScope.dbStatus._all.total.docs.count).format('0.0 a').toUpperCase();
+
+          console.log('=====> vm.dbDocCountRaw: ', $rootScope.dbStatus._all.total.docs.count);
+          console.log('=====> vm.dbDocCount: ', vm.dbDocCount);
         });
       };
 
@@ -85,8 +102,14 @@
         return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
       }
 
-      vm.getServerStatus();
-      setInterval(vm.getServerStatus, 10000);
+      vm.updateStatuses =  function () {
+        vm.getDatabasetatus();
+        vm.getServerStatus();
+      }
+
+      vm.updateStatuses();
+
+      setInterval(vm.updateStatuses, SERVER_UPDATE_INTERVAL);
 
 
       // Dashboard charts

@@ -18,6 +18,8 @@
         inactive: []
       };
 
+      $rootScope.dbStatus = {};
+
       init();
 
       function init() {
@@ -124,6 +126,19 @@
 
         return dataObj;
       }
+
+      function getDatabaseStatus() {
+        return $http.get( BACKEND.baseURL + '/db/stats')
+          .success(function (res) {
+            $rootScope.dbStatus = res;
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+
+      }
+
+      memLeaksService.getDatabaseStatus = getDatabaseStatus;      
 
       return memLeaksService;
     }
