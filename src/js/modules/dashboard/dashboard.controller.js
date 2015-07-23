@@ -9,8 +9,8 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'BACKEND'];
-    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout, BACKEND) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'BACKEND'];
+    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout, serverStatus, BACKEND) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
@@ -50,8 +50,7 @@
       // Pie Charts
       // ----------------------------------- 
 
-      vm.piePercent1 = 75;
-      vm.piePercent2 = 50;
+      vm.cpuPieValue = vm.memPieValue = vm.storagePieValue = 0;
       vm.pieOptions = {
           animate:{
               duration: 700,
@@ -64,6 +63,31 @@
           size: 65,
           lineCap: 'circle'
       };
+
+      vm.getServerStatus = function () {
+        serverStatus.getServerStatus().then(function(resp) {
+          vm.cpuPieValue = Math.round($rootScope.serverStatus.cpu.usage * 100);
+          vm.memPieValue = Math.round(100 - $rootScope.serverStatus.mem.memFreePerc * 100);
+          vm.memValue = bytesToSize($rootScope.serverStatus.mem.memTotal - $rootScope.serverStatus.mem.memFree, 1);
+
+          vm.diskPieValue = Math.round(100 - $rootScope.serverStatus.disk.freeSpace/$rootScope.serverStatus.disk.totalSpace * 100);
+          vm.diskValue = bytesToSize($rootScope.serverStatus.disk.totalSpace - $rootScope.serverStatus.disk.freeSpace);
+        });
+      };
+
+      function bytesToSize(bytes, decimals) {
+        if(bytes == 0) return '0 Byte';
+        var k = 1000;
+        var dm = decimals + 1 || 3;
+        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        if (bytes == 0) return '0 Byte';
+        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
+      }
+
+      vm.getServerStatus();
+      setInterval(vm.getServerStatus, 10000);
+
 
       // Dashboard charts
       // ----------------------------------- 

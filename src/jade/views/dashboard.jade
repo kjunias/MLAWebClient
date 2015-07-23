@@ -31,18 +31,18 @@
               .p
                 .row.row-flush.text-center
                   .col-xs-2
-                    p.mt-lg CPU
-                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent1')
-                      span {{dashboard.piePercent1}}
-                  .col-xs-2
+                    p.mt-lg CPU (%)
+                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.cpuPieValue')
+                      span {{dashboard.cpuPieValue}}
+                  .col-xs-3
                     p.mt-lg Memory
-                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent2')
-                      span {{dashboard.piePercent1}}
-                  .col-xs-2
+                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.memPieValue')
+                      span {{dashboard.memValue}}
+                  .col-xs-3
                     p.mt-lg Storage
-                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent1')
-                      span {{dashboard.piePercent1}}
-                  .col-xs-6
+                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.diskPieValue')
+                      span {{dashboard.diskValue}}
+                  .col-xs-4
                     .col-xs-6
                       p.mt-lg DB SIZE
                       h4.text-md.m0.mb-lg 11 GB
