@@ -452,6 +452,8 @@
         tooltipFormat: '<span style="color: {{color}}; width: 30px; height: 22px;">&#9679;</span> {{prefix}}{{y}}{{suffix}}</span>'
       };
 
+      vm.sparkReporterCPUOpts = angular.extend({}, vm.sparkSearchOpts, { height: '35px', fillColor: '#c0d0f0', fillOpacity: 0.25 });
+
       function updateSparkSearchkValues() {
         var queryCountDiff = $rootScope.dbStatus.currentQueryStats.query_time - $rootScope.dbStatus.lastQueryStats.query_time;
         var queryTimeDiff = ($rootScope.dbStatus.currentQueryStats.query_total - $rootScope.dbStatus.lastQueryStats.query_total)/1000;

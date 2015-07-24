@@ -8,7 +8,7 @@
   .col-lg-9.fw-boxed
  
     // START Tabbed panel
-    .panel.panel-default(ng-init="hpanel = [true, false, false, false]")
+    .panel.panel-default.dbpanel(ng-init="hpanel = [false, true, false, false]")
       .row
         .col-md-4
           .row.row-flush.text-center.text-muted.m0
@@ -59,26 +59,53 @@
 
 
         .col-md-8(ng-if="hpanel[1]")
-          .row.row-table
-            .col-sm-6.col-xs-12
-              .p
-                .row.row-flush.text-center
-                  .col-xs-6
-                    p.mt-lg Memory
-                     .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent1')
-                      span {{dashboard.piePercent1}}
-                  .col-xs-6
-                    p.mt-lg CPU
-                    .easypie(easypiechart='', options='dashboard.pieOptions', percent='dashboard.piePercent2')
-                      span {{dashboard.piePercent2}}
-            .col-sm-6.col-xs-12
-              .p
-                | ES 
-                progressbar.progress-xs(value='35', type='warning')
-                | MemSurvey
-                progressbar.progress-xs(value='10', type='info')
-                | Other
-                progressbar.progress-xs.m0(value='35', type='gray')
+          .row.row-table.mt.pt.mr(chained-animation="fadeIn")
+            .col-sm-8.col-xs-12.ml0.pl0.mb0.pb0
+              .row.row-table.mb0.pb0
+                .col-sm-12.col-xs-12
+                  em.pull-right.icon-cog.text-muted.clickable
+                  .text-md Current Reporter: {{currentReporter._source.idReporters}}
+                  .text-muted.pull-left LAN: {{reportersMappings[currentReporter._source.strFrom] || reporter._source.strFrom}} 
+                  .text-muted.pull-right WAN: {{currentReporter._source.strFrom}}
+              hr.mt0
+              .row.row-table
+                .col-sm-6.col-xs-12
+                  small.text-sm.text-center CPU
+                  sparkline.mb(options="dashboard.sparkReporterCPUOpts", values="dashboard.sparkSearchVals")
+                .col-sm-6.col-xs-12
+                  small.text-sm.text-center Memory
+                  sparkline.mb(options="dashboard.sparkReporterCPUOpts", values="dashboard.sparkIndexVals")
+
+              .row.row-table.mb0.pb0.mt
+                .col-lg-4.col-sm-4.col-xs-4.mb0
+                  .panel.panel-default.mb0.pb0(ripple="")
+                    .panel-body.mb0.pb0(ng-class="'bg-' + app.theme.name")
+                      h1.text-thin.mt 150 s
+                      .text-right.text-sm.text-muted Reporting interval
+                .col-lg-4.col-sm-4.col-xs-4.mb0
+                  .panel.panel-default.mb0.pb0(ripple="")
+                    .panel-body.mb0.pb0(ng-class="")
+                      h1.text-thin.mt.text 9/10 
+                      .text-right.text-sm.text-muted Active / Total Units
+                .col-lg-4.col-sm-4.col-xs-4.mb0
+                  .panel.panel-default.mb0.pb0(ripple="")
+                    .panel-body.mb0.pb0(ng-class="'bg-' + app.theme.name")
+                      h1.text-thin.mt 2
+                      .text-right.text-sm.text-muted ALERTS
+
+            .col-sm-4.col-xs-12
+              .row.row-table
+                .col-lg-12.col-sm-3.col-xs-3
+                  .panel.panel-default(ripple="")
+                    .panel-body(ng-class="'bg-primary'")
+                      h1.text-thin.mt.text-center 5 / 13
+                      .text-right.text-sm.text-muted.text-center Active /Total Reporters
+                .col-lg-12.col-sm-3.col-xs-3
+                  .panel.panel-default(ripple="")
+                    .panel-body(ng-class="'bg-primary'")
+                      h1.text-thin.mt.text-center 4
+                      .text-right.text-sm.text-muted.text-center TOTAL ALERTS
+
         .col-md-8(ng-if="hpanel[2]", ng-init="dashboard.loadProgressValues()")
           .row.row-table
             .col-sm-8.col-xs-12
