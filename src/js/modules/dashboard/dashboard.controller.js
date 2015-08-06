@@ -9,8 +9,8 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
-    function DashboardController($rootScope, $scope, $http, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
+    function DashboardController($rootScope, $scope, $http, $modal, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
@@ -80,22 +80,52 @@
 
       vm.getDatabasetatus = function () {
         memoryleaks.getDatabaseStatus().then(function(resp) {
-          // console.log('=====> getDatabaseStatus: ', $rootScope.dbStatus);
           var str = $rootScope.dbStatus._all.total.store.size.toUpperCase(); 
           var position = str.length - 2;
           
           vm.dbSize = [str.slice(0, position), ' ', str.slice(position)].join('');
           vm.dbDocCount = numeral($rootScope.dbStatus._all.total.docs.count).format('0.0 a').toUpperCase();
 
-          console.log('=====>search: ', $rootScope.dbStatus._all.total.search);      
-          console.log('=====>indexing: ', $rootScope.dbStatus._all.total.indexing);      
-          console.log('=====>query/sec: ', $rootScope.dbStatus._all.total.search.query_total/($rootScope.dbStatus._all.total.search.query_time_in_millis/1000));      
-          console.log('=====>index/sec: ', $rootScope.dbStatus._all.total.indexing.index_total/($rootScope.dbStatus._all.total.indexing.index_time_in_millis/1000));
-
           updateSparkSearchkValues();
           updateSparkIndexValues();
         });
       };
+
+      vm.reportersModalOpen = function (repSettings) {
+        var modalInstance = $modal.open({
+          templateUrl: '/reportersSettingsModal.html',
+          controller: ModalInstanceCtrl,
+          scope: $scope,
+          resolve: {
+            repSettings: function() {
+              return repSettings;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+          console.log("Saving reporters settings");
+        }, function () {
+          console.log("Cancelling reporters settings");
+        });
+      };
+
+      var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+        $scope.reporterSettings = {
+          id : $rootScope.currentReporter._source.idReporters
+        };
+
+        $scope.saveSetting = function (task) {
+          $modalInstance.close('closed');
+        };
+
+        $scope.modalCancel = function () {
+          vm.taskEdition = false;
+          $modalInstance.dismiss('cancel');
+        };
+      };
+      ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
 
       function bytesToSize(bytes, decimals) {
         if(bytes == 0) return '0 Byte';

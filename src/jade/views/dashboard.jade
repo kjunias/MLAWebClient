@@ -1,4 +1,26 @@
 .app-view-header
+  // Modal inline template
+  script(type='text/ng-template', id='/reportersSettingsModal.html')
+    .modal-header
+      h4#myModalLabel.modal-title Reporters Settings
+    .modal-body
+      //- .form-group
+      //-   select.form-control()
+      
+      label.col-sm-2.control-label Reporter
+      .col-sm-10
+        select.form-control.m-b(ng-trim="true", type='text', ng-model='reporterSettings.id', placeholder='Reporter..', name='reporter', required)
+          option Option 1
+          option Option 2
+          option Option 3
+          option Option 4
+        br
+      .form-group
+        textarea.form-control(ng-trim="true", ng-model='theTask.description', placeholder='Type a description..', rows="8")
+    .modal-footer
+      button.btn.btn-primary(ng-click='saveSetting(repSettings)') Save Settings 
+      button.btn.btn-warning(ng-click='modalCancel()') Cancel
+
   | Dashboard
   small(ng-bind="app.date.toLocaleString()")
 
@@ -8,7 +30,7 @@
   .col-lg-9.fw-boxed
  
     // START Tabbed panel
-    .panel.panel-default.dbpanel(ng-init="hpanel = [true, false, false, false]")
+    .panel.panel-default.dbpanel(ng-init="hpanel = [false, true, false, false]")
       .row
         .col-md-4
           .row.row-flush.text-center.text-muted.m0
@@ -63,7 +85,7 @@
             .col-sm-8.col-xs-12.ml0.pl0.mb0.pb0
               .row.row-table.mb0.pb0
                 .col-sm-12.col-xs-12
-                  em.pull-right.icon-cog.text-muted.clickable
+                  em.pull-right.icon-cog.text-muted.clickable(ng-click='dashboard.reportersModalOpen()')
                   .text-md Current Reporter: {{currentReporter._source.idReporters}}
                   .text-muted.pull-left LAN: {{reportersMappings[currentReporter._source.strFrom] || reporter._source.strFrom}} 
                   .text-muted.pull-right WAN: {{currentReporter._source.strFrom}}
