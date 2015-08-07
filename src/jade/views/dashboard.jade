@@ -3,20 +3,62 @@
   script(type='text/ng-template', id='/reportersSettingsModal.html')
     .modal-header
       h4#myModalLabel.modal-title Reporters Settings
-    .modal-body
+    .modal-body.mt0.pt0
       //- .form-group
       //-   select.form-control()
-      
-      label.col-sm-2.control-label Reporter
-      .col-sm-10
+      .col-sm-4.pl0.ml0
+        label.control-label Reporter
         select.form-control.m-b(ng-trim="true", type='text', ng-model='reporterSettings.id', placeholder='Reporter..', name='reporter', required)
-          option Option 1
-          option Option 2
-          option Option 3
-          option Option 4
+          option 192.168.12.1
+          option 192.168.8.1
+          option 192.168.28.1
+          option 192.168.25.1
         br
+      .col-sm-4
+        label.control-label WAN
+        input.form-control.m-b(ng-trim="true", type='text', ng-model='reporterSettings.wan', placeholder='WAN', name='reporterWan', required)
+        br
+
+      .col-md-2
+        label.control-label Polling
+        input.form-control.pt0.pr0.pb0.pl-sm(type='number', ng-model="reporterSettings.polling", min='1', max='10000', step='1', tooltip='Seconds')
+        br
+
+      .col-md-2
+        label.control-label State
+        br
+        label.switch(ng-class="'switch-' + app.theme.name")
+          input(type='checkbox', ng-model="serie.show", ng-click="toggleLegend(serie)")
+          span
+        br
+
       .form-group
-        textarea.form-control(ng-trim="true", ng-model='theTask.description', placeholder='Type a description..', rows="8")
+        table.table.table-bordered.table-hover.bg-white
+          tr(style='font-weight: bold')
+            td(style='width:25%') Unit IP
+            td(style='width:25%') Status
+            td(style='width:25%') Polling Interval (s)
+            td(style='width:25%') Edit
+          tr(ng-repeat='unit in reporterSettings.units')
+            td
+              span(editable-text='unit.unitIP', e-name='unitIP', e-form='rowform', onbeforesave='xtable.checkName($data, user.id)', e-required='') {{ user.name || &apos;empty&apos; }}
+            td
+              // editable status (select-local)
+              span(editable-select='user.status', e-name='status', e-form='rowform', e-ng-options='s.value as s.text for s in xtable.statuses') {{ xtable.showStatus(user) }}        
+            td
+              // editable group (select-remote)
+              span(editable-select='user.group', e-name='group', onshow='xtable.loadGroups()', e-form='rowform', e-ng-options='g.id as g.text for g in xtable.groups') {{ xtable.showGroup(user) }}
+            td(style='white-space: nowrap')
+              // form
+              form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='xtable.saveUser($data, user.id)', ng-show='rowform.$visible', shown='xtable.inserted == user')
+                button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+                button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
+              .buttons(ng-show='!rowform.$visible')
+                button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
+                button.btn.btn-sm.btn-danger(ng-click='xtable.removeUser($index)', title="Delete"): em.fa.fa-trash
+        button.btn.btn-default(ng-click='xtable.addUser()') Add row
+
+
     .modal-footer
       button.btn.btn-primary(ng-click='saveSetting(repSettings)') Save Settings 
       button.btn.btn-warning(ng-click='modalCancel()') Cancel
