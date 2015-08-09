@@ -9,8 +9,8 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
-    function DashboardController($rootScope, $scope, $http, $modal, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', '$controller', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
+    function DashboardController($rootScope, $scope, $http, $modal, $controller, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
@@ -94,38 +94,10 @@
       vm.reportersModalOpen = function (repSettings) {
         var modalInstance = $modal.open({
           templateUrl: '/reportersSettingsModal.html',
-          controller: ModalInstanceCtrl,
-          scope: $scope,
-          resolve: {
-            repSettings: function() {
-              return repSettings;
-            }
-          }
-        });
-
-        modalInstance.result.then(function () {
-          console.log("Saving reporters settings");
-        }, function () {
-          console.log("Cancelling reporters settings");
+          controller: 'ReportersSettingsController',
+          scope: $scope
         });
       };
-
-      var ModalInstanceCtrl = function ($scope, $modalInstance) {
-
-        $scope.reporterSettings = {
-          id : $rootScope.currentReporter._source.idReporters
-        };
-
-        $scope.saveSetting = function (task) {
-          $modalInstance.close('closed');
-        };
-
-        $scope.modalCancel = function () {
-          vm.taskEdition = false;
-          $modalInstance.dismiss('cancel');
-        };
-      };
-      ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
 
       function bytesToSize(bytes, decimals) {
         if(bytes == 0) return '0 Byte';

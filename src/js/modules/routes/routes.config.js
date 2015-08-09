@@ -25,14 +25,14 @@
           abstract: true,
           templateUrl: Route.base('app.html'),
           resolve: {
-            _assets: Route.require('icons', 'screenfull', 'sparklines', 'slimscroll', 'toaster', 'animate', 'numeral')
+            _assets: Route.require('icons', 'screenfull', 'sparklines', 'slimscroll', 'toaster', 'animate', 'numeral', 'underscore')
           }
         })
         .state('app.dashboard', {
           url: '/dashboard',
           templateUrl: Route.base('dashboard.html'),
           resolve: {
-            assets: Route.require('flot-chart', 'flot-chart-plugins', 'easypiechart')
+            assets: Route.require('flot-chart', 'flot-chart-plugins', 'easypiechart', 'xeditable')
           }
         })
         .state('app.cards', {
