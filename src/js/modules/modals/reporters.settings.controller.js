@@ -25,11 +25,25 @@
       }
 
       $scope.getMacAddress = function (unit) {
-        return $rootScope.units[unit.idUnits].MACAddress;
+        if (unit.idUnits) {
+          return $rootScope.units[unit.idUnits].MACAddress;
+        }
+        return null;
       };
 
       $scope.saveUnit = function (data, unit) {
         console.log('saveUnit', data, unit);
+      };
+
+      $scope.addUnit = function () {
+        console.log('addUnit');
+        $scope.unitToAdd = {
+          "idUnits": null,
+          "IPv4": null,
+          "pollingInterval": null,
+          "status": "active"
+        };
+        $scope.currentReporterToSet._source.settings.units.push($scope.unitToAdd);
       };
 
       $scope.saveSetting = function (task) {
