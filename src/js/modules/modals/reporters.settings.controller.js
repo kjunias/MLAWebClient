@@ -68,13 +68,13 @@
         $scope.currentReporterToSet._source.settings.units.push($scope.unitToAdd);
       };
 
-      $scope.checkIPv4 = function (data) {
+      $scope.checkIPv4 = function (data, unit) {
         var ipFormat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (!data || !data.match(ipFormat)) {
           rowform.$visible = true;
           return 'Enter valid IP';
         }
-        if (findUnit('IPv4', data) ) {
+        if (angular.equals(unit, $scope.unitToAdd) && findUnit('IPv4', data) ) {
           return 'Already exists!';
         }
       };
@@ -85,13 +85,13 @@
         });
       }
 
-      $scope.checkMACAddress = function (data) {
+      $scope.checkMACAddress = function (data, unit) {
         var MACFormat = /^([0-9A-F]{2}){5}([0-9A-F]{2})$/;
         if (!data || !data.match(MACFormat)) {
           rowform.$visible = true;
           return 'Enter valid MACAddress';
         }
-        if (findUnit('MACAddress', data) ) {
+        if (angular.equals(unit, $scope.unitToAdd) && findUnit('MACAddress', data) ) {
           return 'Already exists!';
         }
       };
@@ -105,9 +105,21 @@
         }
       };
 
-      $scope.saveSetting = function (task) {
+      $scope.saveReportersSettings = function () {
+        formatReportersSettings();
+        memoryleaks.saveReporter($scope.currentReporterToSet._source);
         $modalInstance.close('closed');
       };
+
+      function formatReportersSettings() {
+        console.log('pollingInterval: ', $scope.currentReporterToSet._source.settings.pollingInterval); 
+        var units = $scope.currentReporterToSet._source.settings.units;
+        for (var unit in units) {
+          delete units[unit]['MACAddress'];
+          delete units[unit]['$$hashKey'];
+          console.log('unit: ', units[unit]);        
+        }
+      }
 
       $scope.modalCancel = function () {
         ctrl.taskEdition = false;
