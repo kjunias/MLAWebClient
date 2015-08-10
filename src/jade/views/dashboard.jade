@@ -38,14 +38,14 @@
             td(style='width:20%') Edit
           tr.text-center(ng-repeat='unit in currentReporterToSet._source.settings.units')
             td.mt0.mb0.pt0.pb0.align-middle
-              span(editable-text='unit.IPv4', e-name='unitIP', e-form='rowform', e-style="width: 100%") {{ unit.IPv4 }}
+              span(editable-text='unit.IPv4', e-name='unitIP', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data)', oncancel="cancelEditRow(unit)", e-required='') {{ unit.IPv4 }}
             td.mt0.mb0.pt0.pb0
-              span(editable-text='getMacAddress(unit)', e-name='unitIP', e-form='rowform', e-style="width: 100%") {{ getMacAddress(unit)}}
+              span(editable-text='unit.MACAddress', e-name='unitMAC', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data)', e-required='') {{ unit.MACAddress}}
             td.mt0.mb0.pt0.pb0
-              span(editable-select='unit.status', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%") {{ unit.status}}
+              span(editable-select='unit.status', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%", e-class='pl0 pr0') {{ unit.status}}
             td.mt0.mb0.pt0.pb0
               // editable status (select-local)
-              span(editable-number='unit.pollingInterval', e-name='pollingInterval', e-form='rowform', e-style="width: 100%") {{ unit.pollingInterval }}        
+              span(editable-number='unit.pollingInterval || 10', e-name='pollingInterval', e-form='rowform', e-style="width: 100%", e-min='1', e-max='3600') {{ unit.pollingInterval }}        
  
             td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
               // form
@@ -54,7 +54,7 @@
                 button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
               .buttons(ng-show='!rowform.$visible')
                 button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
-                button.btn.btn-sm.btn-danger(ng-click='xtable.removeUser($index)', title="Delete"): em.fa.fa-trash
+                button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
         button.btn.btn-default(ng-click='addUnit()') Add Unit
 
 
