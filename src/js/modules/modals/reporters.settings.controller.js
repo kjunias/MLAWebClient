@@ -74,13 +74,25 @@
           rowform.$visible = true;
           return 'Enter valid IP';
         }
+        if (findUnit('IPv4', data) ) {
+          return 'Already exists!';
+        }
       };
+
+      function findUnit (prop, value) {
+        return _.find($scope.currentReporterToSet._source.settings.units, function (item) {
+          return item[prop] === value;
+        });
+      }
 
       $scope.checkMACAddress = function (data) {
         var MACFormat = /^([0-9A-F]{2}){5}([0-9A-F]{2})$/;
         if (!data || !data.match(MACFormat)) {
           rowform.$visible = true;
           return 'Enter valid MACAddress';
+        }
+        if (findUnit('MACAddress', data) ) {
+          return 'Already exists!';
         }
       };
 
