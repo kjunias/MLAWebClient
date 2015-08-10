@@ -38,14 +38,13 @@
             td(style='width:20%') Edit
           tr.text-center(ng-repeat='unit in currentReporterToSet._source.settings.units')
             td.mt0.mb0.pt0.pb0.align-middle
-              span(editable-text='unit.IPv4', e-name='unitIP', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data)', oncancel="cancelEditRow(unit)", e-required='') {{ unit.IPv4 }}
+              span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
             td.mt0.mb0.pt0.pb0
-              span(editable-text='unit.MACAddress', e-name='unitMAC', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data)', e-required='') {{ unit.MACAddress}}
+              span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
             td.mt0.mb0.pt0.pb0
-              span(editable-select='unit.status', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%", e-class='pl0 pr0') {{ unit.status}}
+              span(editable-select='unit.status', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%", e-class='pl0 pr0 text-center') {{ unit.status }}
             td.mt0.mb0.pt0.pb0
-              // editable status (select-local)
-              span(editable-number='unit.pollingInterval || 10', e-name='pollingInterval', e-form='rowform', e-style="width: 100%", e-min='1', e-max='3600') {{ unit.pollingInterval }}        
+              span(editable-number='unit.pollingInterval', e-name='pollingInterval', e-form='rowform', e-style="width: 100%", e-min='1', e-max='3600',  e-class='p0 text-center') {{ unit.pollingInterval }}        
  
             td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
               // form

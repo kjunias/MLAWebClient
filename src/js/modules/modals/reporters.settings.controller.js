@@ -24,7 +24,9 @@
       function initReportersSettings() {
         var units = $scope.currentReporterToSet._source.settings.units;
         for (var unit in units) {
-          units[unit].MACAddress = getMacAddress(units[unit]);
+          if(getMacAddress(units[unit])) {
+            units[unit].MACAddress = getMacAddress(units[unit]).toUpperCase();
+          }
         }
       }
 
@@ -37,23 +39,31 @@
       };
 
       function getMacAddress (unit) {
-        if (unit.idUnits) {
+        if (unit.idUnits && $rootScope.units[unit.idUnits]) {
           return $rootScope.units[unit.idUnits].MACAddress;
         }
         return null;
       };
 
       $scope.saveUnit = function (data, unit) {
-        // console.log('saveUnit', data, unit);
+        angular.extend(unit, data);
+        delete unit.$$hashKey
+        if (angular.equals(unit, $scope.unitToAdd)) {
+          var actualUnit = memoryleaks.getUnitByMACAddress(unit.MACAddress);
+          if(actualUnit) {
+            unit.idUnits = actualUnit.idUnits;
+            console.log('getUnit: ', actualUnit, unit);
+          }
+        }
       };
 
       $scope.addUnit = function () {
-        console.log('addUnit');
         $scope.unitToAdd = {
-          "idUnits": null,
-          "IPv4": null,
-          "pollingInterval": null,
-          "status": "active"
+          idUnits: null,
+          IPv4: null,
+          MACAddress: null,
+          pollingInterval: null,
+          status: "active"
         };
         $scope.currentReporterToSet._source.settings.units.push($scope.unitToAdd);
       };
@@ -67,7 +77,7 @@
       };
 
       $scope.checkMACAddress = function (data) {
-        var MACFormat = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
+        var MACFormat = /^([0-9A-F]{2}){5}([0-9A-F]{2})$/;
         if (!data || !data.match(MACFormat)) {
           rowform.$visible = true;
           return 'Enter valid MACAddress';

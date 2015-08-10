@@ -11,7 +11,7 @@
         .service('memoryleaks', MemoryleaksService);
 
     MemoryleaksService.$inject = ['$rootScope', '$http', 'BACKEND'];
-    function MemoryleaksService($rootScope, $http,  BACKEND) {
+    function MemoryleaksService($rootScope, $http, BACKEND) {
       var memLeaksService = this;
       $rootScope.reporters = {
         active: [],
@@ -158,6 +158,13 @@
 
       }
 
+      function getUnitByMACAddress (MACAddress) {
+        return _.find($rootScope.units, function (item) {
+          return item.MACAddress == MACAddress;
+        });
+      }
+
+      memLeaksService.getUnitByMACAddress = getUnitByMACAddress;      
       memLeaksService.getDatabaseStatus = getDatabaseStatus;      
 
       return memLeaksService;
