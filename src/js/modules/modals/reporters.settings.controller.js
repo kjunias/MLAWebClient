@@ -22,6 +22,7 @@
       }, true);
 
       function initReportersSettings() {
+        $scope.currentReporterToSet._source.settings.LAN =  $rootScope.reportersMappings[$scope.currentReporterToSet._source.settings.LAN] || $scope.currentReporterToSet._source.settings.LAN
         var units = $scope.currentReporterToSet._source.settings.units;
         for (var unit in units) {
           if(getMacAddress(units[unit])) {
@@ -32,9 +33,9 @@
 
       $scope.toggleReporterStatus = function () {
         if ($scope.currentReporterToSet._source.settings.status === $scope.reporterStatusOptions[0]) {
-          $scope.currentReporterToSet._source.settings.status = $scope.reporterStatusOptions[1]
+          $scope.currentReporterToSet._source.settings.status = $scope.reporterStatusOptions[1];
         }else if($scope.currentReporterToSet._source.settings.status === $scope.reporterStatusOptions[1]) {
-          $scope.currentReporterToSet._source.settings.status = $scope.reporterStatusOptions[0]
+          $scope.currentReporterToSet._source.settings.status = $scope.reporterStatusOptions[0];
         }
       };
 
@@ -116,8 +117,7 @@
         var units = $scope.currentReporterToSet._source.settings.units;
         for (var unit in units) {
           delete units[unit]['MACAddress'];
-          delete units[unit]['$$hashKey'];
-          console.log('unit: ', units[unit]);        
+          delete units[unit]['$$hashKey'];     
         }
       }
 

@@ -167,8 +167,8 @@
       function saveReporter (currentReporterToSet) {
         return $http.post( BACKEND.baseURL + '/update/reporters/' + currentReporterToSet.idReporters, currentReporterToSet)
           .success(function (res) {
-            console.log('Saved reporter: ', currentReporterToSet.idReporters);
             console.log('Saved reporter: ', res);
+            init();
           })
           .error(function (err) {
             console.log(err);
@@ -178,7 +178,6 @@
       memLeaksService.saveReporter = saveReporter;      
       memLeaksService.getUnitByMACAddress = getUnitByMACAddress;      
       memLeaksService.getDatabaseStatus = getDatabaseStatus;      
-
       return memLeaksService;
     }
 
