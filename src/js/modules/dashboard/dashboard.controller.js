@@ -184,7 +184,6 @@
       }
 
       vm.refreshChart = function (event) {
-        console.log("===> resolution: ", $rootScope.currentPeriod.resolution);
         updateLeaksData();
       }
 
@@ -220,6 +219,12 @@
 
       function updateLeaksSeries(rawData) {
         $rootScope.chartLoading = true;
+        if ($rootScope.leaksSeries.length === 0 ) {
+          generateLeaksSeries(rawData);
+          redraw();
+          return;
+        }
+
         for (var i in rawData) {
           for (var j in $rootScope.leaksSeries) {
             if (rawData[i].idUnits === $rootScope.leaksSeries[j].idUnits) {
