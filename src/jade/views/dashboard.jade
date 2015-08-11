@@ -3,58 +3,61 @@
 
   // Modal inline template
   script(type='text/ng-template', id='/reportersSettingsModal.html')
-    .modal-header
-      h4#myModalLabel.modal-title Reporters Settings
-    .modal-body.mt0.pt0
-      .col-sm-4.pl0.ml0
-        label.control-label Reporter
-        select.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet', ng-options='repToSet._source.settings.LAN for repToSet in reportersToSet', name='reporter', required)
-        br
-      .col-sm-4
-        label.control-label WAN
-        input.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet._source.settings.WAN', placeholder='WAN', name='reporterWan', required)
-        br
+    .col-sm-12
+      .modal-header
+        h4#myModalLabel.modal-title Reporters Settings
+    .col-sm-12
+      .modal-body.mt0.pt0
+        .col-sm-4
+          label.control-label Reporter
+          select.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet', ng-options='repToSet._source.settings.LAN for repToSet in reportersToSet', name='reporter', required)
+          br
+        .col-sm-4
+          label.control-label WAN
+          input.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet._source.settings.WAN', placeholder='WAN', name='reporterWan', required)
+          br
 
-      .col-md-2
-        label.control-label Polling
-        input.form-control.pt0.pr0.pb0.pl-sm(type='number', ng-model="currentReporterToSet._source.settings.pollingInterval", min='1', max='3600', step='1', tooltip='Seconds')
-        br
+        .col-md-2
+          label.control-label Polling
+          input.form-control.pt0.pr0.pb0.pl-sm(type='number', ng-model="currentReporterToSet._source.settings.pollingInterval", min='1', max='3600', step='1', tooltip='Seconds')
+          br
 
-      .col-md-2.mr0
-        label.control-label Status
-        br
-        label.switch(ng-class="'switch-' + app.theme.name")
-          input(type='checkbox', ng-checked='currentReporterToSet._source.settings.status == "active"', ng-click="toggleReporterStatus()", tooltip='Active or Inactive')
-          span
-        br
+        .col-md-2.mr0
+          label.control-label Status
+          br
+          label.switch(ng-class="'switch-' + app.theme.name")
+            input(type='checkbox', ng-checked='currentReporterToSet._source.settings.status == "active"', ng-click="toggleReporterStatus()", tooltip='Active or Inactive')
+            span
+          br
 
-      .form-group
-        table.table.table-bordered.table-hover.bg-white
-          tr.text-center(style='font-weight: bold')
-            td(style='width:20%') Unit IP
-            td(style='width:20%') MACAddress
-            td(style='width:15%') Status
-            td(style='width:25%') Polling Interval (s)
-            td(style='width:20%') Edit
-          tr.text-center(ng-repeat='unit in currentReporterToSet._source.settings.units')
-            td.mt0.mb0.pt0.pb0.align-middle
-              span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
-            td.mt0.mb0.pt0.pb0
-              span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
-            td.mt0.mb0.pt0.pb0
-              span(editable-select='unit.status', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%", e-class='pl0 pr0 text-center') {{ unit.status }}
-            td.mt0.mb0.pt0.pb0
-              span(editable-number='unit.pollingInterval', e-name='pollingInterval', e-form='rowform', e-style="width: 100%", e-min='1', e-max='3600',  e-class='p0 text-center') {{ unit.pollingInterval }}        
- 
-            td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
-              // form
-              form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='saveUnit($data, unit)', ng-show='rowform.$visible', shown='unitToAdd == unit')
-                button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
-                button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
-              .buttons(ng-show='!rowform.$visible')
-                button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
-                button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
-        button.btn.btn-default(ng-click='addUnit()') Add Unit
+        .col-sm-12
+          .form-group
+            table.table.table-bordered.table-hover.bg-white
+              tr.text-center(style='font-weight: bold')
+                td(style='width:20%') Unit IP
+                td(style='width:20%') MACAddress
+                td(style='width:15%') Status
+                td(style='width:25%') Polling (s)
+                td(style='width:20%') Edit
+              tr.text-center(ng-repeat='unit in currentReporterToSet._source.settings.units')
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-select='unit.status', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%", e-class='pl0 pr0 text-center') {{ unit.status }}
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-number='unit.pollingInterval', e-name='pollingInterval', e-form='rowform', e-style="width: 100%", e-min='1', e-max='3600',  e-class='p0 text-center') {{ unit.pollingInterval }}        
+     
+                td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
+                  // form
+                  form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='saveUnit($data, unit)', ng-show='rowform.$visible', shown='unitToAdd == unit')
+                    button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+                    button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
+                  .buttons(ng-show='!rowform.$visible')
+                    button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
+                    button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
+            button.btn.btn-default(ng-click='addUnit()') Add Unit
 
 
     .modal-footer
@@ -70,7 +73,7 @@
   .col-lg-9.fw-boxed
  
     // START Tabbed panel
-    .panel.panel-default.dbpanel(ng-init="hpanel = [true, false, false, false]")
+    .panel.panel-default.dbpanel(ng-init="hpanel = [false, true, false, false]")
       .row
         .col-md-4
           .row.row-flush.text-center.text-muted.m0
@@ -121,7 +124,7 @@
 
 
         .col-md-8(ng-if="hpanel[1]")
-          .row.row-table.mt.pt.mr(chained-animation="fadeIn")
+          .row.row-table.mt.pt.mr
             .col-sm-8.col-xs-12.ml0.pl0.mb0.pb0
               .row.row-table.mb0.pb0
                 .col-sm-12.col-xs-12
