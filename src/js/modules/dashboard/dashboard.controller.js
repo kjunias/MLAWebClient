@@ -21,7 +21,7 @@
       $rootScope.currentPeriod = {
         from : new Date(),
         to: new Date(),
-        resolution: 500
+        resolution: 200
       };
 
       $rootScope.leaksSeries = [];
