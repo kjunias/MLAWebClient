@@ -7,28 +7,30 @@
       .modal-header
         h4#myModalLabel.modal-title Reporters Settings
     .col-sm-12
-      .modal-body.mt0.pt0
+      .modal-body.mt0
         .col-sm-4
           label.control-label Reporter
           select.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet', ng-options='repToSet._source.settings.LAN for repToSet in reportersToSet', name='reporter', required)
-          br
         .col-sm-4
           label.control-label WAN
           input.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet._source.settings.WAN', placeholder='WAN', name='reporterWan', required)
-          br
 
         .col-md-2
           label.control-label Polling
-          input.form-control.pt0.pr0.pb0.pl-sm(type='number', ng-model="currentReporterToSet._source.settings.pollingInterval", min='1', max='3600', step='1', tooltip='Seconds')
-          br
+          input.form-control.pt0.pr0.pb0.pl-sm(type='number', ng-model="currentReporterToSet._source.settings.pollingInterval", placeholder='15', min='1', max='3600', step='1', tooltip='Seconds')
 
         .col-md-2.mr0
           label.control-label Status
-          br
           label.switch(ng-class="'switch-' + app.theme.name")
             input(type='checkbox', ng-checked='currentReporterToSet._source.settings.status == "active"', ng-click="toggleReporterStatus()", tooltip='Active or Inactive')
             span
-          br
+
+      .col-sm-12
+        hr
+        .col-sm-12
+          label.control-label Email
+          input.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet._source.settings.notifications.emails', placeholder='Email', name='reporterWan', required)
+          br          
 
         .col-sm-12
           .form-group
@@ -73,7 +75,7 @@
   .col-lg-9.fw-boxed
  
     // START Tabbed panel
-    .panel.panel-default.dbpanel(ng-init="hpanel = [false, true, false, false]")
+    .panel.panel-default.dbpanel(ng-init="hpanel = [true, false, false, false]")
       .row
         .col-md-4
           .row.row-flush.text-center.text-muted.m0
