@@ -63,7 +63,6 @@
           trackColor: colors.byName('info'),
           scaleColor: false,
           lineWidth: 10,
-          size: 65,
           lineCap: 'circle'
       };
 
@@ -219,6 +218,7 @@
 
       function updateLeaksSeries(rawData) {
         $rootScope.chartLoading = true;
+        erase();
         if ($rootScope.leaksSeries.length === 0 ) {
           generateLeaksSeries(rawData);
           redraw();
@@ -269,7 +269,8 @@
       }
 
       function generateLeaksSeries(rawData) {
-        $rootScope.leaksSeries = []
+        erase();
+        $rootScope.leaksSeries = [];
         var i = 0;
         for (var unit in rawData) {
           $rootScope.leaksSeries[i] = {
@@ -429,7 +430,7 @@
       vm.sparkOpts = {
         chartRangeMin: 0,
         type:               'line',
-        height:             '80px',
+        height:             '70px',
         width:              '100%',
         lineWidth:          '2',
         lineColor:          colors.byName('purple'),
@@ -439,14 +440,13 @@
         fillColor:          '',
         highlightLineColor: '#fff',
         spotRadius:         '3',
-        resize:             'true',
-        tooltipFormat: '<span style="color: {{color}}; width: 30px; height: 22px;">&#9679;</span> {{prefix}}{{y}}{{suffix}}</span>'
+        resize:             'true'
       };
 
       vm.sparkSearchOpts = {
         chartRangeMin: 0,
         type:               'line',
-        height:             '80px',
+        height:             '70px',
         width:              '100%',
         lineWidth:          '2',
         lineColor:          colors.byName('info'),
@@ -456,8 +456,7 @@
         fillColor:          '',
         highlightLineColor: 'green',
         spotRadius:         '3',
-        resize:             'true',
-        tooltipFormat: '<span style="color: {{color}}; width: 30px; height: 22px;">&#9679;</span> {{prefix}}{{y}}{{suffix}}</span>'
+        resize:             'true'
       };
 
       vm.sparkReporterCPUOpts = angular.extend({}, vm.sparkSearchOpts, { height: '35px', fillColor: '#c0d0f0', fillOpacity: 0.25 });

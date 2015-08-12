@@ -20,7 +20,6 @@
 
       function link(scope, element, attributs, ctrl) {
         element.find('a').on('click', function (event) {
-          console.log("====> click!!!");
           var ele = angular.element(this),
               par = ele.parent()[0];
 
