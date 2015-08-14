@@ -15,12 +15,16 @@
       sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
       sc.units = _.sortBy($rootScope.units, function(item) { return item.idUnits});
 
-      // console.log("1 =====> unites: ", $rootScope.units, $rootScope.unitsIPv4s);
-
       $scope.getUnitIP = function (idUnits) {
         return _.find($rootScope.unitsIPv4s, function (item) {
           return idUnits === item.idUnits;
         }).IPv4;
+      };
+
+      $scope.getUnitModel = function (idModel) {
+        return _.find($rootScope.models, function (item) {
+          return idModel === item.idModel;
+        }).model;
       };
 
       $scope.deleteReportersData = function () {
@@ -36,6 +40,19 @@
         }
       };
 
+      $scope.deleteUnitsData = function () {
+        for (var u in sc.units) {
+          var unit= sc.units[u];
+          if (unit._deleteUnitLogs) {
+            deleteUnitsLogs(unit);
+          }
+
+          if (unit._deleteUnit) {
+            deleteUnit(unit);
+          }
+        }
+      };
+
       function deleteReportersLogs(reporter) {
         console.log("1 =====> deleteReportersLogs: ", reporter);
       }
@@ -45,6 +62,16 @@
         .then(function () {
           memoryleaks.getReporters().then(function() {
             sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
+          });
+        });
+      }
+
+      function deleteUnit(unit) {
+        memoryleaks.deleteUnit(unit)
+        .then(function () {
+          memoryleaks.getUnits().then(function() {
+            sc.units = _.sortBy($rootScope.units, function(item) { return item.idUnits});
+            console.log("11 =====> deleteUnitsLogs: ", unit);
           });
         });
       }

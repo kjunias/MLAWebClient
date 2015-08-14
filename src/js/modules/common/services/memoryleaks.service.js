@@ -182,7 +182,16 @@
         return $http.post( BACKEND.baseURL + '/delete/reporters/' + reporterToDelete._source.idReporters, reporterToDelete)
           .success(function (res) {
             console.log('Deleted reporter: ', res);
-            init();
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+      function deleteUnit (unit) {
+        return $http.post( BACKEND.baseURL + '/delete/units/' + unit.idUnits, unit)
+          .success(function (res) {
+            console.log('Deleted unit: ', res);
           })
           .error(function (err) {
             console.log(err);
@@ -191,7 +200,9 @@
 
       memLeaksService.saveReporter = saveReporter;      
       memLeaksService.deleteReporter = deleteReporter;      
+      memLeaksService.deleteUnit = deleteUnit;      
       memLeaksService.getReporters = getReporters;      
+      memLeaksService.getUnits = getUnits;      
       memLeaksService.getUnitByMACAddress = getUnitByMACAddress;      
       memLeaksService.getDatabaseStatus = getDatabaseStatus;      
       return memLeaksService;

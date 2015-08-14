@@ -13,7 +13,7 @@
     .panel.panel-default
       .panel-heading
         .panel-title 
-          em.icon-bar-graph-2.fa-lg.text-muted.pull-right
+          em.icon-cog.fa-lg.text-muted.pull-right
           | Reporters
       .panel-body
         .row
@@ -48,48 +48,44 @@
 
         // START reporters Panel
 
-    //- // START units Panel
-    //- .panel.panel-default
-    //-   .panel-heading
-    //-     .panel-title 
-    //-       em.icon-bar-graph-2.fa-lg.text-muted.pull-right
-    //-       | Units
-    //-   .panel-body
-    //-     .row
-    //-       .col-sm-12
-    //-         .form-group
-    //-           table.table.table-bordered.table-hover.bg-white
-    //-             tr.text-center(style='font-weight: bold')
-    //-               td(style='width:10%') Unit Id
-    //-               td(style='width:20%') IP
-    //-               td(style='width:20%') MAC
-    //-               td(style='width:15%') Load
-    //-               td(style='width:15%') Delete Unit
-    //-               td(style='width:10%') Delete Logs
-    //-             tr.text-center(ng-repeat='unit in units')
-    //-               td.mt0.mb0.align-middle.text-center
-    //-                 {{unit.idUnits}}
-    //-               td.align-middle
-    //-                 {{getUnitIP(unit.idUnits)}}
-    //-               td.mt0.mb0.align-middle
-    //-                 {{unit.MACAddress}}
-    //-               td.mt0.mb0.align-middle
-    //-                 {{reporter._source.settings.units.length}}
+    // START units Panel
+    .panel.panel-default
+      .panel-heading
+        .panel-title 
+          em.icon-cog.fa-lg.text-muted.pull-right
+          | Units
+      .panel-body
+        .row
+          .col-sm-12
+            .form-group
+              table.table.table-bordered.table-hover.bg-white
+                tr.text-center(style='font-weight: bold')
+                  td(style='width:10%') Unit Id
+                  td(style='width:20%') IP
+                  td(style='width:20%') MAC
+                  td(style='width:15%') Model
+                  td(style='width:15%') Delete Unit
+                  td(style='width:10%') Delete Logs
+                tr.text-center(ng-repeat='unit in server.units')
+                  td.mt0.mb0.align-middle.text-center {{unit.idUnits}}
+                  td.align-middle {{getUnitIP(unit.idUnits)}}
+                  td.mt0.mb0.align-middle {{unit.MACAddress}}
+                  td.mt0.mb0.align-middle {{getUnitModel(unit.idModel)}}
                     
-    //-               td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
-    //-                 .form-group
-    //-                   .checkbox.c-checkbox.needsclick
-    //-                     label.needsclick
-    //-                       input(type='checkbox', value='', ng-model='reporter._deleteReporter').needsclick
-    //-                       span.fa.fa-check                    
-    //-               td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
-    //-                 .form-group
-    //-                   .checkbox.c-checkbox.needsclick
-    //-                     label.needsclick
-    //-                       input(type='checkbox', value='', ng-model='reporter._deleteReporterLogs').needsclick
-    //-                       span.fa.fa-check
-    //-           button.btn.btn-default.btn-danger.pull-right(ng-click='deleteReportersData()') Delete
+                  td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
+                    .form-group
+                      .checkbox.c-checkbox.needsclick
+                        label.needsclick
+                          input(type='checkbox', value='', ng-model='unit._deleteUnit').needsclick
+                          span.fa.fa-check                    
+                  td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
+                    .form-group
+                      .checkbox.c-checkbox.needsclick
+                        label.needsclick
+                          input(type='checkbox', value='', ng-model='unit._deleteUnitLogs').needsclick
+                          span.fa.fa-check
+              button.btn.btn-default.btn-danger.pull-right(ng-click='deleteUnitsData()') Delete
 
-    //-     // START reporters Panel
+        // START reporters Panel
    
    
