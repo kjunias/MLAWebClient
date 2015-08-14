@@ -33,17 +33,21 @@
       function init() {
         $rootScope.dbStatus.lastQueryStats = $rootScope.dbStatus.currentQueryStats;
         getUnits()
+        .then(getReporters())
         .then(getModels())
         .then(getSerials())
         .then(getLoads())
         .then(getUnitsIPv4s())
-        .then(getConfigs())
-        .then(getReporters());
+        .then(getConfigs());
       }
 
       function getReporters() {
         return $http.get( BACKEND.baseURL + '/reporters')
           .success(function (res) {
+            $rootScope.reporters = {
+              active: [],
+              inactive: []
+            };
             for (var i in res) {
               var aWeekAgo = new Date();
               aWeekAgo.setDate(aWeekAgo.getDate() - 7);
@@ -175,7 +179,20 @@
           });
       }
 
+      function deleteReporter (reporterToDelete) {
+        return $http.post( BACKEND.baseURL + '/delete/reporters/' + reporterToDelete._source.idReporters, reporterToDelete)
+          .success(function (res) {
+            console.log('Deleted reporter: ', res);
+            init();
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
       memLeaksService.saveReporter = saveReporter;      
+      memLeaksService.deleteReporter = deleteReporter;      
+      memLeaksService.getReporters = getReporters;      
       memLeaksService.getUnitByMACAddress = getUnitByMACAddress;      
       memLeaksService.getDatabaseStatus = getDatabaseStatus;      
       return memLeaksService;

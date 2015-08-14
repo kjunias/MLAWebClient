@@ -35,6 +35,7 @@
                                       '192.168.4.138':'192.168.38.1',
                                       '192.168.4.96':'192.168.25.1'
                                     };
+
       $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1);      
       $rootScope.$on('reporter.selected', onReporterSelect);
 
