@@ -182,6 +182,7 @@
         return $http.post( BACKEND.baseURL + '/delete/reporters/' + reporterToDelete._source.idReporters, reporterToDelete)
           .success(function (res) {
             console.log('Deleted reporter: ', res);
+            init();
           })
           .error(function (err) {
             console.log(err);
@@ -192,6 +193,7 @@
         return $http.post( BACKEND.baseURL + '/delete/units/' + unit.idUnits, unit)
           .success(function (res) {
             console.log('Deleted unit: ', res);
+            init();
           })
           .error(function (err) {
             console.log(err);

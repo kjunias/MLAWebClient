@@ -35,7 +35,7 @@
           }
 
           if (reporter._deleteReporter) {
-            deleteReporter(reporter);
+            deleteReporter(reporter, rep);
           }
         }
       };
@@ -48,7 +48,7 @@
           }
 
           if (unit._deleteUnit) {
-            deleteUnit(unit);
+            deleteUnit(unit, u);
           }
         }
       };
@@ -57,21 +57,18 @@
         console.log("1 =====> deleteReportersLogs: ", reporter);
       }
 
-      function deleteReporter(reporter) {
+      function deleteReporter(reporter, index) {
         memoryleaks.deleteReporter(reporter)
         .then(function () {
-          memoryleaks.getReporters().then(function() {
-            sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
-          });
+          sc.reporters.splice(index, 1);
         });
       }
 
-      function deleteUnit(unit) {
+      function deleteUnit(unit, index) {
         memoryleaks.deleteUnit(unit)
         .then(function () {
           memoryleaks.getUnits().then(function() {
-            sc.units = _.sortBy($rootScope.units, function(item) { return item.idUnits});
-            console.log("11 =====> deleteUnitsLogs: ", unit);
+            sc.units.splice(index, 1);
           });
         });
       }
