@@ -44,10 +44,9 @@
       function getReporters() {
         return $http.get( BACKEND.baseURL + '/reporters')
           .success(function (res) {
-            $rootScope.reporters = {
-              active: [],
-              inactive: []
-            };
+            $rootScope.reporters.active = [];
+            $rootScope.reporters.inactive = [];
+
             for (var i in res) {
               var aWeekAgo = new Date();
               aWeekAgo.setDate(aWeekAgo.getDate() - 7);

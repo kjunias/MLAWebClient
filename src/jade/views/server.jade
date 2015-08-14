@@ -27,7 +27,7 @@
                   td(style='width:15%') Units
                   td(style='width:15%') Delete Reporter
                   td(style='width:10%') Delete Logs
-                tr.text-center(ng-repeat='reporter in reporters')
+                tr.text-center(ng-repeat='reporter in server.reporters')
                   td.mt0.mb0.align-middle.text-center {{reporter._source.idReporters}}
                   td.align-middle {{reporter._source.settings.LAN}}
                   td.mt0.mb0.align-middle {{reporter._source.settings.WAN}}
