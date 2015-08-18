@@ -200,8 +200,21 @@
           });
       }
 
+
+      function deleteReporterLogs (reporter) {
+        return $http.post( BACKEND.baseURL + '/delete/logs/idReporters/' + reporter._source.idReporters, reporter)
+          .success(function (res) {
+            console.log('Deleted reporters logs: ', res);
+            init();
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
       memLeaksService.saveReporter = saveReporter;      
       memLeaksService.deleteReporter = deleteReporter;      
+      memLeaksService.deleteReporterLogs = deleteReporterLogs;      
       memLeaksService.deleteUnit = deleteUnit;      
       memLeaksService.getReporters = getReporters;      
       memLeaksService.getUnits = getUnits;      

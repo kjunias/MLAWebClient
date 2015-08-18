@@ -54,7 +54,10 @@
       };
 
       function deleteReportersLogs(reporter) {
-        console.log("1 =====> deleteReportersLogs: ", reporter);
+        memoryleaks.deleteReporterLogs(reporter)
+        .then(function (response) {
+          reporter._deleteReporterLogs = false
+        });
       }
 
       function deleteReporter(reporter, index) {

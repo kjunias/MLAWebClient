@@ -1,143 +1,77 @@
-/**
-   Component: form-input.less
-*/
+// .spinner {
+//   width: 100px;
 
-/**
- * Custom form elements
- *    - Checkbox 
- *    - Radios
- */
+//   > input {
+//     text-align: left;
+//   }
+// }
 
-@ui-fg-color: @brand-primary;
-@ui-bg-color: #ddd;
-@ui-input-wd: 20px;
+// .input-group-btn-vertical {
+//   position: relative;
+//   white-space: nowrap;
+//   width: 1%;
+//   vertical-align: middle;
+//   display: table-cell;
 
-.c-checkbox,
-.c-radio {
-  margin-right: 4px;
-  * {
-    cursor: pointer;
-  }
-  input {
-    opacity: 0;
-    position: absolute;
-    margin-left: 0 !important;
-  }
-  
-  // the element that replaces the input
-  span {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    margin-left: -@ui-input-wd;
-    width: @ui-input-wd; height: @ui-input-wd;
-    border-radius: 2px;
-    border: 1px solid #ccc;
-    margin-right: (@ui-input-wd/4);
-    text-align: center;
-    &:before {
-      margin-left: 1px; // fa align trick
-      color: #fff;
-    }
-  }
+//   > .btn {
+//     display: block;
+//     float: none;
+//     width: 100%;
+//     max-width: 100%;
+//     padding: 8px;
+//     margin-left: -1px;
+//     position: relative;
+//     border-radius: 0;
+//   }
 
-  &:hover span {
-    border-color: @ui-fg-color;
-  }
+//   > .btn:first-child {
+//     border-top-right-radius: 4px;
+//   }
 
-  .form-inline & span {
-    margin-left: 0;
-  }
+//   > .btn:last-child {
+//     margin-top: -2px;
+//     border-bottom-right-radius: 4px;
+//   }
 
-  &.c-checkbox-rounded,
-  &.c-radio-rounded {
-    span {
-      border-radius: 500px;
-    }
-  }
-}
+//   > em {
+//     position: absolute;
+//     top: 0;
+//     left: 4px;
+//   }
+// }
 
-/* override for radio */
-.c-radio span {
-  border-radius: 500px;
-}
-
-/* the icon */
-.c-checkbox,
-.c-radio {
-  span:before {
-    //content: "\2713"; /* comment content to use custom icon classes */
-    position: absolute;
-    top: 0; left: -1px;  right: 0; bottom: 0;
-    opacity: 0;
-    .scale(.2);
-    text-align: center !important;
-    font-size: 12px;
-    line-height: (@ui-input-wd - 1);
-    vertical-align: middle;
-  }
-}
-
-
-/* Checked state */
-.c-checkbox,
-.c-radio {
-  input[type=checkbox]:checked + span:before,
-  input[type=radio]:checked + span:before{
-    opacity: 1;
-    .scale(1);
-    .transition-transform(.2s ease-out);
-  }
-
-  input[type=checkbox]:checked + span,
-  input[type=radio]:checked + span {
-    border-color: @ui-fg-color;
-    background-color: @ui-fg-color;
-  }
-
-  /* override for radio */
-  input[type=radio]:checked + span{
-    background-color: #fff;
-    &:before{ 
-      color: @ui-fg-color;
-    }
-  }
-
-  /* Disable state */
-
-  input[type=checkbox]:disabled + span,
-  input[type=radio]:disabled + span{
-    border-color: @ui-bg-color !important;
-    background-color: @ui-bg-color !important;
-  }
-  /* override for radio */
-  input[type=radio]:disabled + span {
-    background-color: #fff !important;
-    &:before {
-      color: @ui-bg-color;
-    }
-  }
-}
-
-.block-note {
-  background-image: -webkit-linear-gradient(#eee .1em, transparent .1em);
-  background-image: linear-gradient(#eee .1em, transparent .1em);
-  
-  background-size: 100% 20px;
-  background-color: #fff; 
-
-  line-height: 20px;
-  margin-top: 5px;
-  padding: 0;
-  padding-bottom: 1px;
-  border: none;
-
-  &.block-note-margin {
-    background-image: 
-      -webkit-linear-gradient(0deg, transparent 49px, lighten(@brand-danger, 30%) 49px, lighten(@brand-danger, 30%) 51px, transparent 51px), -webkit-linear-gradient(#eee .1em, transparent .1em);
-    background-image: 
-      linear-gradient(90deg, transparent 49px, lighten(@brand-danger, 30%) 49px, lighten(@brand-danger, 30%) 51px, transparent 51px),
-      linear-gradient(#eee .1em, transparent .1em);
-    padding-left: 55px;
-  }
-}
+// .spinner {
+//   width: 100px;
+// }
+// .spinner input {
+//   text-align: left !important;
+// }
+// .input-group-btn-vertical {
+//   position: relative !important;
+//   white-space: nowrap !important;
+//   width: 1% !important;
+//   vertical-align: middle !important;
+//   display: table-cell !important;
+// }
+// .input-group-btn-vertical > .btn {
+//   display: block;
+//   float: none;
+//   width: 100% !important;
+//   max-width: 100% !important;
+//   padding: 8px !important;
+//   margin-left: -1px !important;
+//   position: relative !important;
+//   border-radius: 0 !important;
+// }
+// .input-group-btn-vertical > .btn:first-child {
+//   border-top-right-radius: 4px;
+// }
+// .input-group-btn-vertical > .btn:last-child {
+//   margin-top: -2px !important;
+//   border-bottom-right-radius: 4px;
+// }
+// .input-group-btn-vertical i{
+//   position: absolute !important;
+//   top: 0 !important;
+//   left: 4px !important;
+// }
