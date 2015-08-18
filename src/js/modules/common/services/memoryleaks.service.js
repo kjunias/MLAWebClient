@@ -38,6 +38,7 @@
         .then(getSerials())
         .then(getLoads())
         .then(getUnitsIPv4s())
+        .then(getSnapshots())
         .then(getConfigs());
       }
 
@@ -127,6 +128,17 @@
           })
           .error(function (err) {
             console.log(err);
+          });
+      }
+
+      function getSnapshots() {
+        return $http.get( BACKEND.baseURL + '/snapshots')
+          .success(function (res) {
+            $rootScope.snapshots = res.snapshots;
+            console.log("=============> snapshots: ", res);
+          })
+          .error(function (err) {
+            console.log('Error getSnapshots: ', err);
           });
       }
 

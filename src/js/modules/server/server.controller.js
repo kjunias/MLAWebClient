@@ -12,8 +12,8 @@
     ServerController.$inject = ['$rootScope', '$scope', '$http', '$modal', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
     function ServerController($rootScope, $scope, $http, $modal, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
       var sc = this;
-      refreshReporters();
-      refreshUnits();
+      init();
+
       
       $scope.getUnitIP = function (idUnits) {
         return _.find($rootScope.unitsIPv4s, function (item) {
@@ -25,6 +25,11 @@
         return _.find($rootScope.models, function (item) {
           return idModel === item.idModel;
         }).model;
+      };
+
+      $scope.getLocalDateString = function (dateStr) {
+        var date = new Date(dateStr);
+        return date.toLocaleDateString();
       };
 
       $scope.deleteReportersData = function () {
@@ -60,12 +65,22 @@
         });
       }
 
+      function init () {
+        refreshReporters();
+        refreshUnits();
+        refreshSnapshots();
+      }
+
       function refreshReporters () {
         sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
       }
 
       function refreshUnits () {
         sc.units = _.sortBy($rootScope.units, function(item) { return item.idUnits});
+      }
+
+      function refreshSnapshots () {
+        sc.snapshots = $rootScope.snapshots;
       }
 
       function deleteReportersLogs(reporter) {
