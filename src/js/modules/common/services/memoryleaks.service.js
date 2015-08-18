@@ -135,7 +135,6 @@
         return $http.get( BACKEND.baseURL + '/snapshots')
           .success(function (res) {
             $rootScope.snapshots = res.snapshots;
-            console.log("=============> snapshots: ", res);
           })
           .error(function (err) {
             console.log('Error getSnapshots: ', err);
@@ -180,7 +179,7 @@
       }
 
       function saveReporter (currentReporterToSet) {
-        return $http.post( BACKEND.baseURL + '/update/reporters/' + currentReporterToSet.idReporters, currentReporterToSet)
+        return $http.put( BACKEND.baseURL + '/update/reporters/' + currentReporterToSet.idReporters, currentReporterToSet)
           .success(function (res) {
             console.log('Saved reporter: ', res);
             init();
@@ -191,7 +190,7 @@
       }
 
       function deleteReporter (reporterToDelete) {
-        return $http.post( BACKEND.baseURL + '/delete/reporters/' + reporterToDelete._source.idReporters, reporterToDelete)
+        return $http.delete( BACKEND.baseURL + '/delete/reporters/' + reporterToDelete._source.idReporters, reporterToDelete)
           .success(function (res) {
             console.log('Deleted reporter: ', res);
             init();
@@ -202,7 +201,7 @@
       }
 
       function deleteUnit (unit) {
-        return $http.post( BACKEND.baseURL + '/delete/units/' + unit.idUnits, unit)
+        return $http.delete( BACKEND.baseURL + '/delete/units/' + unit.idUnits, unit)
           .success(function (res) {
             console.log('Deleted unit: ', res);
             init();
@@ -221,7 +220,7 @@
       }
 
       function deleteLogs (idField, id, doc) {
-        return $http.post( BACKEND.baseURL + '/delete/logs/' + idField +'/' + id, doc)
+        return $http.delete( BACKEND.baseURL + '/delete/logs/' + idField +'/' + id, doc)
           .success(function (res) {
             console.log('Deleted logs with ' + idField + '=' + id, res);
             init();
