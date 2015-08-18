@@ -200,11 +200,18 @@
           });
       }
 
+      function deleteUnitsLogs (unit) {
+        return deleteLogs('idunits', unit.idUnits, unit);
+      }
 
       function deleteReporterLogs (reporter) {
-        return $http.post( BACKEND.baseURL + '/delete/logs/idReporters/' + reporter._source.idReporters, reporter)
+        return deleteLogs('idReporters', reporter._source.idReporters, reporter);
+      }
+
+      function deleteLogs (idField, id, doc) {
+        return $http.post( BACKEND.baseURL + '/delete/logs/' + idField +'/' + id, doc)
           .success(function (res) {
-            console.log('Deleted reporters logs: ', res);
+            console.log('Deleted logs with ' + idField + '=' + id, res);
             init();
           })
           .error(function (err) {
@@ -218,6 +225,7 @@
       memLeaksService.deleteUnit = deleteUnit;      
       memLeaksService.getReporters = getReporters;      
       memLeaksService.getUnits = getUnits;      
+      memLeaksService.deleteUnitsLogs = deleteUnitsLogs;      
       memLeaksService.getUnitByMACAddress = getUnitByMACAddress;      
       memLeaksService.getDatabaseStatus = getDatabaseStatus;      
       return memLeaksService;

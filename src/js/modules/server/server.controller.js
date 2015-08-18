@@ -12,9 +12,9 @@
     ServerController.$inject = ['$rootScope', '$scope', '$http', '$modal', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
     function ServerController($rootScope, $scope, $http, $modal, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
       var sc = this;
-      sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
-      sc.units = _.sortBy($rootScope.units, function(item) { return item.idUnits});
-
+      refreshReporters();
+      refreshUnits();
+      
       $scope.getUnitIP = function (idUnits) {
         return _.find($rootScope.unitsIPv4s, function (item) {
           return idUnits === item.idUnits;
@@ -52,6 +52,21 @@
           }
         }
       };
+
+      function deleteUnitsLogs(unit) {
+        memoryleaks.deleteUnitsLogs(unit)
+        .then(function () {
+          unit._deleteUnitLogs = false;
+        });
+      }
+
+      function refreshReporters () {
+        sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
+      }
+
+      function refreshUnits () {
+        sc.units = _.sortBy($rootScope.units, function(item) { return item.idUnits});
+      }
 
       function deleteReportersLogs(reporter) {
         memoryleaks.deleteReporterLogs(reporter)
