@@ -201,7 +201,7 @@
       }
 
       function deleteUnitsLogs (unit) {
-        return deleteLogs('idunits', unit.idUnits, unit);
+        return deleteLogs('idUnits', unit.idUnits, unit);
       }
 
       function deleteReporterLogs (reporter) {
@@ -219,15 +219,15 @@
           });
       }
 
-      memLeaksService.saveReporter = saveReporter;      
-      memLeaksService.deleteReporter = deleteReporter;      
-      memLeaksService.deleteReporterLogs = deleteReporterLogs;      
-      memLeaksService.deleteUnit = deleteUnit;      
-      memLeaksService.getReporters = getReporters;      
-      memLeaksService.getUnits = getUnits;      
-      memLeaksService.deleteUnitsLogs = deleteUnitsLogs;      
-      memLeaksService.getUnitByMACAddress = getUnitByMACAddress;      
-      memLeaksService.getDatabaseStatus = getDatabaseStatus;      
+      memLeaksService.saveReporter = saveReporter;
+      memLeaksService.deleteReporter = deleteReporter;
+      memLeaksService.deleteReporterLogs = deleteReporterLogs;
+      memLeaksService.deleteUnit = deleteUnit;
+      memLeaksService.getReporters = getReporters;     
+      memLeaksService.getUnits = getUnits;
+      memLeaksService.deleteUnitsLogs = deleteUnitsLogs;
+      memLeaksService.getUnitByMACAddress = getUnitByMACAddress;
+      memLeaksService.getDatabaseStatus = getDatabaseStatus;
       return memLeaksService;
     }
 
