@@ -58,6 +58,20 @@
         }
       };
 
+      $scope.deleteSnapShot = function (snapshot) {
+        memoryleaks.deleteSnapShot(snapshot)
+        .then(function () {
+          setTimeout(refreshSnapshots, 500); 
+        });
+      };
+
+      $scope.createSnapshot = function () {
+        memoryleaks.createSnapshot()
+        .then(function () {
+          setTimeout(refreshSnapshots, 500); 
+        });
+      };
+
       function deleteUnitsLogs(unit) {
         memoryleaks.deleteUnitsLogs(unit)
         .then(function () {
@@ -81,6 +95,7 @@
 
       function refreshSnapshots () {
         sc.snapshots = $rootScope.snapshots;
+        console.log('===> refreshSnapshots: ', sc.snapshots);
       }
 
       function deleteReportersLogs(reporter) {

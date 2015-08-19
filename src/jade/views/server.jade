@@ -35,8 +35,8 @@
                       li {{index }}                
                   td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
                     .buttons
-                      button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
-              button.btn.btn-default.btn-info.pull-right(ng-click='deleteReportersData()') Create
+                      button.btn.btn-sm.btn-danger(ng-click='deleteSnapShot(snapshot)', title="Delete"): em.fa.fa-trash
+              button.btn.btn-default.btn-info.pull-right(ng-click='createSnapshot()') Create
         // END reporters Panel
 
     // START reporters Panel
@@ -115,6 +115,6 @@
                           span.fa.fa-check
               button.btn.btn-default.btn-danger.pull-right(ng-click='deleteUnitsData()') Delete
 
-        // END reporters Panel
+        // END units Panel
    
    

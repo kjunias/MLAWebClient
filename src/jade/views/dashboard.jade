@@ -135,7 +135,7 @@
                   .text-md Current Reporter: {{currentReporter._source.idReporters}}
                   .text-muted.pull-left LAN: {{reportersMappings[currentReporter._source.strFrom] || reporter._source.strFrom}} 
                   .text-muted.pull-right WAN: {{currentReporter._source.strFrom}}
-              hr.mt0
+              hr.mt0.mb-sm
               .row.row-table
                 .col-sm-6.col-xs-12
                   small.text-sm.text-center CPU
@@ -145,34 +145,28 @@
                   sparkline.mb(options="dashboard.sparkReporterCPUOpts", values="dashboard.sparkIndexVals")
 
               .row.row-table.mt
-                .col-lg-4.col-sm-4.col-xs-4.mb0
+                .col-sm-6.col-xs-6.mb0
                   .panel.panel-default.mb0.pb0(ripple="")
                     .panel-body.mb0.pb0(ng-class="'bg-' + app.theme.name")
                       h1.text-thin.mt 15 s
                       .text-right.text-sm.text-muted Reporting interval
-                .col-lg-4.col-sm-4.col-xs-4.mb0
+                .col-sm-6.col-xs-6.mb0
                   .panel.panel-default.mb0.pb0(ripple="")
                     .panel-body.mb0.pb0(ng-class="")
                       h1.text-thin.mt.text 9/10 
                       .text-right.text-sm.text-muted Active / Total Units
-                .col-lg-4.col-sm-4.col-xs-4.mb0
-                  .panel.panel-default.mb0.pb0(ripple="")
-                    .panel-body.mb0.pb0(ng-class="'bg-' + app.theme.name")
-                      h1.text-thin.mt 2
-                      .text-right.text-sm.text-muted ALERTS
-
             .col-sm-4.col-xs-12
               .row.row-table
-                .col-lg-12.col-sm-3.col-xs-3
-                  .panel.panel-default(ripple="")
+                .col-lg-12.col-sm-3.col-xs-3.mt0.mb0
+                  .panel.panel-default.mt0.mb0(ripple="")
                     .panel-body(ng-class="'bg-primary'")
                       h1.text-thin.mt.text-center 5 / 13
-                      .text-right.text-sm.text-muted.text-center Active / Total Reporters
+                      .text-right.text-sm.text-muted Active / Total Reporters
                 .col-lg-12.col-sm-3.col-xs-3
-                  .panel.panel-default(ripple="")
+                  .panel.panel-default.mt0.mb0(ripple="")
                     .panel-body(ng-class="'bg-primary'")
                       h1.text-thin.mt.text-center 4
-                      .text-right.text-sm.text-muted.text-center TOTAL ALERTS
+                      .text-right.text-sm.text-muted TOTAL ALERTS
 
         .col-md-8.align-middle.v-middle(ng-if="hpanel[2]", ng-init="dashboard.loadProgressValues()")
           .row.row-table.mt.pt.mr.pr.align-middle

@@ -47,7 +47,6 @@
           .success(function (res) {
             $rootScope.reporters.active = [];
             $rootScope.reporters.inactive = [];
-
             for (var i in res) {
               var aWeekAgo = new Date();
               aWeekAgo.setDate(aWeekAgo.getDate() - 7);
@@ -182,7 +181,7 @@
         return $http.put( BACKEND.baseURL + '/update/reporters/' + currentReporterToSet.idReporters, currentReporterToSet)
           .success(function (res) {
             console.log('Saved reporter: ', res);
-            init();
+            getReporters();
           })
           .error(function (err) {
             console.log(err);
@@ -193,7 +192,7 @@
         return $http.delete( BACKEND.baseURL + '/delete/reporters/' + reporterToDelete._source.idReporters, reporterToDelete)
           .success(function (res) {
             console.log('Deleted reporter: ', res);
-            init();
+            getReporters();
           })
           .error(function (err) {
             console.log(err);
@@ -204,7 +203,9 @@
         return $http.delete( BACKEND.baseURL + '/delete/units/' + unit.idUnits, unit)
           .success(function (res) {
             console.log('Deleted unit: ', res);
-            init();
+            getUnits();
+            getUnitByMACAddress();
+            getUnitsIPv4s();
           })
           .error(function (err) {
             console.log(err);
@@ -230,6 +231,28 @@
           });
       }
 
+      function deleteSnapShot (snapshot) {
+        return $http.delete( BACKEND.baseURL + '/snapshots/delete/' + snapshot.snapshot, snapshot)
+          .success(function (res) {
+            console.log('Deleted snapshot ' + snapshot.snapshot, res);
+            getSnapshots();
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
+      function createSnapshot () {
+        return $http.post(BACKEND.baseURL + '/snapshot/create')
+          .success(function (res) {
+            console.log('Created snapshot ', res);
+            getSnapshots();
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+
       memLeaksService.saveReporter = saveReporter;
       memLeaksService.deleteReporter = deleteReporter;
       memLeaksService.deleteReporterLogs = deleteReporterLogs;
@@ -237,6 +260,8 @@
       memLeaksService.getReporters = getReporters;     
       memLeaksService.getUnits = getUnits;
       memLeaksService.deleteUnitsLogs = deleteUnitsLogs;
+      memLeaksService.deleteSnapShot = deleteSnapShot;
+      memLeaksService.createSnapshot = createSnapshot;
       memLeaksService.getUnitByMACAddress = getUnitByMACAddress;
       memLeaksService.getDatabaseStatus = getDatabaseStatus;
       return memLeaksService;
