@@ -13,7 +13,7 @@
     function ReportersSettingsController($rootScope, $scope, $modalInstance,  colors, _, memoryleaks, editableOptions, editableThemes, BACKEND) {
       var ctrl = this;
       $scope.currentReporterToSet = $rootScope.currentReporter;
-      $scope.reportersToSet = $rootScope.reporters.active.concat($rootScope.reporters.inactive);
+      $scope.reportersToSet = $rootScope.reporters;
       $scope.statusOptions = ['active', 'inactive'];
       editableOptions.theme = 'bs3';
 
