@@ -45,21 +45,9 @@
       function getReporters() {
         return $http.get( BACKEND.baseURL + '/reporters')
           .success(function (res) {
-            $rootScope.reporters.active = [];
-            $rootScope.reporters.inactive = [];
-            for (var i in res) {
-              var aWeekAgo = new Date();
-              aWeekAgo.setDate(aWeekAgo.getDate() - 7);
-              var rep = res[i];
-              if (new Date(rep._source.lastValidDate) < aWeekAgo) {
-                $rootScope.reporters.inactive.push(rep);
-              } else {
-                $rootScope.reporters.active.push(rep);
-              }
-            }
-
-            if ($rootScope.reporters.active.length > 0 ) {
-              $rootScope.currentReporter = $rootScope.reporters.active[0];
+            $rootScope.reporters = res;
+            if ($rootScope.reporters.length > 0 ) {
+              $rootScope.currentReporter = $rootScope.reporters[0];
               $rootScope.$emit('reporter.selected', $rootScope.currentReporter);
             }
 

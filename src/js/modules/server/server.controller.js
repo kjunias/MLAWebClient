@@ -86,7 +86,7 @@
       }
 
       function refreshReporters () {
-        sc.reporters = _.sortBy($rootScope.reporters.active.concat($rootScope.reporters.inactive), function(item) { return item._source.idReporters});
+        sc.reporters = _.sortBy($rootScope.reporters, function(item) { return item._source.idReporters});
       }
 
       function refreshUnits () {
