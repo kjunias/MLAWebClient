@@ -27,7 +27,7 @@
                 a
                   em.sidebar-item-icon.fa.fa-angle-right
                   | Reporters
-              li(ng-repeat="reporter in reporters", ui-sref-active="", ui-reporters="")
+              li(ng-repeat="reporter in reporters", ui-sref-active="", ui-reporters="", ng-class="reporter._source.idReporters ===  currentReporter._source.idReporters ? 'active' : ''")
                 a(ui-sref='app.dashboard', title='{{reporter._source.idReporters}}', id='{{reporter._source.idReporters}}', ripple='', ng-click="reporterClick(reporter)")
                   em.sidebar-item-icon
                   span {{reporter._source.idReporters}}: {{reporter._source.settings.LAN || reportersMappings[reporter._source.strFrom] || reporter._source.strFrom}}
