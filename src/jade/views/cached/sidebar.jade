@@ -30,7 +30,7 @@
               li(ng-repeat="reporter in reporters", ui-sref-active="", ui-reporters="", ng-class="reporter._source.idReporters ===  currentReporter._source.idReporters ? 'active' : ''")
                 a(ui-sref='app.dashboard', title='{{reporter._source.idReporters}}', id='{{reporter._source.idReporters}}', ripple='', ng-click="reporterClick(reporter)")
                   em.sidebar-item-icon
-                  span {{reporter._source.idReporters}}: {{reporter._source.settings.LAN || reportersMappings[reporter._source.strFrom] || reporter._source.strFrom}}
+                  span {{reporter._source.idReporters}}: {{reportersMappings[reporter._source.strFrom] || reporter._source.settings.LAN || reporter._source.strFrom}}
                   span(ng-show="reporter._source.settings.status === 'active'") 
                     .fa.fa-circle.pull-right.text-success
 
