@@ -17,6 +17,33 @@
           | Syslogs for {{currentSyslogUnit}}
       .panel-body
         .row
+          .col-sm-5
+            label.control-label From
+          .col-sm-5
+            label.control-label To
+
+        .row(ng-controller='PeriodDatepickerController')
+          .col-sm-5
+            p.input-group
+              span.input-group-btn
+                button.btn.btn-default(type='button', ng-click='toggleFrom($event)')
+                  em.fa.fa-calendar
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='syslogRange.from', is-open='openedFrom', min-date='minDate', max-date="today()", 
+                                    datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="onSyslogDateChange()", close-text='Close')
+
+          .col-sm-5
+            p.input-group
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='syslogRange.to', is-open='openedTo', min-date='minDate', max-date="today()", 
+                                  datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="onSyslogDateChange()", close-text='Close')
+              span.input-group-btn
+                button.btn.btn-default(type='button', ng-click='toggleTo($event)')
+                  em.fa.fa-calendar
+
+          .col-sm-2.pull-right.chart-refresh-btn
+            button.btn.btn-default.pull-right(type='button', ng-click='dashboard.refreshChart($event)')
+                  em.fa.fa-refresh
+        hr
+        .row
           .col-sm-12
             div
               table.row-border.hover(datatable='ng')

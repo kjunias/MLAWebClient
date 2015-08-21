@@ -16,5 +16,10 @@
       $scope.getLocalDate= function (date) {
         return new Date(date).toLocaleString();
       };
+
+      $scope.onSyslogDateChange = function () {
+        $rootScope.syslogRange.from.setHours(0,0,0);
+        $rootScope.syslogRange.to.setHours(23,59,59);
+      }
     }
 })();

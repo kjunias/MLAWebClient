@@ -13,15 +13,17 @@
     SyslogleaksService.$inject = ['$rootScope', '$http', 'BACKEND'];
     function SyslogleaksService($rootScope, $http, BACKEND) {
       var syslogService = this;
-      $rootScope.syslogUnits = [];
 
       init();
 
       function init() {
+        $rootScope.syslogUnits = [];
         $rootScope.syslogRange = {
-          from: new Date('2015-08-14T21:23:04.614Z'),
-          to: new Date('2015-08-14T21:23:04.615Z')
+          from: new Date(),
+          to: new Date()
         };
+
+        $rootScope.syslogRange.from.setDate($rootScope.syslogRange.from.getDate() - 1);      
         getSyslogUnits()
         .then(getSyslogData)
       }
