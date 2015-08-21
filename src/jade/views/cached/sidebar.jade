@@ -55,7 +55,7 @@
               li.sidebar-subnav-header
                 a
                   em.sidebar-item-icon.fa.fa-angle-right
-                  | Reporters
+                  | Syslog Units
               li(ng-repeat="unit in syslogUnits", ui-sref-active="", ui-reporters="", ng-class="unit ===  currentSyslogUnit ? 'active' : ''")
                 a(ui-sref='app.syslog', title='{{unit}}', id='{{unit}}', ripple='', ng-click="syslogUnitClick(unit)")
                   em.sidebar-item-icon
