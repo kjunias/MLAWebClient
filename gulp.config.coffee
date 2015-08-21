@@ -72,8 +72,10 @@ module.exports = ($, usehtml) ->
       webroot:          dist,
       # host:             'localhost',
       # port:             '3000',
-      host:             '192.168.40.38',
-      port:             '5151',
+      host:             '192.168.38.1',
+      port:             '3333',
+      # host:             '192.168.40.38',
+      # port:             '5151',
       livereload:       true,
       directoryListing: false
     ,
