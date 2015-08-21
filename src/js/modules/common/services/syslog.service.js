@@ -63,8 +63,32 @@
         });
       }
 
+      function addSyslogData() {
+        if (typeof $rootScope.currentSyslogUnit === 'undefined') {
+          return null;
+        }
+
+        $rootScope.syslogDataLoading = true;
+        return $http.get(BACKEND.baseURL + '/syslog/logs/'+ $rootScope.currentSyslogUnit, {
+          params: {
+            from: $rootScope.currentSyslogLogs[$rootScope.currentSyslogLogs.length -1]._source['@timestamp'],
+            to: $rootScope.syslogRange.to.toISOString()
+          }
+        })
+        .success(function (res) {
+          $rootScope.currentSyslogLogs = $rootScope.currentSyslogLogs.concat(res);
+        })
+        .error(function (err) {
+          console.log(err);
+        })
+        .finally(function () {
+          $rootScope.syslogDataLoading = false;
+        });
+      }
+
       syslogService.getSyslogUnits = getSyslogUnits;
       syslogService.getSyslogData = getSyslogData;
+      syslogService.addSyslogData = addSyslogData;
       
       return syslogService;
     }

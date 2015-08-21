@@ -26,7 +26,16 @@
         var promise = syslog.getSyslogData()
         if(promise) {
           promise.then(function () {
-            console.log('=========> syslog!!!!');
+            console.log('Loaded data');
+          });
+        }
+      }
+
+      $scope.addMoreLogs = function () {
+        var promise = syslog.addSyslogData()
+        if(promise) {
+          promise.then(function () {
+            console.log('Added more data');
           });
         }
       }

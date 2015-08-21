@@ -42,6 +42,9 @@
           .col-sm-2.pull-right.chart-refresh-btn
             button.btn.btn-default.pull-right(type='button', ng-click='refreshLogs($event)')
                   em.fa.fa-refresh
+            button.btn.btn-default.pull-right(type='button', ng-click='addMoreLogs($event)')
+                  em.fa.fa-plus
+
         hr
         .text-center(ng-show="syslogDataLoading")
           img(src="app/assets/img/utils/loading-spinner.gif")
