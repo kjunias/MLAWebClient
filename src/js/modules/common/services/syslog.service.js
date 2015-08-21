@@ -27,7 +27,6 @@
           .success(function (res) {
             $rootScope.syslogUnits = res;
             $rootScope.currentSyslogUnit = $rootScope.syslogUnits[0];
-            console.log("=================> $rootScope.syslogUnits: ", $rootScope.syslogUnits);
           })
           .error(function (err) {
             console.log(err);

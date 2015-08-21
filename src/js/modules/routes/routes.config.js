@@ -42,6 +42,13 @@
             assets: Route.require('easypiechart', 'xeditable')
           }
         })
+        .state('app.syslog', {
+          url: '/syslog',
+          templateUrl: Route.base('syslog.html'),
+          resolve: {
+            assets: Route.require('xeditable')
+          }
+        })
         // Single Page Routes
         .state('page', {
           url: '/page',
