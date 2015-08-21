@@ -9,34 +9,29 @@
   // START page content
   .col-lg-9.fw-boxed
 
-    // START reporters Panel
+    // START Logs Panel
     .panel.panel-default
       .panel-heading
         .panel-title 
-          em.icon-cog.fa-lg.text-muted.pull-right
-          | Logs
+          em.icon-grid.fa-lg.text-muted.pull-right
+          | Syslogs for {{currentSyslogUnit}}
       .panel-body
         .row
           .col-sm-12
-            //- form.form-horizontal
-            //-   table.table.table-bordered.table-hover.bg-white
-            //-     tr.text-center(style='font-weight: bold')
-            //-       td(style='width:20%') Snapshot Id
-            //-       td(style='width:20%') Date
-            //-       td(style='width:20%') State
-            //-       td(style='width:20%') Indices
-            //-       td(style='width:20%') Delete Snapshot
-            //-     tr.text-center(ng-repeat='snapshot in server.snapshots')
-            //-       td.mt0.mb0.pt0.pb0.align-middle.text-center {{snapshot.snapshot}}
-            //-       td.mt0.mb0.pt0.pb0.align-middle {{getLocalDateString(snapshot.start_time)}}
-            //-       td.mt0.mb0.pt0.pb0.align-middle {{snapshot.state}}
-            //-       td.mt0.mb0.pt0.pb0.align-middle 
-            //-         ul(ng-repeat='index in snapshot.indices')
-            //-           li {{index }}                
-            //-       td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
-            //-         .buttons
-            //-           button.btn.btn-sm.btn-danger(ng-click='deleteSnapShot(snapshot)', title="Delete"): em.fa.fa-trash
-            //-   button.btn.btn-default.btn-info.pull-right(ng-click='createSnapshot()') Create
-        // END reporters Panel
+            div
+              table.row-border.hover(datatable='ng')
+                thead
+                  tr
+                    th(style='width:15%') Time
+                    th(style='width:10%') Facility
+                    th(style='width:10%') Level
+                    th(style='width:65%') Message
+                tbody
+                  tr(ng-repeat='log in currentSyslogLogs')
+                    td {{ getLocalDate( log._source['@timestamp']) }}
+                    td {{ log._source.facility_label }}
+                    td {{ log._source.severity_label }}
+                    td {{ log._source.message }}
+    // END Logs Panel
 
    

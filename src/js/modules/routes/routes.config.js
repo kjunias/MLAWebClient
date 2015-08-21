@@ -46,7 +46,7 @@
           url: '/syslog',
           templateUrl: Route.base('syslog.html'),
           resolve: {
-            assets: Route.require('xeditable')
+            assets: Route.require('datatables')
           }
         })
         // Single Page Routes
