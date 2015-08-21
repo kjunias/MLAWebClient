@@ -40,10 +40,12 @@
                   em.fa.fa-calendar
 
           .col-sm-2.pull-right.chart-refresh-btn
-            button.btn.btn-default.pull-right(type='button', ng-click='dashboard.refreshChart($event)')
+            button.btn.btn-default.pull-right(type='button', ng-click='refreshLogs($event)')
                   em.fa.fa-refresh
         hr
-        .row
+        .text-center(ng-show="syslogDataLoading")
+          img(src="app/assets/img/utils/loading-spinner.gif")
+        .row(ng-show="!syslogDataLoading")
           .col-sm-12
             div
               table.row-border.hover(datatable='ng')

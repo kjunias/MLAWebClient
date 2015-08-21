@@ -17,6 +17,7 @@
       init();
 
       function init() {
+        $rootScope.syslogDataLoading = false;
         $rootScope.syslogUnits = [];
         $rootScope.syslogRange = {
           from: new Date(),
@@ -44,6 +45,7 @@
           return null;
         }
 
+        $rootScope.syslogDataLoading = true;
         return $http.get(BACKEND.baseURL + '/syslog/logs/'+ $rootScope.currentSyslogUnit, {
           params: {
             from: $rootScope.syslogRange.from.toISOString(),
@@ -57,7 +59,7 @@
           console.log(err);
         })
         .finally(function () {
-          $rootScope.chartLoading = false;
+          $rootScope.syslogDataLoading = false;
         });
       }
 
