@@ -10,8 +10,8 @@
         .run(appRun);
 
 
-    appRun.$inject = ['$rootScope', '$state', '$stateParams', '$localStorage', 'translator', 'settings', 'browser', 'memoryleaks'];
-    function appRun($rootScope, $state, $stateParams, $localStorage, translator, settings, browser, memoryleaks) {
+    appRun.$inject = ['$rootScope', '$state', '$stateParams', '$localStorage', 'translator', 'settings', 'browser', 'memoryleaks', 'syslog'];
+    function appRun($rootScope, $state, $stateParams, $localStorage, translator, settings, browser, memoryleaks, syslog) {
 
       // Set reference to access them from any scope
       $rootScope.$state = $state;

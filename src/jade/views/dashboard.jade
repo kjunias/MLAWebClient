@@ -31,10 +31,44 @@
           label.control-label Email
           input.form-control.m-b(ng-trim="true", type='text', ng-model='currentReporterToSet._source.settings.notifications.emails', placeholder='Email', name='reporterWan', required)
           br          
+        .col-sm-12
+          h5 Watchers
+            span.pull-right
+              small.pull-right Reporter's watchers
+          .form-group.mb-sm
+            table.table.table-bordered.table-hover.bg-white.pb0.mb0
+              tr.text-center(style='font-weight: bold')
+                td(style='width:15%') Property
+                td(style='width:12%') Predicate
+                td(style='width:15%') Threshold
+                td(style='width:38%') Emails
+                td(style='width:20%') Edit
+              tr.text-center(ng-repeat='watcher in currentReporterToSet._source.settings.watchers.reporter')
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-text='watcher.type', e-name='Type', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit)', oncancel="cancelEditRow(watcher)", e-class='pl0 pr0 text-center', e-required='') {{ watcher.type }}
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-text='watcher.predicate', e-name='predicate', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ watcher.predicate }}
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-text='watcher.threshold', e-name='pollingInterval', e-form='rowform', e-style="width: 100%", e-min='1', e-max='3600',  e-class='p0 text-center') {{ watcher.threshold }}        
+                td.mt0.mb0.pt0.pb0.align-middle
+                  span(editable-text='watcher.emails[0]', e-name='status', e-form='rowform', e-ng-options='statusOpt for statusOpt in statusOptions', e-style="width: 100%", e-class='pl0 pr0 text-center') {{ watcher.emails[0] }}
+     
+                td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
+                  // form
+                  form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='saveUnit($data, unit)', ng-show='rowform.$visible', shown='watcherToAdd == watcher')
+                    button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+                    button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
+                  .buttons(ng-show='!rowform.$visible')
+                    button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
+                    button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
+            
+            button.btn.btn-default.btn-success.mt0(ng-click='addUnit()')
+              .fa.fa-plus
 
         .col-sm-12
-          .form-group
-            table.table.table-bordered.table-hover.bg-white
+          .form-group.mb-sm
+            h5 Units
+            table.table.table-bordered.table-hover.bg-white.pb0.mb0
               tr.text-center(style='font-weight: bold')
                 td(style='width:20%') Unit IP
                 td(style='width:20%') MACAddress
@@ -59,7 +93,9 @@
                   .buttons(ng-show='!rowform.$visible')
                     button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
                     button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
-            button.btn.btn-default(ng-click='addUnit()') Add Unit
+            
+            button.btn.btn-default.btn-success.mt0(ng-click='addUnit()')
+              .fa.fa-plus
 
 
     .modal-footer
@@ -77,7 +113,7 @@
   .col-lg-9.fw-boxed
  
     // START Tabbed panel
-    .panel.panel-default.dbpanel.pr-lg(ng-init="hpanel = [true, false, false, false]")
+    .panel.panel-default.dbpanel.pr-lg(ng-init="hpanel = [false, true, false, false]")
       .row
         .col-md-4
           .row.row-flush.text-center.text-muted.m0
@@ -157,12 +193,12 @@
                       .text-right.text-sm.text-muted Active / Total Units
             .col-sm-4.col-xs-12
               .row.row-table
-                .col-lg-12.col-sm-3.col-xs-3.mt0.mb0
+                .col-lg-12.col-sm-12.col-xs-12.mt0.mb0
                   .panel.panel-default.mt0.mb0(ripple="")
                     .panel-body(ng-class="'bg-primary'")
                       h1.text-thin.mt.text-center 5 / 13
                       .text-right.text-sm.text-muted Active / Total Reporters
-                .col-lg-12.col-sm-3.col-xs-3
+                .col-lg-12.col-sm-12.col-xs-12
                   .panel.panel-default.mt0.mb0(ripple="")
                     .panel-body(ng-class="'bg-primary'")
                       h1.text-thin.mt.text-center 4
