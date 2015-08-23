@@ -26,7 +26,9 @@
 
         $rootScope.syslogRange.from.setDate($rootScope.syslogRange.from.getDate() - 1);      
         getSyslogUnits()
-        .then(getSyslogData)
+        .then(function () {
+          return getSyslogData();
+        })
       }
 
       function getSyslogUnits() {
@@ -40,17 +42,24 @@
           });
       }
 
-      function getSyslogData() {
+      function getSyslogData(matchPhrase) {
         if (typeof $rootScope.currentSyslogUnit === 'undefined') {
           return null;
         }
 
         $rootScope.syslogDataLoading = true;
+        
+        var params = {
+          from: $rootScope.syslogRange.from.toISOString(),
+          to: $rootScope.syslogRange.to.toISOString()
+        };
+
+        if (matchPhrase) {
+          params.matchPhrase = matchPhrase;
+        }
+
         return $http.get(BACKEND.baseURL + '/syslog/logs/'+ $rootScope.currentSyslogUnit, {
-          params: {
-            from: $rootScope.syslogRange.from.toISOString(),
-            to: $rootScope.syslogRange.to.toISOString()
-          }
+          params: params
         })
         .success(function (res) {
           $rootScope.currentSyslogLogs = res;
@@ -63,17 +72,24 @@
         });
       }
 
-      function addSyslogData() {
+      function addSyslogData(matchPhrase) {
         if (typeof $rootScope.currentSyslogUnit === 'undefined') {
           return null;
         }
 
         $rootScope.syslogDataLoading = true;
+
+        var params = {
+          from: $rootScope.currentSyslogLogs[$rootScope.currentSyslogLogs.length -1]._source['@timestamp'],
+          to: $rootScope.syslogRange.to.toISOString(),
+        };
+
+        if (matchPhrase) {
+          params.matchPhrase = matchPhrase;
+        }
+
         return $http.get(BACKEND.baseURL + '/syslog/logs/'+ $rootScope.currentSyslogUnit, {
-          params: {
-            from: $rootScope.currentSyslogLogs[$rootScope.currentSyslogLogs.length -1]._source['@timestamp'],
-            to: $rootScope.syslogRange.to.toISOString()
-          }
+          params: params
         })
         .success(function (res) {
           $rootScope.currentSyslogLogs = $rootScope.currentSyslogLogs.concat(res);

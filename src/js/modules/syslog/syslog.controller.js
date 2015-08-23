@@ -47,5 +47,14 @@
           });
         }
       }
+
+      $scope.syslogSearch = function () {
+        var promise = syslog.getSyslogData($scope.syslogQuery)
+        if(promise) {
+          promise.then(function () {
+            console.log('Loaded data');
+          });
+        }
+      };
     }
 })();
