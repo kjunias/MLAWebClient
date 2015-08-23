@@ -51,7 +51,7 @@
         .row(ng-show="!syslogDataLoading")
           .col-sm-12
             div
-              table.row-border.hover(datatable='ng')
+              table.row-border.hover(datatable='ng' dt-options="dtOptions")
                 thead
                   tr
                     th(style='width:15%') Time

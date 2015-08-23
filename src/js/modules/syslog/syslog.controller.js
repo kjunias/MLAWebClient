@@ -9,9 +9,17 @@
         .module('naut')
         .controller('SyslogController', SyslogController);
     
-    SyslogController.$inject = ['$rootScope', '$scope', '$http', '$modal', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'syslog', 'BACKEND'];
-    function SyslogController($rootScope, $scope, $http, $modal, colors, flotOptions, $timeout, serverStatus, syslog, BACKEND) {
+    SyslogController.$inject = ['$rootScope', '$scope', '$http', 'syslog', 'DTOptionsBuilder', 'BACKEND'];
+    function SyslogController($rootScope, $scope, $http, syslog, DTOptionsBuilder, BACKEND) {
       var sc = this;
+
+      $scope.dtOptions = DTOptionsBuilder.newOptions()
+      .withLanguage({
+        "sLengthMenu":     "_MENU_ entries / page",
+        "sLoadingRecords": "Loading...",
+        "sProcessing":     "Processing...",
+        "sSearch":         "Filter:"
+      });
 
       $scope.getLocalDate= function (date) {
         return new Date(date).toLocaleString();
