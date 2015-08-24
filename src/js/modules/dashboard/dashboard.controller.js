@@ -14,7 +14,7 @@
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
-      var SERVER_UPDATE_INTERVAL = 5000;
+      var SERVER_UPDATE_INTERVAL = 20 * 1000;
 
       $rootScope.chartLoading = true;
       $rootScope.singleSeriesToggled = false;
