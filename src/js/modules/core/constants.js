@@ -9,7 +9,7 @@
     .module('naut')
     .constant('VERSION', {
       number: '0.0.1',
-      startDate: '2015-06-01',
+      startDate: '2015-07-02',
       endDate: 'Now'
     })
     .constant('BACKEND', {

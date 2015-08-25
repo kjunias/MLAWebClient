@@ -25,7 +25,7 @@ module.exports = ($, usehtml) ->
     #
     version: 
       number: '0.0.1'
-      startDate: '2015-06-01'
+      startDate: '2015-07-02'
       endDate: 'Now'
     #
     # Paths
@@ -77,12 +77,12 @@ module.exports = ($, usehtml) ->
     ,
     webserver:
       webroot:          dist,
-      # host:             'localhost',
-      # port:             '3000',
+      host:             'localhost',
+      port:             '3000',
       # host:             '192.168.38.1',
       # port:             '3333',
-      host:             '192.168.40.38',
-      port:             '5151',
+      # host:             '192.168.40.38',
+      # port:             '5151',
       livereload:       true,
       directoryListing: false
     ,
