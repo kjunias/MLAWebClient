@@ -9,8 +9,8 @@
         .module('naut')
         .controller('DashboardController', DashboardController);
     
-    DashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', '$controller', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND'];
-    function DashboardController($rootScope, $scope, $http, $modal, $controller, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
+    DashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', '$controller', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND', 'VERSION'];
+    function DashboardController($rootScope, $scope, $http, $modal, $controller, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND, VERSION) {
       var vm = this;
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';

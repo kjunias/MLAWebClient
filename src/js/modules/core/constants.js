@@ -7,6 +7,11 @@
 
   angular
     .module('naut')
+    .constant('VERSION', {
+      number: '0.0.1',
+      startDate: '2015-06-01',
+      endDate: 'Now'
+    })
     .constant('BACKEND', {
       // 'baseURL': 'http://localhost:5555'
       // 'baseURL': 'http://192.168.38.1:5555'

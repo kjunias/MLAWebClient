@@ -21,6 +21,13 @@ module.exports = ($, usehtml) ->
   # Shared config object
   config =
     #
+    # Version
+    #
+    version: 
+      number: '0.0.1'
+      startDate: '2015-06-01'
+      endDate: 'Now'
+    #
     # Paths
     #
     dist:    dist,
@@ -72,6 +79,8 @@ module.exports = ($, usehtml) ->
       webroot:          dist,
       # host:             'localhost',
       # port:             '3000',
+      # host:             '192.168.38.1',
+      # port:             '3333',
       host:             '192.168.40.38',
       port:             '5151',
       livereload:       true,

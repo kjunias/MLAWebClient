@@ -1,11 +1,11 @@
 // START Sidebar
-.sidebar-wrapper(ui-if="reportersLoaded")
+.sidebar-wrapper(ui-if="reportersLoaded" ng-controller="SidebarController as sidebar")
   .sidebar(ui-sidebar="")
     .sidebar-nav
         ul.nav
           // Iterates over all sidebar items
           li.nav-heading
-            span.text-muted(translate='sidebar.heading.HEADER') Main Navigation
+            span.text-muted Version: {{sidebar.version.number}} ({{sidebar.version.startDate}})
           li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Dashboard', ripple='')
               .label.pull-right.label-success 4
