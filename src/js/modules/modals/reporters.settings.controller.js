@@ -87,7 +87,7 @@
       }
 
       $scope.checkMACAddress = function (data, unit) {
-        var MACFormat = /^([0-9A-F]{2}){5}([0-9A-F]{2})$/;
+        var MACFormat = /^([0-9a-f]{2}){5}([0-9a-f]{2})$/;
         if (!data || !data.match(MACFormat)) {
           rowform.$visible = true;
           return 'Enter valid MACAddress';
