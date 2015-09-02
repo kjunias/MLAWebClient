@@ -13,11 +13,12 @@
     function ServerController($rootScope, $scope, $http, $modal, colors, flotOptions, $timeout, serverStatus, memoryleaks, BACKEND) {
       var sc = this;
       init();
-
       
       $scope.getUnitIP = function (idUnits) {
-        return _.find($rootScope.unitsIPv4s, function (item) {
+        return _.max(_.filter($rootScope.unitsIPv4s, function (item) {
           return idUnits === item.idUnits;
+        }), function (item) {
+          return new Date (item.lastValidDate).getTime();
         }).IPv4;
       };
 
