@@ -4,7 +4,8 @@
     "SERVER": "Server",
     "REPORTERS": "Reporters",
     "UNITS": "Units",
-    "LOADS": "Loads"
+    "LOADS": "Loads",
+    "SYSLOG": "Syslog"
   },
   "topbar": {
     "search": {

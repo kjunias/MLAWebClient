@@ -17,7 +17,8 @@
               em.sidebar-item-icon.icon-server
               span(translate='common.SERVER') Server
 
-          li(ng-class="{active:$state.includes('app')}")
+          //- li(ng-class="{active:$state.includes('app')}")
+          li
             a(href='', title='Layouts', ripple='')
               em.sidebar-item-icon.icon-globe
               em.sidebar-item-caret.fa.pull-right.fa-angle-right
@@ -33,7 +34,6 @@
                   span {{reporter._source.idReporters}}: {{reportersMappings[reporter._source.strFrom] || reporter._source.settings.LAN || reporter._source.strFrom}}
                   span(ng-show="reporter._source.settings.status === 'active'") 
                     .fa.fa-circle.pull-right.text-success
-
           li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Units', ripple='')
               em.sidebar-item-icon.icon-box
@@ -45,6 +45,22 @@
 
           li
             hr
+
+          li(ng-class="{active:$state.includes('app')}")
+            a(href='', title='Layouts', ripple='')
+              em.sidebar-item-icon.icon-paper
+              em.sidebar-item-caret.fa.pull-right.fa-angle-right
+              span(translate='common.SYSLOG') Syslog
+            ul.nav.sidebar-subnav
+              li.sidebar-subnav-header
+                a
+                  em.sidebar-item-icon.fa.fa-angle-right
+                  | Syslog Units
+              li(ng-repeat="unit in syslogUnits", ui-sref-active="", ui-reporters="", ng-class="unit ===  currentSyslogUnit ? 'active' : ''")
+                a(ui-sref='app.syslog', title='{{unit}}', id='{{unit}}', ripple='', ng-click="syslogUnitClick(unit)")
+                  em.sidebar-item-icon
+                  span {{unit }}
+
           li(ui-sref-active="")
             a(ui-sref='app.dashboard', title='Units', ripple='')
               em.sidebar-item-icon.fa.fa-calendar

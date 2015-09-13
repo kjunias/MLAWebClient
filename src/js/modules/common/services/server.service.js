@@ -1,6 +1,6 @@
 /**=========================================================
- * Module: MemoryleaksService.js
- * Memoryleaks data service
+ * Module: ServerService.js
+ * Server data service
  =========================================================*/
 
 (function() {

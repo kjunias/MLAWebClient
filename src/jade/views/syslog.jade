@@ -1,0 +1,80 @@
+.app-view-header
+
+
+  | Syslogs
+  small(ng-bind="app.date.toLocaleString()")
+
+.row(ng-controller="SyslogController as syslog")
+  .text-center
+  // START page content
+  .col-lg-9.fw-boxed
+
+    // START Logs Panel
+    .panel.panel-default
+      .panel-heading
+        .panel-title 
+          em.icon-grid.fa-lg.text-muted.pull-right
+          | Syslogs for {{currentSyslogUnit}}
+      .panel-body
+        .row
+          .col-sm-5
+            label.control-label From
+          .col-sm-5
+            label.control-label To
+
+        .row(ng-controller='PeriodDatepickerController')
+          .col-sm-5
+            p.input-group
+              span.input-group-btn
+                button.btn.btn-default(type='button', ng-click='toggleFrom($event)')
+                  em.fa.fa-calendar
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='syslogRange.from', is-open='openedFrom', min-date='minDate', max-date="today()", 
+                                    datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="onSyslogDateChange()", close-text='Close')
+
+          .col-sm-5
+            p.input-group
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='syslogRange.to', is-open='openedTo', min-date='minDate', max-date="today()", 
+                                  datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="onSyslogDateChange()", close-text='Close')
+              span.input-group-btn
+                button.btn.btn-default(type='button', ng-click='toggleTo($event)')
+                  em.fa.fa-calendar
+
+          .col-sm-2.pull-right.chart-refresh-btn
+            button.btn.btn-default.pull-right(type='button', ng-click='refreshLogs($event)')
+                  em.fa.fa-refresh
+
+        .row
+          .col-sm-11
+            p.input-group
+              input.form-control(type='text', ng-model='syslogQuery', ng-model-options='{ debounce: 1000 }', ng-change="syslogSearch()")
+              span.input-group-btn
+                button.btn.btn-default(type='button', ng-click='syslogSearch()')
+                  em.fa.fa-search
+
+          .col-sm-1.pull-right.chart-refresh-btn
+            button.btn.btn-default.pull-right(type='button', ng-click='addMoreLogs($event)')
+                  em.fa.fa-plus
+
+
+        hr
+        .text-center(ng-show="syslogDataLoading")
+          img(src="app/assets/img/utils/loading-spinner.gif")
+        .row(ng-show="!syslogDataLoading")
+          .col-sm-12
+            div
+              table.row-border.hover(datatable='ng' dt-options="dtOptions")
+                thead
+                  tr
+                    th(style='width:15%') Time
+                    th(style='width:10%') Facility
+                    th(style='width:10%') Level
+                    th(style='width:65%') Message
+                tbody
+                  tr(ng-repeat='log in currentSyslogLogs')
+                    td {{ getLocalDate( log._source['@timestamp']) }}
+                    td {{ log._source.facility_label }}
+                    td {{ log._source.severity_label }}
+                    td {{ log._source.message }}
+    // END Logs Panel
+
+   
