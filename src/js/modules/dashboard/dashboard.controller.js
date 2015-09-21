@@ -161,17 +161,11 @@
       });
 
       function hoverPoint (flotItem, $tooltipEl) {
-        var idCurrentConfiguration = flotItem.series.data[flotItem.dataIndex][2];
-        var config = $rootScope.configs[idCurrentConfiguration];
-        var ipv4 = $rootScope.unitsIPv4s[config.idIPv4].IPv4;
-        var loadVersion = $rootScope.loads[config.idLoadVersion].loadVersion;
-        var serialNo = $rootScope.serials[config.idSerial].serialNo;
-
         var str = 'Time: ' + new Date(flotItem.datapoint[0]).toLocaleString() + '<br>' +
               'Mem(%): ' + flotItem.datapoint[1].toFixed(3) + '<br>' +
-              'IPv4: ' + ipv4 + '<br>' +
-              'Serial: ' + serialNo + '<br>' +
-              'Load: ' + loadVersion + '<br>';
+              'IPv4: ' + flotItem.series.data[flotItem.dataIndex][2] + '<br>' +
+              'Serial: ' + flotItem.series.data[flotItem.dataIndex][3] + '<br>' +
+              'Load: ' + flotItem.series.data[flotItem.dataIndex][4] + '<br>';
 
         $tooltipEl.text('');
         $tooltipEl.append(str);
@@ -234,8 +228,9 @@
               for (var d in unitData) {
                 var x = new Date(unitData[d].date).getTime();
                 // var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00));
-                var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
-                $rootScope.leaksSeries[j].data.push([x, y, unitData[d].idCurrentConfiguration]);
+                // var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
+                var y = (((unitData[d].memTotal - (unitData[d].memFree + unitData[d].memCached + unitData[d].memBuffer)) * 100)/(unitData[d].memTotal * 1.00));
+                $rootScope.leaksSeries[j].data.push([x, y, unitData[d].unitsIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
               }
             }
           }
@@ -277,12 +272,13 @@
         for (var unit in rawData) {
           $rootScope.leaksSeries[i] = {
             'label': rawData[unit].IPV4,
-            'idUnits': rawData[unit].idUnits,
+            'MACAddress': rawData[unit].MACAddress,
             'color': getRandomColor(),
             'index':i,
             'show': true,
             'data': []
           };
+
 
           vm.showSeriesLegend[i] = $rootScope.leaksSeries[i].show;
 
@@ -290,8 +286,9 @@
           for (var d in unitData) {
             var x = new Date(unitData[d].date).getTime();
             // var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
-            var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
-            $rootScope.leaksSeries[i].data.push([x, y, unitData[d].idCurrentConfiguration]);
+            // var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
+            var y = (((unitData[d].memTotal - (unitData[d].memFree + unitData[d].memCached + unitData[d].memBuffer)) * 100)/(unitData[d].memTotal * 1.00));
+            $rootScope.leaksSeries[i].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
           }
 
           i++;
