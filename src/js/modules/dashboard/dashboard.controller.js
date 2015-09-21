@@ -187,7 +187,7 @@
         var unitsToUpdate = [];
         for (var unit in $rootScope.leaksSeries) {
           if ($rootScope.leaksSeries[unit].show) {
-            unitsToUpdate.push($rootScope.leaksSeries[unit].idUnits);
+            unitsToUpdate.push($rootScope.leaksSeries[unit].MACAddress);
           }
         }
 
