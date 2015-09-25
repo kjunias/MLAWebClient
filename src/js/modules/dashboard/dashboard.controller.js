@@ -222,7 +222,7 @@
 
         for (var i in rawData) {
           for (var j in $rootScope.leaksSeries) {
-            if (rawData[i].idUnits === $rootScope.leaksSeries[j].idUnits) {
+            if (rawData[i].MACAddress === $rootScope.leaksSeries[j].MACAddress) {
               $rootScope.leaksSeries[j].data = [];
               var unitData = rawData[i].data;
               for (var d in unitData) {
@@ -230,7 +230,7 @@
                 // var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00));
                 // var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
                 var y = (((unitData[d].memTotal - (unitData[d].memFree + unitData[d].memCached + unitData[d].memBuffer)) * 100)/(unitData[d].memTotal * 1.00));
-                $rootScope.leaksSeries[j].data.push([x, y, unitData[d].unitsIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
+                $rootScope.leaksSeries[j].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
               }
             }
           }
