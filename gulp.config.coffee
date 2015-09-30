@@ -77,8 +77,7 @@ module.exports = ($, usehtml) ->
     ,
     webserver:
       webroot:          dist,
-      # host:             'monitoring.media5corp.com',
-      host:             'localhost',
+      host:             'monitoring.media5corp.com',
       port:             '80',
       livereload:       true,
       directoryListing: false
