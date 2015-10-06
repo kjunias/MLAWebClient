@@ -24,6 +24,7 @@
         resolution: 200
       };
 
+
       $rootScope.leaksSeries = [];
       $rootScope.showAll = true;
       vm.showSeriesLegend = [];
@@ -36,7 +37,9 @@
                                       '192.168.4.96':'192.168.25.1'
                                     };
 
-      $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1);      
+      $rootScope.currentPeriod.to.setHours(23,59,59);     
+      $rootScope.currentPeriod.from.setHours(0,0,0);
+      $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1); 
       $rootScope.$on('reporter.selected', onReporterSelect);
 
       // Some numbers for demo
