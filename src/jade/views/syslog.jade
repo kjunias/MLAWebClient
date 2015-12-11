@@ -44,16 +44,13 @@
                   em.fa.fa-refresh
 
         .row
-          .col-sm-11
+          .col-sm-12
             p.input-group
               input.form-control(type='text', ng-model='syslogQuery', ng-model-options='{ debounce: 1000 }', ng-change="syslogSearch()")
               span.input-group-btn
                 button.btn.btn-default(type='button', ng-click='syslogSearch()')
                   em.fa.fa-search
 
-          .col-sm-1.pull-right.chart-refresh-btn
-            button.btn.btn-default.pull-right(type='button', ng-click='addMoreLogs($event)')
-                  em.fa.fa-plus
 
 
         hr
@@ -75,6 +72,11 @@
                     td {{ log._source.facility_label }}
                     td {{ log._source.severity_label }}
                     td {{ log._source.message }}
+        .row
+          .col-sm-12.pull-right.chart-refresh-btn.mt
+            button.btn.btn-default.btn-sm.pull-right(type='button', ng-click='addMoreLogs($event)')
+                  em.fa.fa-plus
+
     // END Logs Panel
 
    
