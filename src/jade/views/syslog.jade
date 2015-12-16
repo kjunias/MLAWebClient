@@ -52,7 +52,6 @@
                   em.fa.fa-search
 
 
-
         hr
         .text-center(ng-show="syslogDataLoading")
           img(src="app/assets/img/utils/loading-spinner.gif")
@@ -62,12 +61,12 @@
               table.row-border.hover(datatable='ng' dt-options="dtOptions")
                 thead
                   tr
-                    th(style='width:15%') Time
+                    th(style='width:15%', ng-click='sortByTime($event)') Time
                     th(style='width:10%') Facility
                     th(style='width:10%') Level
                     th(style='width:65%') Message
                 tbody
-                  tr(ng-repeat='log in currentSyslogLogs')
+                  tr(ng-repeat="log in currentSyslogLogs")
                     td {{ getLocalDate( log._source['@timestamp']) }}
                     td {{ log._source.facility_label }}
                     td {{ log._source.severity_label }}
@@ -78,5 +77,3 @@
                   em.fa.fa-plus
 
     // END Logs Panel
-
-   

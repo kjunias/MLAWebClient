@@ -42,7 +42,7 @@
           });
       }
 
-      function getSyslogData(matchPhrase) {
+      function getSyslogData(parameters) {
         if (typeof $rootScope.currentSyslogUnit === 'undefined') {
           return null;
         }
@@ -54,9 +54,15 @@
           to: $rootScope.syslogRange.to.toISOString()
         };
 
-        if (matchPhrase) {
-          params.matchPhrase = matchPhrase;
+        if (parameters) {
+          if (parameters.query) {
+            params.matchPhrase = parameters.query;
+          }
+          if (parameters.order) {
+            params.order = parameters.order;
+          }
         }
+
 
         return $http.get(BACKEND.baseURL + '/syslog/logs/'+ $rootScope.currentSyslogUnit, {
           params: params
@@ -72,7 +78,7 @@
         });
       }
 
-      function addSyslogData(matchPhrase) {
+      function addSyslogData(parameters) {
         if (typeof $rootScope.currentSyslogUnit === 'undefined') {
           return null;
         }
@@ -83,6 +89,15 @@
           from: $rootScope.currentSyslogLogs[$rootScope.currentSyslogLogs.length -1]._source['@timestamp'],
           to: $rootScope.syslogRange.to.toISOString(),
         };
+
+        if (parameters) {
+          if (parameters.query) {
+            params.matchPhrase = parameters.query;
+          }
+          if (parameters.order) {
+            params.order = parameters.order;
+          }
+        }
 
         if (matchPhrase) {
           params.matchPhrase = matchPhrase;

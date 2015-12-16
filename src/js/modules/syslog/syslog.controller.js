@@ -19,7 +19,12 @@
         "sLoadingRecords": "Loading...",
         "sProcessing":     "Processing...",
         "sSearch":         "Filter:"
+      })
+      .withOption('fnDrawCallback', function(){
+        setTimeOrder();
       });
+
+      $scope.timeOrder = 'asc';
 
       $scope.getLocalDate= function (date) {
         return new Date(date).toLocaleString();
@@ -31,16 +36,17 @@
       }
 
       $scope.refreshLogs = function () {
-        var promise = syslog.getSyslogData()
-        if(promise) {
+        var promise = syslog.getSyslogData($scope.getParams())
+        if (promise) {
           promise.then(function () {
             console.log('Loaded data');
           });
         }
+        return promise;
       }
 
       $scope.addMoreLogs = function () {
-        var promise = syslog.addSyslogData()
+        var promise = syslog.addSyslogData($scope.getParams())
         if(promise) {
           promise.then(function () {
             console.log('Added more data');
@@ -49,12 +55,43 @@
       }
 
       $scope.syslogSearch = function () {
-        var promise = syslog.getSyslogData($scope.syslogQuery)
+        var params = {query: $scope.syslogQuery};
+        var promise = syslog.getSyslogData(params);
         if(promise) {
           promise.then(function () {
             console.log('Loaded data');
           });
         }
       };
+
+      $scope.getParams = function () {
+        return {
+          query: $scope.syslogQuery,
+          order: $scope.timeOrder
+        };
+      };
+
+      $scope.sortByTime = function () {
+        $scope.orderChanged = true;
+        
+        if ($scope.timeOrder == "asc") {
+          $scope.timeOrder = "desc";
+        } else if ($scope.timeOrder == "desc") {
+          $scope.timeOrder = "asc";
+        }
+
+        $scope.refreshLogs().then()
+      };
+
+      function setTimeOrder () {
+        if ($scope.orderChanged) {
+          $scope.orderChanged = false;
+          setTimeout( function () {
+            var table = $('#DataTables_Table_0').DataTable();
+            table = $('#DataTables_Table_0').DataTable();
+            table.order([0, $scope.timeOrder ]).draw();
+          } , 1000);
+        }
+      }
     }
 })();
