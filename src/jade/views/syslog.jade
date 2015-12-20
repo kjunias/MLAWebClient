@@ -61,15 +61,19 @@
               table.row-border.hover(datatable='ng' dt-options="dtOptions")
                 thead
                   tr
-                    th(style='width:15%', ng-click='sortByTime($event)') Time
+                    th(style='width:10%', ng-click='sortByTime($event)') Time
                     th(style='width:10%') Facility
                     th(style='width:10%') Level
-                    th(style='width:65%') Message
+                    th(style='width:10%') Service PID
+                    th(style='width:10%') Service Name
+                    th(style='width:50%') Message
                 tbody
                   tr(ng-repeat="log in currentSyslogLogs")
                     td {{ getLocalDate( log._source['@timestamp']) }}
-                    td {{ log._source.facility_label }}
-                    td {{ log._source.severity_label }}
+                    td {{ log._source.facility }}
+                    td {{ log._source.severity }}
+                    td {{ log._source.service_pid }}
+                    td {{ log._source.service_name }}
                     td {{ log._source.message }}
         .row
           .col-sm-12.pull-right.chart-refresh-btn.mt
