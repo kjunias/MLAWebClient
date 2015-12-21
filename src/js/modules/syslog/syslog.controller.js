@@ -20,6 +20,7 @@
         "sProcessing":     "Processing...",
         "sSearch":         "Filter:"
       })
+//      .withButtons(['excel'])
       .withOption('fnDrawCallback', function(){
         setTimeOrder();
       });
@@ -43,7 +44,7 @@
           });
         }
         return promise;
-      }
+      };
 
       $scope.addMoreLogs = function () {
         var promise = syslog.addSyslogData($scope.getParams())
@@ -52,12 +53,12 @@
             console.log('Added more data');
           });
         }
-      }
+      };
 
       $scope.syslogSearch = function () {
         var params = {query: $scope.syslogQuery};
         var promise = syslog.getSyslogData(params);
-        if(promise) {
+        if (promise) {
           promise.then(function () {
             console.log('Loaded data');
           });
