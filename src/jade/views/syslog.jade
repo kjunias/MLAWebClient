@@ -15,15 +15,28 @@
         .panel-title 
           em.icon-grid.fa-lg.text-muted.pull-right
           | Syslogs for {{currentSyslogUnit}}
+      
       .panel-body
         .row
-          .col-sm-5
+          .col-sm-9
+          .col-sm-1
+            button.btn.btn-default.pull-right(type='button', ng-click='refreshLogs($event)')
+              em.fa.fa-refresh
+          .col-sm-1
+            button.btn.btn-default.pull-right(type='button', ng-csv='exportLogs()' filename='{{getFileName()}}' field-separator="{{separator}}" csv-header="getHeader()")
+              em.fa.fa-download
+          .col-sm-1
+            button.btn.btn-default.pull-right(type='button', ng-click='deleteLogs()')
+              em.fa.fa-trash-o
+
+        .row
+          .col-sm-6
             label.control-label From
-          .col-sm-5
+          .col-sm-6
             label.control-label To
 
         .row(ng-controller='PeriodDatepickerController')
-          .col-sm-5
+          .col-sm-6
             p.input-group
               span.input-group-btn
                 button.btn.btn-default(type='button', ng-click='toggleFrom($event)')
@@ -31,7 +44,7 @@
               input.form-control(type='text', datepicker-popup='{{format}}', ng-model='syslogRange.from', is-open='openedFrom', min-date='minDate', max-date="today()", 
                                     datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="onSyslogDateChange()", close-text='Close')
 
-          .col-sm-5
+          .col-sm-6
             p.input-group
               input.form-control(type='text', datepicker-popup='{{format}}', ng-model='syslogRange.to', is-open='openedTo', min-date='minDate', max-date="today()", 
                                   datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="onSyslogDateChange()", close-text='Close')
@@ -39,21 +52,13 @@
                 button.btn.btn-default(type='button', ng-click='toggleTo($event)')
                   em.fa.fa-calendar
 
-          .col-sm-2.pull-right.chart-refresh-btn
-            button.btn.btn-default.pull-right(type='button', ng-click='refreshLogs($event)')
-                  em.fa.fa-refresh
-
         .row
-          .col-sm-10
+          .col-sm-12
             p.input-group
               input.form-control(type='text', ng-model='syslogQuery', ng-model-options='{ debounce: 1000 }', ng-change="syslogSearch()")
               span.input-group-btn
                 button.btn.btn-default(type='button', ng-click='syslogSearch()')
                   em.fa.fa-search
-
-          .col-sm-2.pull-right.chart-refresh-btn
-            button.btn.btn-default.pull-right(type='button', ng-csv='exportLogs()' filename='{{getFileName()}}' field-separator="{{separator}}" csv-header="getHeader()")
-                  em.fa.fa-download
 
         hr
         .text-center(ng-show="syslogDataLoading")

@@ -72,8 +72,12 @@
         return ["Timestamp", "Facility", "Level", "Service", "Message"];
       };
 
+      $scope.deleteLogs = function () {
+        syslog.deleteSyslogData();
+      };
+
       $scope.addMoreLogs = function () {
-        var promise = syslog.addSyslogData($scope.getParams())
+        var promise = syslog.addSyslogData($scope.getParams());
         if(promise) {
           promise.then(function () {
             console.log('Added more data');

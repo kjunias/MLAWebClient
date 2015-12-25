@@ -117,9 +117,26 @@
         });
       }
 
+
+      function deleteSyslogData() {
+        $rootScope.syslogDataLoading = true;
+        return $http.delete( BACKEND.baseURL + '/syslog/clean/' + $rootScope.currentSyslogUnit)
+          .success(function (res) {
+            console.log('Logs deletion successfull: ', res);
+            init();
+          })
+          .error(function (err) {
+            console.log(err);
+          })
+          .finally(function () {
+            $rootScope.syslogDataLoading = false;
+          });
+      }
+
       syslogService.getSyslogUnits = getSyslogUnits;
       syslogService.getSyslogData = getSyslogData;
       syslogService.addSyslogData = addSyslogData;
+      syslogService.deleteSyslogData = deleteSyslogData;
       
       return syslogService;
     }
