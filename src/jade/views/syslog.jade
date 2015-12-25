@@ -52,7 +52,7 @@
                   em.fa.fa-search
 
           .col-sm-2.pull-right.chart-refresh-btn
-            button.btn.btn-default.pull-right(type='button', ng-click='refreshLogs($event)')
+            button.btn.btn-default.pull-right(type='button', ng-csv='exportLogs()' filename='{{getFileName()}}' field-separator="{{separator}}" csv-header="getHeader()")
                   em.fa.fa-download
 
         hr

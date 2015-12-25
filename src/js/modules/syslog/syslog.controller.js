@@ -26,6 +26,7 @@
       });
 
       $scope.timeOrder = 'asc';
+      $scope.separator = ',';
 
       $scope.getLocalDate= function (date) {
         return new Date(date).toLocaleString();
@@ -44,6 +45,31 @@
           });
         }
         return promise;
+      };
+
+      $scope.exportLogs = function () {
+        var logs = [];
+        console.log($scope.currentSyslogLogs[0]._source);
+        $scope.currentSyslogLogs.forEach(function (element, index, array) {
+          var obj = {
+            timestamp: element._source['@timestamp'],
+            facility: element._source.facility,
+            severity: element._source.severity,
+            severity: element._source.service_name,
+            severity: element._source.message
+          };
+
+          logs.push(obj);
+        });
+        return logs;
+      };
+
+      $scope.getFileName = function () {
+        return $rootScope.currentSyslogUnit + ".csv"
+      };
+
+      $scope.getHeader = function () {
+        return ["Timestamp", "Facility", "Level", "Service", "Message"];
       };
 
       $scope.addMoreLogs = function () {

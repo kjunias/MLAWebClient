@@ -83,7 +83,11 @@
               {name: 'datatables',                files: ['vendor/datatables/media/css/jquery.dataTables.min.css',
                                                           'vendor/datatables/media/js/jquery.dataTables.min.js',
                                                           'vendor/angular-datatables/dist/angular-datatables.min.js',
-                                                          'vendor/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.min.js']},
+                                                          'vendor/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.min.js',                                                         
+                                                          'vendor/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.min.js',                                                         
+                                                          'vendor/angular-sanitize/angular-sanitize.js',
+                                                          'vendor/ng-csv/build/ng-csv.js'
+                                                          ]},
               {name: 'oitozero.ngSweetAlert',     files: ['vendor/sweetalert/dist/sweetalert.css',
                                                           'vendor/sweetalert/dist/sweetalert.min.js',
                                                           'vendor/angular-sweetalert/SweetAlert.js']}
