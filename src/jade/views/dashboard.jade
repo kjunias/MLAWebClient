@@ -1,11 +1,10 @@
 .app-view-header
 
-
-  // Modal inline template
+  // Modal reporter settings modal
   script(type='text/ng-template', id='/reportersSettingsModal.html')
     .col-sm-12
       .modal-header
-        h4#myModalLabel.modal-title Reporters Settings
+        h4#reportersSettings.modal-title Reporters Settings
     .col-sm-12
       .modal-body.mt0
         .col-sm-4
@@ -94,7 +93,7 @@
                     button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
                     button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
             
-            button.btn.btn-default.btn-success.mt0(ng-click='addUnit()')
+            button.btn.btn-default.btn-success.pull-ri.mt0(ng-click='addUnit()')
               .fa.fa-plus
 
 
@@ -102,7 +101,11 @@
       button.btn.btn-primary(ng-click='saveReportersSettings()') Save Settings 
       button.btn.btn-warning(ng-click='modalCancel()') Cancel
 
-    // End modal
+    // End reporter settings modal
+
+    // START dashboard settings modal
+    // END dashboard settings modal
+
 
   | Dashboard
   small(ng-bind="app.date.toLocaleString()")
@@ -110,7 +113,7 @@
 .row(ng-controller="DashboardController as dashboard")
   .text-center
   // START dashboard content
-  .col-lg-9.fw-boxed
+  .col-lg-10.fw-boxed
  
     // START Tabbed panel
     .panel.panel-default.dbpanel.pr-lg(ng-init="hpanel = [true, false, false, false]")
@@ -248,7 +251,9 @@
     // END Tabbed panel
 
 
-    // START Panel
+    // START ML Panel
+    .row
+
     .panel.panel-default
       .panel-heading
         .panel-title 
@@ -310,4 +315,5 @@
                       input(type='checkbox', ng-model="showAll")
                       span
  
- 
+
+    // END ML Panel 

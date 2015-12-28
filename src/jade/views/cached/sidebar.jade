@@ -6,11 +6,22 @@
           // Iterates over all sidebar items
           li.nav-heading
             span.text-muted Version: {{sidebar.version.number}} ({{sidebar.version.startDate}})
-          li(ui-sref-active="")
+          li(ui-sref-active="app.dashboard")
             a(ui-sref='app.dashboard', title='Dashboard', ripple='')
-              .label.pull-right.label-success 4
               em.sidebar-item-icon.icon-pie-graph
+              em.sidebar-item-caret.fa.pull-right.fa-angle-right
               span(translate='sidebar.nav.DASHBOARD') Dashboard
+            ul.nav.sidebar-subnav
+              li(ui-sref-active="")
+                a(ui-sref='app.dashboard', title='Units', ripple='')
+                  em.sidebar-item-icon.fa.fa-desktop
+                  span Default Dashboard
+              li
+                hr.mt0.mb0.pt0.pb0
+              li(ng-repeat="db in dashboards", ui-sref-active="")
+                a(ui-sref='app.dashboardcustom', title='{{db._source.name}}', id='{{db._source.name}}', ripple='', ng-click="dashboardClick(db)")
+                  em.sidebar-item-icon.fa.fa-desktop
+                  span {{ db._source.name }}
 
           li(ui-sref-active="")
             a(ui-sref='app.server', title='Units', ripple='')

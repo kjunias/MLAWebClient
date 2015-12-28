@@ -17,6 +17,11 @@
       sidebar.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
       sidebar.version = VERSION;
 
+      $scope.dashboardClick = function (dashboard) {
+        $rootScope.currentDashboard = dashboard;
+        $rootScope.$emit('dashboard.selected', $rootScope.currentDashboard);
+      };
+
       $scope.reporterClick = function (reporter) {
         $rootScope.currentReporter = reporter;
         $rootScope.$emit('reporter.selected', $rootScope.currentReporter);

@@ -35,6 +35,13 @@
             assets: Route.require('flot-chart', 'flot-chart-plugins', 'easypiechart', 'xeditable')
           }
         })
+        .state('app.dashboardcustom', {
+          url: '/dashboardcustom',
+          templateUrl: Route.base('dashboardcustom.html'),
+          resolve: {
+            assets: Route.require('flot-chart', 'flot-chart-plugins', 'easypiechart', 'xeditable')
+          }
+        })
         .state('app.server', {
           url: '/server',
           templateUrl: Route.base('server.html'),
