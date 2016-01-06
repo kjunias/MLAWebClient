@@ -12,23 +12,18 @@
     CustomDashboardModalController.$inject = ['$rootScope', '$scope', '$modalInstance', 'colors', '_', 'memoryleaks', 'dashboard',  'editableOptions', 'editableThemes', 'BACKEND'];
     function CustomDashboardModalController($rootScope, $scope, $modalInstance,  colors, _, memoryleaks, dashboard, editableOptions, editableThemes, BACKEND) {
       var ctrl = this;
-      $scope.currentReporterToSet = $rootScope.currentReporter;
+      
       $scope.reportersToSet = $rootScope.reporters;
       $scope.statusOptions = ['active', 'inactive'];
       editableOptions.theme = 'bs3';
 
-      $scope.$watch('currentReporterToSet', function (newValue) {
-        initReportersSettings();
-      }, true);
-
-      function initReportersSettings() {
-        $scope.currentReporterToSet._source.settings.LAN =  $rootScope.reportersMappings[$scope.currentReporterToSet._source.settings.LAN] || $scope.currentReporterToSet._source.settings.LAN
-        var units = $scope.currentReporterToSet._source.settings.units;
-        for (var unit in units) {
-          if(getMacAddress(units[unit])) {
-            units[unit].MACAddress = getMacAddress(units[unit]).toUpperCase();
+      function reloadDashboard(currentDashboard) {
+        dashboard.getDashboards()
+        .then( function () {
+          if (currentDashboard != undefined) {
+            $rootScope.$emit('dashboard.selected', currentDashboard);
           }
-        }
+        })
       }
 
       function getMacAddress (unit) {
@@ -50,68 +45,71 @@
         }
       };
 
-      $scope.addUnit = function () {
+      $scope.addUnit = function (units) {
         $scope.unitToAdd = {
-          idUnits: null,
           IPv4: null,
           MACAddress: null,
-          pollingInterval: null,
-          status: "active"
         };
-        $scope.currentReporterToSet._source.settings.units.push($scope.unitToAdd);
+        units.push($scope.unitToAdd);
       };
 
-      $scope.checkIPv4 = function (data, unit) {
+      $scope.checkIPv4 = function (data, unit, units) {
         var ipFormat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (!data || !data.match(ipFormat)) {
           rowform.$visible = true;
           return 'Enter valid IP';
         }
-        if (angular.equals(unit, $scope.unitToAdd) && findUnit('IPv4', data) ) {
+        if (angular.equals(unit, $scope.unitToAdd) && findUnit('IPv4', data, units) ) {
           return 'Already exists!';
         }
       };
 
-      function findUnit (prop, value) {
-        return _.find($scope.currentReporterToSet._source.settings.units, function (item) {
+      function findUnit (prop, value, units) {
+        return _.find(units, function (item) {
           return item[prop] === value;
         });
       }
 
-      $scope.checkMACAddress = function (data, unit) {
+      $scope.checkMACAddress = function (data, unit, units) {
         var MACFormat = /^([0-9a-f]{2}){5}([0-9a-f]{2})$/;
         if (!data || !data.match(MACFormat)) {
           rowform.$visible = true;
           return 'Enter valid MACAddress';
         }
-        if (angular.equals(unit, $scope.unitToAdd) && findUnit('MACAddress', data) ) {
+        if (angular.equals(unit, $scope.unitToAdd) && findUnit('MACAddress', data, units) ) {
           return 'Already exists!';
         }
       };
 
-      $scope.cancelEditRow = function (unit) {
+      $scope.cancelEditRow = function (unit, unitsArray) {
         var MACFormat = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
         if (angular.equals(unit, $scope.unitToAdd)) {
-          var units = $scope.currentReporterToSet._source.settings.units;
-          var index = units.indexOf(unit);
-          units.splice(index, 1);
+          var index = unitsArray.indexOf(unit);
+          unitsArray.splice(index, 1);
         }
       };
 
-      $scope.createDashboard = function () {
+      $scope.removeUnit = function (index, unitsArray) {
+        unitsArray.splice(index, 1);
+      };
+
+      $scope.saveDashboard = function () {
+        dashboard.saveDashboard($rootScope.currentDashboard._source, $rootScope.currentDashboard._id);
         $modalInstance.close('closed');
       };
 
 
       $scope.modalCancel = function () {
-        // ctrl.taskEdition = false;
+        $rootScope.currentDashboard = $rootScope.previousDashboard;
         $modalInstance.dismiss('cancel');
       };
 
       $modalInstance.result.then(function () {
-        console.log("Created dashboard");
+        console.log("Saved dashboard");
+        reloadDashboard($rootScope.currentDashboard);
       }, function () {
-        console.log("Cancelling creating dashboard");
+        $rootScope.currentDashboard = $rootScope.previousDashboard;
+        console.log("Cancelled creating dashboard");
       });
     }
 })();

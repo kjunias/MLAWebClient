@@ -22,6 +22,10 @@
         $rootScope.$emit('dashboard.selected', $rootScope.currentDashboard);
       };
 
+      $scope.createDashboardModal = function () {
+        $rootScope.$emit('dashboard.create');
+      };
+
       $scope.reporterClick = function (reporter) {
         $rootScope.currentReporter = reporter;
         $rootScope.$emit('reporter.selected', $rootScope.currentReporter);

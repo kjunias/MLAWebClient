@@ -42,6 +42,7 @@
       $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1); 
       $rootScope.$on('reporter.selected', onReporterSelect);
       $rootScope.$on('dashboard.selected', onDashboardSelect);
+      $rootScope.$on('dashboard.create', onDashboardCreate);
 
       // Some numbers for demo
       vm.loadProgressValues = function() {
@@ -96,12 +97,25 @@
         });
       };
 
-      vm.openCreateModal = function (repSettings) {
+      vm.openEditModal = function () {
         var modalInstance = $modal.open({
           templateUrl: '/createDashboardContent.html',
           controller: 'CustomDashboardModalController',
-          scope: $scope
+          scope: $rootScope
         });
+      };
+
+      vm.openCreateModal = function () {
+        $rootScope.previousDashboard = $rootScope.currentDashboard;
+        $rootScope.currentDashboard = {
+          _source: {
+            units: {
+              memoryleaks: [],
+              syslog: []
+            }
+          }
+        };
+        vm.openEditModal();
       };
 
       function bytesToSize(bytes, decimals) {
@@ -181,6 +195,10 @@
         getDashboardLeaksData();
       }
 
+      function onDashboardCreate(event, data) {
+        vm.openCreateModal();
+      }
+
       function onReporterSelect(event, data) {
         getLeaksData();
       }
@@ -199,7 +217,7 @@
           }
         }
 
-        $http.get( BACKEND.baseURL + '/reporters/'+ encodeURI($rootScope.currentReporter._source.idReporters) +'/unitsdata/update', {
+        $http.get( BACKEND.baseURL + '/dashboard/unitsdata', {
           params: {
             from: $rootScope.currentPeriod.from.toISOString(),
             to: $rootScope.currentPeriod.to.toISOString(),
@@ -250,12 +268,20 @@
 
 
       function getDashboardLeaksData() {
-        if (typeof $rootScope.currentReporter != 'undefined') {
+        if (typeof $rootScope.currentDashboard != 'undefined') {
           $rootScope.chartLoading = true;
-          $http.get(BACKEND.baseURL + '/dashboard/' + $rootScope.currentDashboard._id + '/unitsdata', {
+          var unitsToUpdate = [];
+
+          for (var unit in $rootScope.currentDashboard._source.units.memoryleaks) {
+            var unitObjt = $rootScope.currentDashboard._source.units.memoryleaks[unit];
+            unitsToUpdate.push(unitObjt.MACAddress);
+          }
+
+          $http.get(BACKEND.baseURL + '/dashboard/unitsdata', {
             params: {
               from: $rootScope.currentPeriod.from.toISOString(),
               to: $rootScope.currentPeriod.to.toISOString(),
+              units: unitsToUpdate,
               resolution: $rootScope.currentPeriod.resolution
             }
           })
@@ -379,7 +405,7 @@
           }
         }
         redraw();
-      }
+      };
 
       $scope.$watch('showAll', toggleAllEvent, true);
 

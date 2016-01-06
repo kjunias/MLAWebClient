@@ -13,9 +13,15 @@
               span(translate='sidebar.nav.DASHBOARD') Dashboard
             ul.nav.sidebar-subnav
               li(ui-sref-active="")
-                a(ui-sref='app.dashboard', title='Units', ripple='')
+                a(ui-sref='app.dashboard', title='Default Dashboard', ripple='')
                   em.sidebar-item-icon.fa.fa-desktop
                   span Default Dashboard
+              li
+                hr.mt0.mb0.pt0.pb0
+              li.mt-sm.mb-sm.pt0.pb0(ui-sref-active="app.dashboardcustom")
+                a.mt0.mb0.pt0.pb0(ui-sref='app.dashboardcustom', title='Create Dashboard', ripple='' , ng-click="createDashboardModal()")
+                  em.sidebar-item-icon.fa.fa-plus
+                  span Create Dashboard
               li
                 hr.mt0.mb0.pt0.pb0
               li(ng-repeat="db in dashboards", ui-sref-active="")

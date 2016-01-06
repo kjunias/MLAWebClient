@@ -7,8 +7,7 @@
     .modal-body.mb-lg
         .col-sm-12
           label.control-label Name
-          //- text.form-control.m-b(ng-trim="true", type='text', ng-model='currentDashboard.name', name='currentDbName', required)
-          input.form-control.m-b(ng-trim="true", type='text', ng-model='currentDashboard.name', placeholder='Name', name='currentDbName', required)
+          input.form-control.m-b(ng-trim="true", type='text', ng-model='currentDashboard._source.name', placeholder='Name', name='currentDbName', required)
       
       .col-sm-12
         .form-group.mb-sm
@@ -21,9 +20,9 @@
               td(style='width:20%') Edit
             tr.text-center(ng-repeat='unit in currentDashboard._source.units.memoryleaks')
                 td.mt0.mb0.pt0.pb0.align-middle
-                  span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
+                  span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit, currentDashboard._source.units.memoryleaks)', oncancel="cancelEditRow(unit, currentDashboard._source.units.memoryleaks)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
                 td.mt0.mb0.pt0.pb0.align-middle
-                  span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
+                  span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit, currentDashboard._source.units.memoryleaks)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
                 td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
                   // form
                   form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='saveUnit($data, unit)', ng-show='rowform.$visible', shown='unitToAdd == unit')
@@ -31,9 +30,9 @@
                     button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
                   .buttons(ng-show='!rowform.$visible')
                     button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
-                    button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
+                    button.btn.btn-sm.btn-danger(ng-click='removeUnit($index, currentDashboard._source.units.memoryleaks)', title="Delete"): em.fa.fa-trash
             
-          button.btn.btn-default.btn-success.pull-right.mt0(ng-click='addUnit()')
+          button.btn.btn-default.btn-success.pull-right.mt0(ng-click='addUnit(currentDashboard._source.units.memoryleaks)')
             .fa.fa-plus
 
           hr
@@ -43,11 +42,11 @@
               td(style='width:20%') Unit IP
               td(style='width:20%') MACAddress
               td(style='width:20%') Edit
-            tr.text-center(ng-repeat='unit in currentDashboard._source.units.memoryleaks')
+            tr.text-center(ng-repeat='unit in currentDashboard._source.units.syslog')
                 td.mt0.mb0.pt0.pb0.align-middle
-                  span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
+                  span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit, currentDashboard._source.units.syslog)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
                 td.mt0.mb0.pt0.pb0.align-middle
-                  span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
+                  span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit, currentDashboard._source.units.syslog)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
                 td.mt0.mb0.pt0.pb0(style='white-space: nowrap')
                   // form
                   form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='saveUnit($data, unit)', ng-show='rowform.$visible', shown='unitToAdd == unit')
@@ -57,11 +56,11 @@
                     button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
                     button.btn.btn-sm.btn-danger(ng-click='removeUnit($index)', title="Delete"): em.fa.fa-trash
             
-          button.btn.btn-default.btn-success.pull-right.mt0(ng-click='addUnit()')
+          button.btn.btn-default.btn-success.pull-right.mt0(ng-click='addUnit(currentDashboard._source.units.syslog)')
             .fa.fa-plus
       
     .modal-footer.mt-lg
-      button.btn.btn-primary.mt-lg(ng-click='createDashboard()') Create
+      button.btn.btn-primary.mt-lg(ng-click='saveDashboard()') Save
       button.btn.btn-warning.mt-lg(ng-click='modalCancel()') Cancel
 
 
@@ -77,7 +76,7 @@
     .row.mt-lg.mb-lg
       .col-md-12
         button.btn.btn-default.btn-sm.mr0(ng-click='customDashboard.openCreateModal()') Create
-        button.btn.btn-default.btn-sm.ml0(ng-click='customDashboard.openCreateModal()') Edit
+        button.btn.btn-default.btn-sm.ml0(ng-click='customDashboard.openEditModal()') Edit
         button.btn.btn-default.btn-sm(ng-click='addUnit()') Add Unit
       // END
 
