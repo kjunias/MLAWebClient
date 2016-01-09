@@ -64,7 +64,7 @@
       button.btn.btn-warning.mt-lg(ng-click='modalCancel()') Cancel
 
 
-  | DB 1
+  | {{currentDashboard._source.name}}
   small(ng-bind="app.date.toLocaleString()")
 
 .row(ng-controller="CustomDashboardController as customDashboard")

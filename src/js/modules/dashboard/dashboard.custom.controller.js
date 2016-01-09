@@ -40,7 +40,6 @@
       $rootScope.currentPeriod.to.setHours(23,59,59);     
       $rootScope.currentPeriod.from.setHours(0,0,0);
       $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1); 
-      $rootScope.$on('reporter.selected', onReporterSelect);
       $rootScope.$on('dashboard.selected', onDashboardSelect);
       $rootScope.$on('dashboard.create', onDashboardCreate);
 
@@ -194,7 +193,7 @@
         $tooltipEl.append(str);
       }
 
-      getLeaksData();
+      getDashboardLeaksData();
 
       function onDashboardSelect(event, data) {
         getDashboardLeaksData();
@@ -204,9 +203,6 @@
         vm.openCreateModal();
       }
 
-      function onReporterSelect(event, data) {
-        getLeaksData();
-      }
 
       vm.refreshChart = function (event) {
         updateLeaksData();
@@ -277,6 +273,7 @@
           $rootScope.chartLoading = true;
           var unitsToUpdate = [];
 
+
           for (var unit in $rootScope.currentDashboard._source.units.memoryleaks) {
             var unitObjt = $rootScope.currentDashboard._source.units.memoryleaks[unit];
             unitsToUpdate.push(unitObjt.MACAddress);
@@ -287,31 +284,6 @@
               from: $rootScope.currentPeriod.from.toISOString(),
               to: $rootScope.currentPeriod.to.toISOString(),
               units: unitsToUpdate,
-              resolution: $rootScope.currentPeriod.resolution
-            }
-          })
-          .success(function (res) {
-            generateLeaksSeries(res);
-            redraw();
-            $rootScope.showAll = true;
-          })
-          .error(function (err) {
-            console.log(err);
-          })
-          .finally(function () {
-            $rootScope.chartLoading = false;
-          });
-        }
-      }
-
-
-      function getLeaksData() {
-        if (typeof $rootScope.currentReporter != 'undefined') {
-          $rootScope.chartLoading = true;
-          $http.get( BACKEND.baseURL + '/reporters/'+ $rootScope.currentReporter._source.idReporters +'/unitsdata', {
-            params: {
-              from: $rootScope.currentPeriod.from.toISOString(),
-              to: $rootScope.currentPeriod.to.toISOString(),
               resolution: $rootScope.currentPeriod.resolution
             }
           })
