@@ -98,6 +98,11 @@
       };
 
       vm.openEditModal = function () {
+        $rootScope.previousDashboard = $rootScope.currentDashboard;
+        vm.openDBModal();
+      };
+
+      vm.openDBModal = function () {
         var modalInstance = $modal.open({
           templateUrl: '/createDashboardContent.html',
           controller: 'CustomDashboardModalController',
@@ -115,7 +120,7 @@
             }
           }
         };
-        vm.openEditModal();
+        vm.openDBModal();
       };
 
       function bytesToSize(bytes, decimals) {
