@@ -15,6 +15,9 @@
       $scope.currentReporterToSet = $rootScope.currentReporter;
       $scope.reportersToSet = $rootScope.reporters;
       $scope.statusOptions = ['active', 'inactive'];
+      $scope.snmpOptions = ['snmpv1', 'snmpv2c', 'snmpv3'];
+      $scope.snmpAuthProtocolOptions = ['MD5', 'SHA1'];
+      $scope.snmpPrivProtocolOptions = ['DES', 'None'];
       editableOptions.theme = 'bs3';
 
       $scope.$watch('currentReporterToSet', function (newValue) {
@@ -44,6 +47,15 @@
           return $rootScope.units[unit.idUnits].MACAddress;
         }
         return null;
+      };
+
+      $scope.getSnmpVersion = function (unit) {
+        if (!unit.snmp) {
+          unit.snmp = {
+            version: $scope.snmpOptions[1]
+          };
+        }
+        return unit.snmp.version;
       };
 
       $scope.saveUnit = function (data, unit) {
@@ -95,6 +107,21 @@
         if (angular.equals(unit, $scope.unitToAdd) && findUnit('MACAddress', data) ) {
           return 'Already exists!';
         }
+      };
+
+      $scope.checkSnmp = function (data, unit) {
+        if (!data) {
+          rowform.$visible = true;
+          return 'Choose SNMP Version';
+        }
+
+        if (data == $scope.snmpOptions[2]) {
+          console.log("====> Chose snmpv3!!!!");
+        }
+      };
+
+      $scope.showSNMP = function (rowform) {
+        return rowform.$data.snmpVersion == $scope.snmpOptions[2];
       };
 
       $scope.cancelEditRow = function (unit) {

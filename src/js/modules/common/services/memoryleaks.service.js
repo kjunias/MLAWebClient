@@ -47,7 +47,6 @@
           .success(function (res) {
             $rootScope.reporters = res;
             if ($rootScope.reporters.length > 0 ) {
-              $rootScope.currentReporter = $rootScope.reporters[0];
               for (var i in $rootScope.reporters) {
                 if($rootScope.reporters[i]._source.settings.status === 'active') {
                   $rootScope.currentReporter = $rootScope.reporters[i];
