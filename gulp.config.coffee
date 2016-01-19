@@ -24,8 +24,8 @@ module.exports = ($, usehtml) ->
     # Version
     #
     version: 
-      number: '0.0.3'
-      startDate: '2015-08-25'
+      number: '0.0.4'
+      startDate: '2016-01-19'
       endDate: 'Now'
     #
     # Paths
@@ -78,6 +78,7 @@ module.exports = ($, usehtml) ->
     webserver:
       webroot:          dist,
       host:             'monitoring.media5corp.com',
+      # host:             'localhost',
       port:             '80',
       livereload:       true,
       directoryListing: false
