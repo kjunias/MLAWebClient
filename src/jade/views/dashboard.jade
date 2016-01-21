@@ -284,9 +284,11 @@
 
     .panel.panel-default
       .panel-heading
-        .panel-title 
-          em.icon-bar-graph-2.fa-lg.text-muted.pull-right
-          | Memory Usage Data
+        .panel-title
+          .col-md-10
+            | Memory Usage Data
+          .col-md-2
+            em.icon-bar-graph-2.fa-lg.text-muted.pull-right
       .panel-body
         .row
           .col-md-10
@@ -298,7 +300,7 @@
                       em.fa.fa-calendar
                   input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.from', is-open='openedFrom', min-date='minDate', max-date="today()", 
                                       datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="datePickerOnDateChange()", close-text='Close')
-              .col-md-4
+              .col-md-4.ml0.pl0
                 p.input-group
                   input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.to', is-open='openedTo', min-date='minDate', max-date="today()", 
                                       datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="datePickerOnDateChange()", close-text='Close')
@@ -306,21 +308,26 @@
                     button.btn.btn-default(type='button', ng-click='toggleTo($event)')
                       em.fa.fa-calendar
 
-              .col-md-2
+              .col-md-2.ml0.pl0
                 p.input-group
                   input.form-control.bfh-number(type='number', ng-model="currentPeriod.resolution", min='100', max='10000', step='100', tooltip='Resolution')
 
-              .col-md-2.pull-right.chart-refresh-btn
+              .col-md-1
+                p.input-group
+                  input.form-control.bfh-number(type='number', ng-model="currentPeriod.resolution", min='100', max='10000', step='100', tooltip='Resolution')
+
+              //- .col-md-1.chart-refresh-btn
+              .col-md-1
                 span.input-group-btn
                     button.btn.btn-default(type='button', ng-click='dashboard.refreshChart($event)')
                       em.fa.fa-refresh
-
-            .text-center(ng-show="chartLoading")
-              img(src="app/assets/img/utils/loading-spinner.gif")
-            flot(id="flotchart", ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.showSeriesLegend}")
-            .row.row-table.pt-lg.mt-lg
-              .text-center
-                small.mt.pt Click & drag to zoom selection; double click twice to start zooming out 
+            .row.row-table.text-center
+              .text-center(ng-show="chartLoading")
+                img(src="app/assets/img/utils/loading-spinner.gif")
+              flot.ml-lg.pr-lg(id="flotchart", ng-show="!chartLoading", options='dashboard.splineChartOpts', dataset="dashboard.splineData", series="{lines: dashboard.showSeriesLegend}")
+              .row.row-table.pt-lg.mt-lg
+                .text-center
+                  small.mt.pt Click & drag to zoom selection; double click twice to start zooming out 
 
           .col-md-2
             table.table.table-hover.mb-lg

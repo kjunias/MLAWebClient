@@ -143,7 +143,7 @@
         console.log('pollingInterval: ', $scope.currentReporterToSet._source.settings.pollingInterval); 
         var units = $scope.currentReporterToSet._source.settings.units;
         for (var unit in units) {
-          delete units[unit]['MACAddress'];
+          // delete units[unit]['MACAddress'];
           delete units[unit]['$$hashKey'];     
         }
       }
