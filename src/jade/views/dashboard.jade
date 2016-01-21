@@ -69,11 +69,12 @@
             h5 Units
             table.table.table-bordered.table-hover.bg-white.pb0.mb0
               tr.text-center(style='font-weight: bold')
-                td(style='width:20%') Unit IP
-                td(style='width:20%') MACAddress
-                td(style='width:15%') SNMP
-                td(style='width:15%') Status
-                td(style='width:15%') Polling (s)
+                td(style='width:18%') Unit IP
+                td(style='width:18%') MACAddress
+                td(style='width:12%') Port
+                td(style='width:12%') SNMP
+                td(style='width:12%') Status
+                td(style='width:13%') Polling (s)
                 td(style='width:15%') Edit
               tbody(ng-repeat='unit in currentReporterToSet._source.settings.units')
                 tr.text-center()
@@ -81,6 +82,8 @@
                     span(editable-text='unit.IPv4', e-name='IPv4', e-form='rowform', e-style="width: 100%", onbeforesave='checkIPv4($data, unit)', oncancel="cancelEditRow(unit)", e-class='pl0 pr0 text-center', e-required='') {{ unit.IPv4 }}
                   td.mt0.mb0.pt0.pb0.align-middle
                     span(editable-text='unit.MACAddress', e-name='MACAddress', e-form='rowform', e-style="width: 100%", onbeforesave='checkMACAddress($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ unit.MACAddress }}
+                  td.mt0.mb0.pt0.pb0.align-middle
+                    span(editable-text='unit.port', e-name='port', e-form='rowform', e-style="width: 100%", onbeforesave='checkPort($data, unit)', e-class='pl0 pr0 text-center', e-required='') {{ unit.port || 161 }}
                   td.mt0.mb0.pt0.pb0.align-middle
                     span(editable-select='unit.snmp.version', e-name='snmpVersion', e-form='rowform', e-ng-options='snmpOpt for snmpOpt in snmpOptions', e-style="width: 100%", e-class='pl0 pr0 text-center', onshow='snmpEdit(unit)', onbeforesave='checkSnmp($data, unit)', ng-model='unit.snmp.version') {{ getSnmpVersion(unit)}}
 
@@ -198,7 +201,7 @@
             .col-sm-8.col-xs-12.ml0.pl0.mb0.pb0
               .row.row-table.mb0.pb0
                 .col-sm-12.col-xs-12
-                  em.pull-right.icon-cog.text-muted.clickable(ng-click='dashboard.reportersModalOpen()')
+                  em.pull-right.icon-cog.text-muted.clickable(ng-click='dashboard.reportersModalOpen(\'lg\')')
                   .text-md Current Reporter: {{currentReporter._source.idReporters}}
                   .text-muted.pull-left LAN: {{reportersMappings[currentReporter._source.strFrom] || reporter._source.strFrom}} 
                   .text-muted.pull-right WAN: {{currentReporter._source.strFrom}}

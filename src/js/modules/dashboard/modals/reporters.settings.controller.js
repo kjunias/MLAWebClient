@@ -109,6 +109,14 @@
         }
       };
 
+      $scope.checkPort = function (data, unit) {
+        if (!data || !isFinite(data)) {
+          rowform.$visible = true;
+          return 'Enter valid port number';
+        }
+        unit.port = parseInt(data);
+      };
+
       $scope.checkSnmp = function (data, unit) {
         if (!data) {
           rowform.$visible = true;

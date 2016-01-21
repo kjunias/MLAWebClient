@@ -99,6 +99,7 @@
         var modalInstance = $modal.open({
           templateUrl: '/reportersSettingsModal.html',
           controller: 'ReportersSettingsController',
+          size: 'lg',
           scope: $scope
         });
       };
