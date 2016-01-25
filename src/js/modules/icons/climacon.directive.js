@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('climacon', climacon);
     
     function climacon() {

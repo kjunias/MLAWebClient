@@ -1,13 +1,13 @@
 /**=========================================================
- * Module: ColorsService.js
- * Services to retrieve global colors
+ * Module: Underscore.js
+ * Service to provide for the underscore library
  =========================================================*/
  
 (function() {
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .factory('_', _);
     
     _.$inject = ['$window'];

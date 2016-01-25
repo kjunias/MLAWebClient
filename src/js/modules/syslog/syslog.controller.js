@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('SyslogController', SyslogController);
     
     SyslogController.$inject = ['$rootScope', '$scope', '$http', 'syslog', 'DTOptionsBuilder', 'BACKEND'];

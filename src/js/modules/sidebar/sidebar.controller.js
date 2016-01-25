@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('SidebarController', SidebarController);
 
     SidebarController.$inject = ['$rootScope', '$scope', '$http', 'colors', 'flotOptions', '$timeout', 'syslog', 'VERSION'];

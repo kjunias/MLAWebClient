@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('PieChartController', PieChartController);
     
     PieChartController.$inject = ['colors'];

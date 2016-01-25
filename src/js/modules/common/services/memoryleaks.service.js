@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('memoryleaks', MemoryleaksService);
 
     MemoryleaksService.$inject = ['$rootScope', '$http', 'BACKEND'];

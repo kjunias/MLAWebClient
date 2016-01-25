@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('FlotChartController', FlotChartController);
     
     FlotChartController.$inject = ['$scope', '$http', '$timeout', 'flotOptions', 'colors'];

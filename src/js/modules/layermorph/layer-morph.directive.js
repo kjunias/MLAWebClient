@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('btnLayerMorph', btnLayerMorph)
         .directive('layerMorphOverlay', layerMorphOverlay)
         .directive('layerMorphClose', layerMorphClose);

@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('flot', flot);
     
     flot.$inject = ['$rootScope', '$http', '$timeout'] ;

@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('uiReporters', uiReporters);
 
     uiReporters.$inject = ['$rootScope', '$window', '$timeout', 'MEDIA_QUERY'];

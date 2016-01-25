@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('sparkline', sparkline);
     
     sparkline.$inject = ['$timeout', '$window'];

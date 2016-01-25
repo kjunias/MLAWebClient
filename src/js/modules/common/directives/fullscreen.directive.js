@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('toggleFullscreen', toggleFullscreen);
     
     function toggleFullscreen() {

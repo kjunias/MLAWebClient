@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('ripple', ripple);
     /* @ngInject */
     function ripple($timeout) {

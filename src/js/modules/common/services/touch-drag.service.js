@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('touchDrag', touchDrag);
 
     touchDrag.$inject = ['$document', 'browser'];

@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('ReportersSettingsController', ReportersSettingsController);
     
     ReportersSettingsController.$inject = ['$rootScope', '$scope', '$modalInstance', 'colors', '_', 'memoryleaks', 'editableOptions', 'editableThemes', 'BACKEND'];

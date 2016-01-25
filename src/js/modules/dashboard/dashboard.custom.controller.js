@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('CustomDashboardController', CustomDashboardController);
     
     CustomDashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', '$controller', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND', 'VERSION'];

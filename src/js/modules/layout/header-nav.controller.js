@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('HeaderNavController', HeaderNavController);
     /* @ngInject */    
     function HeaderNavController($rootScope) {

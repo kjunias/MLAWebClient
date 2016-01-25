@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .constant('VENDOR_ASSETS', {
             // jQuery based and standalone scripts
             scripts: {

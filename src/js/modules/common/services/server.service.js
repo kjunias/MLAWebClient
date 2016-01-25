@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('serverStatus', ServerStatusService);
 
     ServerStatusService.$inject = ['$rootScope', '$http', 'BACKEND'];

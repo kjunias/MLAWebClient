@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .constant('COLORS', {
             // Same values from CSS
             'primary':                '#3F51B5',

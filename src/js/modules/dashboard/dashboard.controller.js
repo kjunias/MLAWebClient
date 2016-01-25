@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('DashboardController', DashboardController);
     
     DashboardController.$inject = ['$rootScope', '$scope', '$http', '$modal', '$controller', 'colors', 'flotOptions', '$timeout', 'serverStatus', 'memoryleaks', 'BACKEND', 'VERSION'];
@@ -15,6 +15,9 @@
       vm.title = 'MemoryLeaks Web Client';
       vm.text = 'AngularJS Web Application for the Mediatrix Units MemoryLeaks Metrics';
       var SERVER_UPDATE_INTERVAL = 5 * 1000;
+
+      $rootScope.dataTypeOpts = ['Memory', 'CPU'];     
+      $rootScope.currentDataType = $rootScope.dataTypeOpts[0];  
 
       $rootScope.chartLoading = true;
       $rootScope.singleSeriesToggled = false;
@@ -36,7 +39,7 @@
                                       '192.168.4.138':'192.168.38.1',
                                       '192.168.4.96':'192.168.25.1'
                                     };
-
+  
       $rootScope.currentPeriod.to.setHours(23,59,59);     
       $rootScope.currentPeriod.from.setHours(0,0,0);
       $rootScope.currentPeriod.from.setDate($rootScope.currentPeriod.from.getDate() - 1); 
@@ -102,6 +105,11 @@
           size: 'lg',
           scope: $scope
         });
+      };
+
+      vm.dataTypeChange = function (data) {
+        $rootScope.currentDataType = data;
+        generateLeaksSeries($rootScope.leaksRawData);
       };
 
       function bytesToSize(bytes, decimals) {
@@ -204,7 +212,8 @@
           }
         })
         .success(function (res) {
-          updateLeaksSeries(res);
+          $rootScope.leaksRawData = res;
+          updateLeaksSeries(res, getMemoryYData);
         })
         .error(function (err) {
           console.log(err);
@@ -215,7 +224,7 @@
       }
 
 
-      function updateLeaksSeries(rawData) {
+      function updateLeaksSeries(rawData, getYData) {
         $rootScope.chartLoading = true;
         erase();
         if ($rootScope.leaksSeries.length === 0 ) {
@@ -233,8 +242,11 @@
                 var x = new Date(unitData[d].date).getTime();
                 // var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00));
                 // var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
-                var y = (((unitData[d].memTotal - (unitData[d].memFree + unitData[d].memCached + unitData[d].memBuffer)) * 100)/(unitData[d].memTotal * 1.00));
-                $rootScope.leaksSeries[j].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
+                // var y = (((unitData[d].memTotal - (unitData[d].memFree + unitData[d].memCached + unitData[d].memBuffer)) * 100)/(unitData[d].memTotal * 1.00));
+                var y = getYData(unitData[d]);
+                if (y >= 0) {
+                  $rootScope.leaksSeries[j].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
+                }
               }
             }
           }
@@ -256,8 +268,8 @@
             }
           })
           .success(function (res) {
+            $rootScope.leaksRawData = res;
             generateLeaksSeries(res);
-            redraw();
             $rootScope.showAll = true;
           })
           .error(function (err) {
@@ -272,6 +284,15 @@
       function generateLeaksSeries(rawData) {
         erase();
         $rootScope.leaksSeries = [];
+        if ($rootScope.currentDataType == $rootScope.dataTypeOpts[0]) {
+          generateMemorySeries(rawData);
+        } else if ($rootScope.currentDataType == $rootScope.dataTypeOpts[1]) {
+          generateCPUSeries(rawData);
+        }
+        redraw();
+      }
+
+      function generateMemorySeries(rawData) {
         var i = 0;
         for (var unit in rawData) {
           $rootScope.leaksSeries[i] = {
@@ -283,20 +304,98 @@
             'data': []
           };
 
+          vm.showSeriesLegend[i] = $rootScope.leaksSeries[i].show;
+
+          var unitData = rawData[unit].data
+          generateUnitData(unitData, getMemoryYData, i, 0);
+          i++;
+        }
+      }
+
+      function generateCPUSeries(rawData) {
+        erase();
+        $rootScope.leaksSeries = [];
+        var i = 0;
+        for (var unit in rawData) {
+          $rootScope.leaksSeries[i] = {
+            'label': rawData[unit].IPV4,
+            'MACAddress': rawData[unit].MACAddress,
+            'color': getRandomColor(),
+            'index':i,
+            'show': true,
+            'data': []
+          };
 
           vm.showSeriesLegend[i] = $rootScope.leaksSeries[i].show;
 
           var unitData = rawData[unit].data
-          for (var d in unitData) {
-            var x = new Date(unitData[d].date).getTime();
-            // var y = ((unitData[d].dcmMemInUse * 100)/(unitData[d].dcmMemTotal * 1.00))
-            // var y = (((unitData[d].memTotal - unitData[d].memFree) * 100)/(unitData[d].memTotal * 1.00));
-            var y = (((unitData[d].memTotal - (unitData[d].memFree + unitData[d].memCached + unitData[d].memBuffer)) * 100)/(unitData[d].memTotal * 1.00));
-            $rootScope.leaksSeries[i].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
-          }
-
+          generateUnitCPUData(unitData, i);
           i++;
         }
+      }
+
+      function generateUnitCPUData(unitData, unitIdx) {
+        for (var d = 1; d < unitData.length; d++) {
+          var x = new Date(unitData[d].date).getTime();
+          var y = getCPUYData(unitData[d], unitData[d-1]);
+          if(y >= 0) {
+            $rootScope.leaksSeries[unitIdx].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
+          }
+        }
+      }
+
+      function generateUnitData(unitData, getYData, unitIdx,startIdx) {
+        for (var d = startIdx; d < unitData.length; d++) {
+          var x = new Date(unitData[d].date).getTime();
+          var y = getYData(unitData[d]);
+          $rootScope.leaksSeries[unitIdx].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
+        }
+      }
+
+      function getMemoryYData(unitData) {
+        var y =  (((unitData.memTotal - (unitData.memFree + unitData.memCached + unitData.memBuffer)) * 100)/(unitData.memTotal * 1.00));
+        if (y >= 0) {
+          return y;
+        }
+        return -1;
+      }
+
+      function getCPUYData(unitData1, unitData0) {
+        var cpuVars = ["ssCpuRawUser", "ssCpuRawNice", "ssCpuRawSystem", "ssCpuRawIdle", "ssCpuRawWait", 
+                        "ssCpuRawKernel", "ssCpuRawInterrupt", "ssCpuPercUser", "ssCpuPercSystem", "ssCpuPercIdle", "ssCpuRawSoftIRQ"];
+        for (var cpuV = 0; cpuV < cpuVars.length; cpuV++) {
+          var ssCpu = cpuVars[cpuV];
+          var ssCpuVal1 = unitData1[ssCpu];
+          var ssCpuVal0 = unitData0[ssCpu];
+
+          if (ssCpuVal1 == undefined || ssCpuVal0 == undefined) {
+            return -1;
+          }
+
+          unitData1[ssCpu] = parseInt(ssCpuVal1);
+          unitData0[ssCpu] = parseInt(ssCpuVal0);
+        }
+
+        var cpuVal1 = getCPUValue(unitData1);
+        var cpuVal0 = getCPUValue(unitData0);
+
+
+        var y =  ((1.00-(cpuVal1.idleTime - cpuVal0.idleTime)/(cpuVal1.totalTime - cpuVal0.totalTime)) * 100);
+        if (y >= 0) {
+          return y;
+        }
+        return -1;
+      }
+
+      function getCPUValue(data) {
+        var cpuVals = {
+          userTime: data["ssCpuRawUser"],
+          niceTime: data["ssCpuRawNice"],
+          idleTime: data["ssCpuRawIdle"] + data["ssCpuRawWait"],
+          sysTime: data["ssCpuRawSystem"] + data["ssCpuRawInterrupt"] + data["ssCpuRawSoftIRQ"]
+        };
+        cpuVals.totalTime = cpuVals.userTime + cpuVals.niceTime + cpuVals.idleTime + cpuVals.sysTime;
+        return cpuVals;
       }
 
       function getDrawableData () {

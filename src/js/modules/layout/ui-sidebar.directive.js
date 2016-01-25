@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('uiSidebar', uiSidebar);
 
     uiSidebar.$inject = ['$rootScope', '$window', '$timeout', 'MEDIA_QUERY'];

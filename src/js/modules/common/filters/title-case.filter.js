@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .filter('titlecase', titlecase);
 
     function titlecase() {

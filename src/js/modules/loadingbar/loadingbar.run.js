@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .run(appRun);
     /* @ngInject */
     function appRun($rootScope, $timeout, cfpLoadingBar) {

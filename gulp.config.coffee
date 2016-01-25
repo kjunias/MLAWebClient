@@ -73,12 +73,12 @@ module.exports = ($, usehtml) ->
       opts:
         standalone: false,
         root: 'templates',
-        module: 'naut'
+        module: 'monitoring'
     ,
     webserver:
       webroot:          dist,
-      host:             'monitoring.media5corp.com',
-      # host:             'localhost',
+      # host:             'monitoring.media5corp.com',
+      host:             'localhost',
       port:             '80',
       livereload:       true,
       directoryListing: false

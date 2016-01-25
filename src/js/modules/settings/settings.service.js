@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('settings', settings);
     /* @ngInject */
     function settings($rootScope, $localStorage, $translate) {

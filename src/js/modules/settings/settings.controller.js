@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('SettingsController', SettingsController);
     /* @ngInject */
     function SettingsController(settings) {
