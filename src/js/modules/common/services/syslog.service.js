@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('syslog', SyslogleaksService);
 
     SyslogleaksService.$inject = ['$rootScope', '$http', 'BACKEND'];

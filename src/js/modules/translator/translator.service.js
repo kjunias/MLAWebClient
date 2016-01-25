@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('translator', translator);
     /* @ngInject */
     function translator($rootScope, $translate) {

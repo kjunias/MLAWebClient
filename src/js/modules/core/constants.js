@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('naut')
+    .module('monitoring')
     .constant('VERSION', {
       number: '0.0.4',
       startDate: '2016-01-19',

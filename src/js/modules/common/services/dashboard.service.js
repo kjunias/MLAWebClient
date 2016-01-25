@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('dashboard', DashboardService);
 
     DashboardService.$inject = ['$rootScope', '$http', 'BACKEND'];

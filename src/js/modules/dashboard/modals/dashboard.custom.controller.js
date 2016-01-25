@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('CustomDashboardModalController', CustomDashboardModalController);
     
     CustomDashboardModalController.$inject = ['$rootScope', '$scope', '$modalInstance', 'colors', '_', 'memoryleaks', 'dashboard',  'editableOptions', 'editableThemes', 'BACKEND'];

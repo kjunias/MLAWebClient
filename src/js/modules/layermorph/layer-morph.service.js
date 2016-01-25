@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('LayerMorph', LayerMorph);
     /* @ngInject */
     function LayerMorph($window, support) {

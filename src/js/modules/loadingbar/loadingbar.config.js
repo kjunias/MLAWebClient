@@ -6,10 +6,9 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .config(loadingBarConfig);
     
-    /* @ngInject */
     function loadingBarConfig(cfpLoadingBarProvider) {
       cfpLoadingBarProvider.includeBar = true;
       cfpLoadingBarProvider.includeSpinner = false;

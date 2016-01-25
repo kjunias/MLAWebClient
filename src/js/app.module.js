@@ -9,7 +9,7 @@
  */
 
 angular
-  .module('naut', [
+  .module('monitoring', [
     'ngRoute',
     'ngAnimate',
     'ngStorage',

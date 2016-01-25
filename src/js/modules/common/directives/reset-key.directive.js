@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('resetKey', resetKey);
     
     resetKey.$inject = ['$state', '$rootScope'];

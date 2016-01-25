@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .factory('colors', colors);
     
     colors.$inject = ['COLORS'];

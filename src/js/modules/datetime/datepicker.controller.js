@@ -7,7 +7,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .controller('PeriodDatepickerController', PeriodDatepickerController);
     
     /* @ngInject */

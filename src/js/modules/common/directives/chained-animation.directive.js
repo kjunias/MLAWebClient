@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .directive('chainedAnimation', chainedAnimation);
     
     function chainedAnimation() {

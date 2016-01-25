@@ -73,7 +73,7 @@ module.exports = ($, usehtml) ->
       opts:
         standalone: false,
         root: 'templates',
-        module: 'naut'
+        module: 'monitoring'
     ,
     webserver:
       webroot:          dist,

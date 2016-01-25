@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('naut')
+    .module('monitoring')
     .config(commonConfig)
     .config(lazyLoadConfig);
 
@@ -13,7 +13,7 @@
   commonConfig.$inject = ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide'];
   function commonConfig($controllerProvider, $compileProvider, $filterProvider, $provide) {
 
-    var app = angular.module('naut');
+    var app = angular.module('monitoring');
     app.controller = $controllerProvider.register;
     app.directive  = $compileProvider.directive;
     app.filter     = $filterProvider.register;

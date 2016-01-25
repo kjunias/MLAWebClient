@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .config(translateConfig);
     /* @ngInject */
     function translateConfig($translateProvider) {

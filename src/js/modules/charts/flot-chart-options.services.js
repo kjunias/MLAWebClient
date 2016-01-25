@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('naut')
+        .module('monitoring')
         .service('flotOptions', flotOptions);
 
     function flotOptions() {
