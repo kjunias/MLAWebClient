@@ -288,10 +288,8 @@
     .panel.panel-default
       .panel-heading
         .panel-title
-          .col-md-10
-            | Memory Usage Data
-          .col-md-2
-            em.icon-bar-graph-2.fa-lg.text-muted.pull-right
+          | {{currentDataType}} Usage Data
+          em.icon-bar-graph-2.fa-lg.text-muted.pull-right
       .panel-body
         .row
           .col-md-10
@@ -303,7 +301,7 @@
                       em.fa.fa-calendar
                   input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.from', is-open='openedFrom', min-date='minDate', max-date="today()", 
                                       datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="datePickerOnDateChange()", close-text='Close')
-              .col-md-4.ml0.pl0
+              .col-md-4
                 p.input-group
                   input.form-control(type='text', datepicker-popup='{{format}}', ng-model='currentPeriod.to', is-open='openedTo', min-date='minDate', max-date="today()", 
                                       datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', ng-change="datePickerOnDateChange()", close-text='Close')
@@ -311,19 +309,20 @@
                     button.btn.btn-default(type='button', ng-click='toggleTo($event)')
                       em.fa.fa-calendar
 
-              .col-md-2.ml0.pl0
-                p.input-group
-                  input.form-control.bfh-number(type='number', ng-model="currentPeriod.resolution", min='100', max='10000', step='100', tooltip='Resolution')
+              .col-md-4.pr0.mr0
+                .col-md-4.ml0.pl0
+                  p.input-group
+                    input.form-control.bfh-number(type='number', ng-model="currentPeriod.resolution", min='100', max='10000', step='100', tooltip='Resolution')
 
-              .col-md-1
-                //- p.input-group
-                //-   input.form-control.bfh-number(type='number', ng-model="currentPeriod.resolution", min='100', max='10000', step='100', tooltip='Resolution')
+                .col-md-5.ml0.pl0.pr0.mr0
+                  p.input-group
+                    select.form-control.m-b(ng-trim="true", type='text', ng-model="currentDataType", ng-init="dataTypeOpts[0]", ng-change="dashboard.dataTypeChange(currentDataType)", ng-options='dataType for dataType in dataTypeOpts', tooltip='Data to show', name='dataType', required)
 
-              //- .col-md-1.chart-refresh-btn
-              .col-md-1
-                span.input-group-btn
-                    button.btn.btn-default(type='button', ng-click='dashboard.refreshChart($event)')
-                      em.fa.fa-refresh
+                //- .col-md-1.chart-refresh-btn
+                .col-md-3.ml0.pl0.pr0.mr0
+                  span.input-group-btn
+                      button.btn.btn-default(type='button', ng-click='dashboard.refreshChart($event)')
+                        em.fa.fa-refresh
             .row.row-table.text-center
               .text-center(ng-show="chartLoading")
                 img(src="app/assets/img/utils/loading-spinner.gif")

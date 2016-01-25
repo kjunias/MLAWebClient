@@ -13,8 +13,8 @@
       endDate: 'Now'
     })
     .constant('BACKEND', {
-      'baseURL': 'http://monitoring.media5corp.com:8080'
-      // 'baseURL': 'http://localhost:8080'
+      // 'baseURL': 'http://monitoring.media5corp.com:8080'
+      'baseURL': 'http://localhost:8080'
     })
     .constant('MEDIA_QUERY', {
       'desktopLG': 1200,
