@@ -109,9 +109,7 @@
 
       vm.dataTypeChange = function (data) {
         $rootScope.currentDataType = data;
-        if (data == $rootScope.dataTypeOpts[0]) {
-        }
-        updateLeaksSeries($rootScope.leaksRawData, getMemoryYData);
+        generateLeaksSeries($rootScope.leaksRawData);
       };
 
       function bytesToSize(bytes, decimals) {
@@ -272,7 +270,6 @@
           .success(function (res) {
             $rootScope.leaksRawData = res;
             generateLeaksSeries(res);
-            redraw();
             $rootScope.showAll = true;
           })
           .error(function (err) {
@@ -292,6 +289,7 @@
         } else if ($rootScope.currentDataType == $rootScope.dataTypeOpts[1]) {
           generateCPUSeries(rawData);
         }
+        redraw();
       }
 
       function generateMemorySeries(rawData) {
@@ -340,7 +338,7 @@
         for (var d = 1; d < unitData.length; d++) {
           var x = new Date(unitData[d].date).getTime();
           var y = getCPUYData(unitData[d], unitData[d-1]);
-          if(y => 0) {
+          if(y >= 0) {
             $rootScope.leaksSeries[unitIdx].data.push([x, y, unitData[d].unitIPv4, unitData[d].serialNo, unitData[d].loadVersion]);
           }
         }
@@ -365,17 +363,24 @@
       function getCPUYData(unitData1, unitData0) {
         var cpuVars = ["ssCpuRawUser", "ssCpuRawNice", "ssCpuRawSystem", "ssCpuRawIdle", "ssCpuRawWait", 
                         "ssCpuRawKernel", "ssCpuRawInterrupt", "ssCpuPercUser", "ssCpuPercSystem", "ssCpuPercIdle", "ssCpuRawSoftIRQ"];
-        for (cpuV in cpuVars) {
-          if (!unitData1[cpuV] || !unitData0[cpuV]) {
+        for (var cpuV = 0; cpuV < cpuVars.length; cpuV++) {
+          var ssCpu = cpuVars[cpuV];
+          var ssCpuVal1 = unitData1[ssCpu];
+          var ssCpuVal0 = unitData0[ssCpu];
+
+          if (ssCpuVal1 == undefined || ssCpuVal0 == undefined) {
             return -1;
           }
+
+          unitData1[ssCpu] = parseInt(ssCpuVal1);
+          unitData0[ssCpu] = parseInt(ssCpuVal0);
         }
 
-        cpuVal1 = getCPUValue(unitData1);
-        cpuVal0 = getCPUValue(unitData0);
+        var cpuVal1 = getCPUValue(unitData1);
+        var cpuVal0 = getCPUValue(unitData0);
 
 
-        var y =  (((unitData.memTotal - (unitData.memFree + unitData.memCached + unitData.memBuffer)) * 100)/(unitData.memTotal * 1.00));
+        var y =  ((1.00-(cpuVal1.idleTime - cpuVal0.idleTime)/(cpuVal1.totalTime - cpuVal0.totalTime)) * 100);
         if (y >= 0) {
           return y;
         }
@@ -383,13 +388,14 @@
       }
 
       function getCPUValue(data) {
-        return {
+        var cpuVals = {
           userTime: data["ssCpuRawUser"],
           niceTime: data["ssCpuRawNice"],
-          idleTime:data["ssCpuRawIdle"] + data["ssCpuRawWait"],
-          sysTime: data["ssCpuRawSystem"] + data["ssCpuRawInterrupt"] + data["ssCpuRawSoftIRQ"],
-          totalTime: userTime + niceTime + idleTime + sysTime
+          idleTime: data["ssCpuRawIdle"] + data["ssCpuRawWait"],
+          sysTime: data["ssCpuRawSystem"] + data["ssCpuRawInterrupt"] + data["ssCpuRawSoftIRQ"]
         };
+        cpuVals.totalTime = cpuVals.userTime + cpuVals.niceTime + cpuVals.idleTime + cpuVals.sysTime;
+        return cpuVals;
       }
 
       function getDrawableData () {
